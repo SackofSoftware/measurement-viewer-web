@@ -809,8 +809,8 @@
                 currentModel = null;
             }
 
-            // Clear measurements
-            clearAllMeasurements();
+            // Clear measurements visuals only (don't delete from DB — restore will reload them)
+            clearAllMeasurements(false);
 
             try {
                 if (config.type === 'glb') {
@@ -1902,9 +1902,11 @@
         // Track temp visual objects so undo can remove them
         let tempVisuals = []; // {type, object} for each temp point/line
 
-        function clearAllMeasurements() {
-            const modelId = document.getElementById('model-picker').value;
-            deleteAllMeasurementsFromDB(modelId);
+        function clearAllMeasurements(deleteFromDB = true) {
+            if (deleteFromDB) {
+                const modelId = document.getElementById('model-picker').value;
+                deleteAllMeasurementsFromDB(modelId);
+            }
             // Remove all measurement-related objects from scene
             const toRemove = [];
             scene.traverse(child => {
