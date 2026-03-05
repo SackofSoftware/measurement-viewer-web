@@ -481,8 +481,6 @@
             const modelId = document.getElementById('model-picker').value;
             // Always read crop state from sliders if crop is enabled
             let cropData = null;
-            console.log('[SAVE] cropEnabled:', cropEnabled, 'currentCropPlanes:', currentCropPlanes);
-            console.log('[SAVE] slider X min:', document.getElementById('crop-x-min').value, 'max:', document.getElementById('crop-x-max').value);
             if (cropEnabled) {
                 cropData = {
                     xMin: parseFloat(document.getElementById('crop-x-min').value) / 10,
@@ -2455,7 +2453,6 @@
 
         async function restoreSavedView(modelId) {
             const view = await loadViewFromDB(modelId);
-            console.log('[RESTORE] view from DB:', JSON.stringify(view));
             if (!view) return;
             if (view.camera_position) {
                 camera.position.set(view.camera_position.x, view.camera_position.y, view.camera_position.z);
@@ -2485,8 +2482,6 @@
                     }
                 });
                 // THEN update clip planes with the saved values
-                console.log('[RESTORE] after setting sliders - X min:', document.getElementById('crop-x-min').value, 'max:', document.getElementById('crop-x-max').value);
-                console.log('[RESTORE] cropEnabled:', cropEnabled);
                 updateClipPlanes();
                 document.getElementById('crop-panel').style.display = 'none'; // Hide panel but keep crop
             }
