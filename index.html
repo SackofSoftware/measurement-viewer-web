@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AR Drone Ops — 3D Measurement Viewer</title>
+    <style>
+        :root {
+            --toolbar-bg: rgba(30, 30, 30, 0.92);
+            --toolbar-hover: rgba(255, 255, 255, 0.1);
+            --toolbar-active: #6366f1;
+            --panel-bg: rgba(20, 20, 20, 0.95);
+            --text: #e4e4e7;
+            --text-dim: #a1a1aa;
+            --accent: #818cf8;
+            --red: #ef4444;
+            --purple: rgba(139, 92, 246, 0.35);
+            --purple-stroke: #a855f7;
+            --green: #22c55e;
+            --yellow: #eab308;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #000; color: var(--text); }
+
+        #canvas-container { width: 100%; height: 100%; position: relative; }
+        canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+
+        /* Logo watermark */
+        #logo {
+            position: absolute; top: 12px; left: 12px; z-index: 10;
+            height: 40px; opacity: 0.85; filter: brightness(1.2);
+            pointer-events: none;
+        }
+
+        /* Model picker */
+        #model-picker {
+            position: absolute; top: 16px; left: 60px; z-index: 10;
+            background: var(--toolbar-bg); border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text); padding: 6px 12px; border-radius: 8px;
+            font-size: 13px; cursor: pointer; backdrop-filter: blur(10px);
+        }
+        #model-picker option { background: #1e1e1e; color: var(--text); }
+
+        /* Loading overlay */
+        #loading {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 100;
+            background: rgba(0,0,0,0.85); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 16px;
+            transition: opacity 0.5s;
+        }
+        #loading.hidden { opacity: 0; pointer-events: none; }
+        #loading-text { font-size: 14px; color: var(--text-dim); }
+        #loading-bar-outer { width: 240px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        #loading-bar-inner { height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+
+        /* Bottom toolbar */
+        #toolbar {
+            position: absolute; bottom: 16px; left: 50%; z-index: 10;
+            transform: translateX(-50%);
+            background: var(--toolbar-bg); border-radius: 12px;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; flex-direction: row; padding: 4px;
+            gap: 2px;
+        }
+        .tool-btn {
+            width: 44px; height: 44px; border: none; background: transparent;
+            color: var(--text); border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; position: relative; transition: all 0.15s;
+        }
+        .tool-btn:hover { background: var(--toolbar-hover); }
+        .tool-btn.active { background: var(--toolbar-active); color: #fff; }
+        .tool-btn.toggle-btn { opacity: 0.5; }
+        .tool-btn.toggle-btn.active { opacity: 1; background: rgba(0,191,255,0.25); color: #00bfff; }
+        .tool-btn svg { width: 22px; height: 22px; }
+        .tool-btn .badge {
+            position: absolute; top: 2px; right: 2px;
+            background: var(--red); color: #fff; font-size: 9px;
+            min-width: 16px; height: 16px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600;
+        }
+        .tool-divider { width: 1px; background: rgba(255,255,255,0.1); margin: 6px 2px; }
+
+        /* Area submenu */
+        .tool-submenu {
+            position: absolute; bottom: 52px; left: 50%; transform: translateX(-50%);
+            background: var(--toolbar-bg); border-radius: 8px;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px; display: none; white-space: nowrap;
+        }
+        .tool-submenu.show { display: block; }
+        .submenu-item {
+            padding: 8px 14px; border-radius: 6px; cursor: pointer;
+            font-size: 13px; display: flex; align-items: center; gap: 8px;
+        }
+        .submenu-item:hover { background: var(--toolbar-hover); }
+        .submenu-item.active { background: var(--toolbar-active); }
+
+        /* Side panel */
+        #side-panel {
+            position: absolute; top: 0; right: 0; width: 320px; height: 100%;
+            background: var(--panel-bg); backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 200; transform: translateX(100%); transition: transform 0.25s ease;
+            overflow-y: auto; padding: 16px;
+        }
+        #side-panel.open { transform: translateX(0); }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .panel-title { font-size: 15px; font-weight: 600; }
+        .panel-close { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px; padding: 4px; }
+        .panel-close:hover { color: var(--text); }
+        .panel-field { margin-bottom: 10px; }
+        .panel-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .panel-value { font-size: 14px; font-weight: 500; }
+        .panel-input { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--text); padding: 6px 10px; border-radius: 6px; width: 100%; font-size: 13px; }
+        .panel-input:focus { outline: none; border-color: var(--accent); }
+
+        /* Measurement info (bottom bar) */
+        #measure-info {
+            position: absolute; bottom: 76px; left: 50%; transform: translateX(-50%);
+            background: var(--toolbar-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+            padding: 8px 16px; font-size: 13px; z-index: 10;
+            display: none; gap: 16px; align-items: center;
+        }
+        #measure-info.show { display: flex; }
+        .measure-stat { display: flex; flex-direction: column; align-items: center; }
+        .measure-stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+        .measure-stat-value { font-size: 16px; font-weight: 600; }
+
+        /* Cursor crosshair when measuring */
+        .crosshair { cursor: crosshair; }
+        .cursor-close { cursor: pointer !important; }
+
+        /* Undo/Clear action buttons */
+        .action-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text); padding: 4px 10px; border-radius: 6px; cursor: pointer;
+            font-size: 11px; font-weight: 500; transition: all 0.15s;
+        }
+        .action-btn:hover { background: rgba(255,255,255,0.2); }
+        .action-btn.danger { border-color: var(--red); color: var(--red); }
+        .action-btn.danger:hover { background: rgba(239,68,68,0.2); }
+
+        /* Close polygon indicator */
+        .close-indicator {
+            width: 16px; height: 16px; border-radius: 50%;
+            border: 2px solid var(--purple-stroke); background: rgba(168,85,247,0.4);
+            position: absolute; pointer-events: none; z-index: 100;
+            transform: translate(-50%, -50%); display: none;
+            animation: pulse-ring 1s ease infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.6); }
+            50% { box-shadow: 0 0 0 6px rgba(168,85,247,0); }
+        }
+
+        /* Photo overlay — must fill exact viewport for pixel-perfect alignment with 3D camera */
+        #photo-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 8; pointer-events: none; display: none;
+        }
+        #photo-overlay img {
+            width: 100%; height: 100%;
+            object-fit: contain; /* letterboxes to match camera aspect — transparent sides show 3D model */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #photo-overlay.show { display: block; }
+        #photo-overlay.show img.visible { opacity: 1; }
+        #photo-overlay-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: auto; opacity: 0;
+            transition: opacity 0.4s ease 0.6s, background 0.15s;
+            backdrop-filter: blur(4px);
+        }
+        #photo-overlay.show #photo-overlay-close { opacity: 1; }
+        #photo-overlay-close:hover { background: rgba(255,255,255,0.2); }
+
+        /* Image thumbnails grid */
+        .photo-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px;
+        }
+        .photo-thumb {
+            aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; cursor: pointer;
+            border: 2px solid transparent; transition: border-color 0.15s;
+        }
+        .photo-thumb:hover { border-color: var(--accent); }
+        .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Coordinate display */
+        #coord-display {
+            position: absolute; bottom: 16px; left: 16px; z-index: 10;
+            background: var(--toolbar-bg); backdrop-filter: blur(10px);
+            border-radius: 8px; padding: 6px 12px; font-size: 11px;
+            color: var(--text-dim); font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #side-panel { width: 100%; right: 0; }
+            #toolbar { bottom: 8px; }
+            .tool-btn { width: 38px; height: 38px; font-size: 15px; }
+            #logo { height: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <!-- Logo -->
+        <img id="logo" src="logo.svg" alt="AR Drone Ops">
+
+        <!-- Model Picker -->
+        <select id="model-picker" style="display:none;">
+            <option value="three-rivers" data-path="models/three-rivers/" data-type="obj">Three Rivers Drive</option>
+        </select>
+
+        <!-- Loading overlay -->
+        <div id="loading">
+            <img src="logo.svg" alt="AR Drone Ops" style="height: 48px; opacity: 0.7;">
+            <div id="loading-text">Loading model...</div>
+            <div id="loading-bar-outer"><div id="loading-bar-inner"></div></div>
+        </div>
+
+        <!-- Right Toolbar -->
+        <div id="toolbar">
+            <!-- Select -->
+            <button class="tool-btn active" data-tool="select" title="Select (V)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+            </button>
+            <!-- Marker -->
+            <button class="tool-btn" data-tool="marker" title="Marker (M)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </button>
+            <div class="tool-divider"></div>
+            <!-- Height -->
+            <button class="tool-btn" data-tool="height" title="Height (H)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M8 6l4-4 4 4M8 18l4 4 4-4"/></svg>
+            </button>
+            <!-- Length -->
+            <button class="tool-btn" data-tool="length" title="Length (L)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M4 8v8M20 8v8M8 10v4M12 10v4M16 10v4"/></svg>
+            </button>
+            <!-- Area -->
+            <button class="tool-btn" data-tool="area" title="Area (A)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9-4 9 4v12l-9 4-9-4V6z"/></svg>
+                <div class="tool-submenu" id="area-submenu">
+                    <div class="submenu-item active" data-area="polygon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polygon points="12,2 22,8 18,20 6,20 2,8"/></svg>
+                        Polygon
+                    </div>
+                    <div class="submenu-item" data-area="rectangle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><rect x="3" y="5" width="18" height="14" rx="1"/></svg>
+                        Rectangle
+                    </div>
+                    <div class="submenu-item" data-area="radius">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><circle cx="12" cy="12" r="9"/><line x1="12" y1="12" x2="19" y2="12"/></svg>
+                        Radius
+                    </div>
+                </div>
+            </button>
+            <!-- Volume -->
+            <button class="tool-btn" data-tool="volume" title="Volume (U)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </button>
+            <div class="tool-divider"></div>
+            <!-- Counter -->
+            <button class="tool-btn" data-tool="counter" title="Counter (C)">
+                <span style="font-weight:700;font-size:15px;">123</span>
+            </button>
+            <div class="tool-divider"></div>
+            <!-- Crop -->
+            <button class="tool-btn" data-tool="crop" title="Crop Model (X)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v4H2v2h4v12h12v4h2v-4h4v-2H8V6h12v2H8"/></svg>
+            </button>
+            <div class="tool-divider"></div>
+            <!-- Camera toggle (not a tool — visibility toggle) -->
+            <button class="tool-btn toggle-btn" data-tool="camera" title="Toggle Cameras (P)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <div class="tool-divider"></div>
+            <!-- Save View -->
+            <button class="tool-btn" id="save-view-btn" title="Save Current View" onclick="window._saveView()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            </button>
+        </div>
+
+        <!-- Crop controls panel -->
+        <div id="crop-panel" style="display:none; position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:10; background:var(--toolbar-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px 16px; font-size:12px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+                <strong>Crop Model</strong>
+                <button onclick="resetCrop()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text); padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Reset</button>
+                <button onclick="applyCrop()" style="background:var(--toolbar-active); border:none; color:#fff; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Apply</button>
+            </div>
+            <div style="display:grid; grid-template-columns:auto 1fr auto; gap:4px 8px; align-items:center;">
+                <label>X</label><input type="range" id="crop-x-min" style="width:120px"><span id="crop-x-min-val"></span>
+                <label></label><input type="range" id="crop-x-max" style="width:120px"><span id="crop-x-max-val"></span>
+                <label>Y</label><input type="range" id="crop-y-min" style="width:120px"><span id="crop-y-min-val"></span>
+                <label></label><input type="range" id="crop-y-max" style="width:120px"><span id="crop-y-max-val"></span>
+                <label>Z</label><input type="range" id="crop-z-min" style="width:120px"><span id="crop-z-min-val"></span>
+                <label></label><input type="range" id="crop-z-max" style="width:120px"><span id="crop-z-max-val"></span>
+            </div>
+        </div>
+
+        <!-- Camera alignment panel -->
+        <div id="cam-align-panel" style="display:none; position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:10; background:var(--toolbar-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px 16px; font-size:12px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+                <strong>Align Cameras</strong>
+                <span style="font-size:10px; color:var(--text-dim);">Use arrow keys (hold Shift for Z)</span>
+                <button onclick="window._setCameraOffset(0,0,0)" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text); padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Reset</button>
+            </div>
+            <div style="display:grid; grid-template-columns:auto 1fr auto; gap:4px 8px; align-items:center;">
+                <label>E/W</label><input type="range" id="cam-offset-x" min="-30" max="30" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-x-val">0.0m</span>
+                <label>Elev</label><input type="range" id="cam-offset-y" min="-20" max="20" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-y-val">0.0m</span>
+                <label>N/S</label><input type="range" id="cam-offset-z" min="-30" max="30" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-z-val">0.0m</span>
+            </div>
+        </div>
+
+        <!-- Side Panel -->
+        <div id="side-panel">
+            <div class="panel-header">
+                <span class="panel-title" id="panel-title">Details</span>
+                <button class="panel-close" onclick="closeSidePanel()">&times;</button>
+            </div>
+            <div id="panel-content"></div>
+        </div>
+
+        <!-- Bottom measurement info -->
+        <div id="measure-info">
+            <div class="measure-stat">
+                <span class="measure-stat-label">Distance</span>
+                <span class="measure-stat-value" id="info-distance">—</span>
+            </div>
+            <div class="measure-stat">
+                <span class="measure-stat-label">Horizontal</span>
+                <span class="measure-stat-value" id="info-horizontal">—</span>
+            </div>
+            <div class="measure-stat">
+                <span class="measure-stat-label">Slope</span>
+                <span class="measure-stat-value" id="info-slope">—</span>
+            </div>
+        </div>
+
+        <!-- Close polygon indicator -->
+        <div class="close-indicator" id="close-indicator"></div>
+
+        <!-- Coordinate display -->
+        <div id="coord-display">X: — Y: — Z: —</div>
+
+        <!-- Photo overlay -->
+        <div id="photo-overlay">
+            <img id="photo-overlay-img" src="" alt="">
+            <button id="photo-overlay-close" onclick="window._returnFromCamera()">✕</button>
+        </div>
+    </div>
+
+    <!-- Supabase client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/",
+            "three-mesh-bvh": "https://unpkg.com/three-mesh-bvh@0.8.3/build/index.module.js"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+        import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+        import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
+
+        // Extend Three.js with BVH for fast raycasting
+        THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+        THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
+        THREE.Mesh.prototype.raycast = acceleratedRaycast;
+
+        // ========== Supabase ==========
+        const SUPABASE_URL = 'https://bkeupqstqhzmygpzohwd.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_tINiov1W4DjwDO6Y2GacUw_hNXTkMo8';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function saveMeasurementToDB(measurement, mIdx) {
+            const modelId = document.getElementById('model-picker').value;
+            const points = measurement.points
+                ? measurement.points.map(p => ({ x: p.x, y: p.y, z: p.z }))
+                : measurement.point
+                    ? [{ x: measurement.point.x, y: measurement.point.y, z: measurement.point.z }]
+                    : [];
+
+            const metadata = {};
+            if (measurement.type === 'height') metadata.heightM = measurement.heightM;
+            if (measurement.type === 'length') {
+                metadata.dist3D = measurement.dist3D;
+                metadata.distH = measurement.distH;
+                metadata.slopeAngle = measurement.slopeAngle;
+            }
+            if (measurement.type === 'area') {
+                metadata.surfArea = measurement.surfArea;
+                metadata.projArea = measurement.projArea;
+            }
+
+            const { data, error } = await supabase.from('model_measurements').insert({
+                model_id: modelId,
+                title: measurement.title || 'Untitled',
+                type: measurement.type,
+                points: points,
+                metadata: metadata
+            }).select().single();
+
+            if (error) { console.error('Supabase save error:', error); return null; }
+            measurement.dbId = data.id;
+            return data;
+        }
+
+        async function updateMeasurementInDB(measurement) {
+            if (!measurement.dbId) return;
+            const points = measurement.points
+                ? measurement.points.map(p => ({ x: p.x, y: p.y, z: p.z }))
+                : measurement.point
+                    ? [{ x: measurement.point.x, y: measurement.point.y, z: measurement.point.z }]
+                    : [];
+            const metadata = {};
+            if (measurement.type === 'height') metadata.heightM = measurement.heightM;
+            if (measurement.type === 'length') {
+                metadata.dist3D = measurement.dist3D;
+                metadata.distH = measurement.distH;
+                metadata.slopeAngle = measurement.slopeAngle;
+            }
+            if (measurement.type === 'area') {
+                metadata.surfArea = measurement.surfArea;
+                metadata.projArea = measurement.projArea;
+            }
+            await supabase.from('model_measurements').update({
+                title: measurement.title || 'Untitled',
+                points: points,
+                metadata: metadata,
+                updated_at: new Date().toISOString()
+            }).eq('id', measurement.dbId);
+        }
+
+        let _updateDebounce = null;
+        function debouncedUpdateMeasurement(measurement) {
+            clearTimeout(_updateDebounce);
+            _updateDebounce = setTimeout(() => updateMeasurementInDB(measurement), 500);
+        }
+
+        async function deleteMeasurementFromDB(measurement) {
+            if (!measurement.dbId) return;
+            await supabase.from('model_measurements').delete().eq('id', measurement.dbId);
+        }
+
+        async function deleteAllMeasurementsFromDB(modelId) {
+            await supabase.from('model_measurements').delete().eq('model_id', modelId);
+        }
+
+        async function loadMeasurementsFromDB(modelId) {
+            const { data, error } = await supabase
+                .from('model_measurements')
+                .select('*')
+                .eq('model_id', modelId)
+                .order('created_at');
+            if (error) { console.error('Supabase load error:', error); return []; }
+            return data || [];
+        }
+
+        async function saveViewToDB() {
+            const modelId = document.getElementById('model-picker').value;
+            const viewData = {
+                model_id: modelId,
+                camera_position: { x: camera.position.x, y: camera.position.y, z: camera.position.z },
+                camera_target: { x: controls.target.x, y: controls.target.y, z: controls.target.z },
+                camera_fov: camera.fov,
+                crop_planes: currentCropPlanes || null,
+                updated_at: new Date().toISOString()
+            };
+            const { error } = await supabase.from('model_views').upsert(viewData, { onConflict: 'model_id' });
+            if (error) console.error('Save view error:', error);
+            else {
+                // Flash the save button green
+                const btn = document.getElementById('save-view-btn');
+                btn.style.background = 'rgba(34,197,94,0.4)';
+                btn.style.color = '#22c55e';
+                setTimeout(() => { btn.style.background = ''; btn.style.color = ''; }, 1200);
+            }
+        }
+
+        async function loadViewFromDB(modelId) {
+            const { data, error } = await supabase
+                .from('model_views')
+                .select('*')
+                .eq('model_id', modelId)
+                .single();
+            if (error || !data) return null;
+            return data;
+        }
+
+        let currentCropPlanes = null; // Track current crop state for saving
+
+        // ========== Constants ==========
+        const M_TO_FT = 3.28084;
+        const MODELS = {
+            'three-rivers': {
+                type: 'obj',
+                basePath: 'models/three-rivers/',
+                objFile: 'odm_textured_model_geo.obj',
+                mtlFile: 'odm_textured_model_geo.mtl',
+                name: 'Three Rivers Drive',
+                crs: 'EPSG:32619' // WGS 84 / UTM zone 19N
+            },
+            'medfield': {
+                type: 'glb',
+                path: '../3D_Model/Medfield-State-textured_model.glb',
+                name: 'Medfield State Hospital'
+            },
+            'cordage': {
+                type: 'glb',
+                path: '../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb',
+                name: 'Cordage Park Marketplace'
+            }
+        };
+
+        // ========== State ==========
+        let currentTool = 'select';
+        let currentAreaMode = 'polygon';
+        let currentModel = null;
+        let meshes = []; // All meshes in scene for raycasting
+        let measurements = []; // All measurement annotations
+        let counterCount = 0;
+        let tempPoints = []; // Points being placed for current measurement
+        let tempLineGroup = null; // Temporary line visualization
+        const pointSphereMap = new Map(); // sphere → { mIdx, pIdx } for dragging
+        let dragTarget = null; // { sphere, mIdx, pIdx, origColor }
+        let isDraggingPoint = false;
+        let cameraData = []; // Loaded camera positions
+        let cameraJson = {}; // Full cameras.json data (includes source, model_origin, etc.)
+        let cameraMeshes = []; // Camera frustum meshes
+
+        // ========== Scene Setup ==========
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a2e);
+
+        // Gradient sky
+        const skyGeo = new THREE.SphereGeometry(5000, 32, 32);
+        const skyMat = new THREE.ShaderMaterial({
+            uniforms: {
+                topColor: { value: new THREE.Color(0x0f0f23) },
+                bottomColor: { value: new THREE.Color(0x2d2d5e) },
+                offset: { value: 400 },
+                exponent: { value: 0.6 }
+            },
+            vertexShader: `
+                varying vec3 vWorldPosition;
+                void main() {
+                    vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                    vWorldPosition = worldPosition.xyz;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 topColor;
+                uniform vec3 bottomColor;
+                uniform float offset;
+                uniform float exponent;
+                varying vec3 vWorldPosition;
+                void main() {
+                    float h = normalize(vWorldPosition + offset).y;
+                    gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+                }
+            `,
+            side: THREE.BackSide
+        });
+        scene.add(new THREE.Mesh(skyGeo, skyMat));
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(80, 60, 80);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        document.getElementById('canvas-container').insertBefore(renderer.domElement, document.getElementById('loading'));
+
+        // CSS2D Renderer for labels
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0';
+        labelRenderer.domElement.style.left = '0';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.getElementById('canvas-container').appendChild(labelRenderer.domElement);
+
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.maxPolarAngle = Math.PI * 0.95;
+        controls.minDistance = 1;
+        controls.maxDistance = 2000;
+
+        // Lighting — generous for photogrammetry models
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+        hemiLight.position.set(0, 200, 0);
+        scene.add(hemiLight);
+
+        const sunLight = new THREE.DirectionalLight(0xfff4e6, 1.0);
+        sunLight.position.set(100, 200, 80);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 4096;
+        sunLight.shadow.mapSize.height = 4096;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 800;
+        sunLight.shadow.camera.left = -200;
+        sunLight.shadow.camera.right = 200;
+        sunLight.shadow.camera.top = 200;
+        sunLight.shadow.camera.bottom = -200;
+        scene.add(sunLight);
+
+        const fillLight = new THREE.DirectionalLight(0xb0c4de, 0.5);
+        fillLight.position.set(-60, 80, -60);
+        scene.add(fillLight);
+
+        // Clipping planes for model cropping
+        const clipPlanes = [
+            new THREE.Plane(new THREE.Vector3(1, 0, 0), 0),   // +X (clip left)
+            new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0),  // -X (clip right)
+            new THREE.Plane(new THREE.Vector3(0, 1, 0), 0),   // +Y (clip bottom)
+            new THREE.Plane(new THREE.Vector3(0, -1, 0), 0),  // -Y (clip top)
+            new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),   // +Z (clip front)
+            new THREE.Plane(new THREE.Vector3(0, 0, -1), 0),  // -Z (clip back)
+        ];
+        renderer.localClippingEnabled = true;
+        let cropEnabled = false;
+        let modelBounds = null;
+
+        function setupCropSliders() {
+            if (!currentModel) return;
+            const box = new THREE.Box3().setFromObject(currentModel);
+            modelBounds = box;
+            const min = box.min;
+            const max = box.max;
+
+            const axes = [
+                { id: 'x', min: min.x, max: max.x },
+                { id: 'y', min: min.y, max: max.y },
+                { id: 'z', min: min.z, max: max.z },
+            ];
+
+            axes.forEach(axis => {
+                const sMin = document.getElementById(`crop-${axis.id}-min`);
+                const sMax = document.getElementById(`crop-${axis.id}-max`);
+                const vMin = document.getElementById(`crop-${axis.id}-min-val`);
+                const vMax = document.getElementById(`crop-${axis.id}-max-val`);
+                sMin.min = axis.min * 10; sMin.max = axis.max * 10; sMin.value = axis.min * 10;
+                sMax.min = axis.min * 10; sMax.max = axis.max * 10; sMax.value = axis.max * 10;
+                vMin.textContent = `${(axis.min * M_TO_FT).toFixed(0)}ft`;
+                vMax.textContent = `${(axis.max * M_TO_FT).toFixed(0)}ft`;
+                sMin.oninput = () => { vMin.textContent = `${(sMin.value / 10 * M_TO_FT).toFixed(0)}ft`; updateClipPlanes(); };
+                sMax.oninput = () => { vMax.textContent = `${(sMax.value / 10 * M_TO_FT).toFixed(0)}ft`; updateClipPlanes(); };
+            });
+        }
+
+        function updateClipPlanes() {
+            const xMin = document.getElementById('crop-x-min').value / 10;
+            const xMax = document.getElementById('crop-x-max').value / 10;
+            const yMin = document.getElementById('crop-y-min').value / 10;
+            const yMax = document.getElementById('crop-y-max').value / 10;
+            const zMin = document.getElementById('crop-z-min').value / 10;
+            const zMax = document.getElementById('crop-z-max').value / 10;
+
+            clipPlanes[0].constant = -xMin;  // +X direction clips at xMin
+            clipPlanes[1].constant = xMax;   // -X direction clips at xMax
+            clipPlanes[2].constant = -yMin;  // +Y direction clips at yMin
+            clipPlanes[3].constant = yMax;   // -Y direction clips at yMax
+            clipPlanes[4].constant = -zMin;  // +Z direction clips at zMin
+            clipPlanes[5].constant = zMax;   // -Z direction clips at zMax
+        }
+
+        function enableCrop(enable) {
+            cropEnabled = enable;
+            document.getElementById('crop-panel').style.display = enable ? 'block' : 'none';
+            if (enable) {
+                setupCropSliders();
+                updateClipPlanes(); // Set clip planes to full extent BEFORE applying
+            }
+            if (currentModel) {
+                currentModel.traverse(child => {
+                    if (child.isMesh && child.material) {
+                        const mats = Array.isArray(child.material) ? child.material : [child.material];
+                        mats.forEach(mat => {
+                            mat.clippingPlanes = enable ? clipPlanes : null;
+                            mat.clipShadows = enable;
+                            mat.needsUpdate = true;
+                        });
+                    }
+                });
+            }
+        }
+
+        window.resetCrop = function() {
+            if (modelBounds) {
+                ['x', 'y', 'z'].forEach(axis => {
+                    const sMin = document.getElementById(`crop-${axis}-min`);
+                    const sMax = document.getElementById(`crop-${axis}-max`);
+                    sMin.value = sMin.min;
+                    sMax.value = sMax.max;
+                    document.getElementById(`crop-${axis}-min-val`).textContent = `${(sMin.min / 10 * M_TO_FT).toFixed(0)}ft`;
+                    document.getElementById(`crop-${axis}-max-val`).textContent = `${(sMax.max / 10 * M_TO_FT).toFixed(0)}ft`;
+                });
+                updateClipPlanes();
+            }
+        };
+
+        window.applyCrop = function() {
+            // Track crop state for save view
+            currentCropPlanes = {
+                xMin: parseFloat(document.getElementById('crop-x-min').value) / 10,
+                xMax: parseFloat(document.getElementById('crop-x-max').value) / 10,
+                yMin: parseFloat(document.getElementById('crop-y-min').value) / 10,
+                yMax: parseFloat(document.getElementById('crop-y-max').value) / 10,
+                zMin: parseFloat(document.getElementById('crop-z-min').value) / 10,
+                zMax: parseFloat(document.getElementById('crop-z-max').value) / 10
+            };
+            // Keep current crop and close panel
+            document.getElementById('crop-panel').style.display = 'none';
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tool="select"]').classList.add('active');
+            currentTool = 'select';
+            controls.enabled = true;
+            renderer.domElement.classList.remove('crosshair');
+        };
+
+        // Raycaster
+        const raycaster = new THREE.Raycaster();
+        raycaster.firstHitOnly = true;
+        const mouse = new THREE.Vector2();
+
+        // ========== Loaders ==========
+        const gltfLoader = new GLTFLoader();
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('https://unpkg.com/three@0.170.0/examples/jsm/libs/draco/');
+        gltfLoader.setDRACOLoader(dracoLoader);
+
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+
+        // ========== Model Loading ==========
+        function setLoading(text, progress) {
+            document.getElementById('loading-text').textContent = text;
+            document.getElementById('loading-bar-inner').style.width = `${progress}%`;
+        }
+
+        function showLoading() {
+            const el = document.getElementById('loading');
+            el.classList.remove('hidden');
+            el.style.opacity = '1';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        async function loadModel(modelId) {
+            const config = MODELS[modelId];
+            if (!config) return;
+
+            showLoading();
+            setLoading(`Loading ${config.name}...`, 0);
+
+            // Clear existing model
+            if (currentModel) {
+                scene.remove(currentModel);
+                meshes.forEach(m => {
+                    if (m.geometry.boundsTree) m.geometry.disposeBoundsTree();
+                });
+                meshes = [];
+                currentModel = null;
+            }
+
+            // Clear measurements
+            clearAllMeasurements();
+
+            try {
+                if (config.type === 'glb') {
+                    await loadGLB(config);
+                } else if (config.type === 'obj') {
+                    await loadOBJ(config);
+                }
+            } catch (err) {
+                console.error('Error loading model:', err);
+                setLoading(`Error: ${err.message}`, 0);
+                return;
+            }
+
+            if (currentModel) {
+                // Collect meshes first
+                currentModel.traverse(child => {
+                    if (child.isMesh) meshes.push(child);
+                });
+
+                // Fit camera immediately
+                fitCameraToModel();
+
+                // Hide loading overlay right away
+                setLoading('Ready', 100);
+                const loadEl = document.getElementById('loading');
+                loadEl.style.opacity = '0';
+                setTimeout(() => { loadEl.style.display = 'none'; }, 600);
+
+                // Compute BVH asynchronously (non-blocking)
+                let bvhIdx = 0;
+                function computeNextBVH() {
+                    if (bvhIdx < meshes.length) {
+                        meshes[bvhIdx].geometry.computeBoundsTree();
+                        bvhIdx++;
+                        requestAnimationFrame(computeNextBVH);
+                    } else {
+                        console.log('BVH complete for', meshes.length, 'meshes');
+                    }
+                }
+                requestAnimationFrame(computeNextBVH);
+            }
+        }
+
+        function loadGLB(config) {
+            return new Promise((resolve, reject) => {
+                gltfLoader.load(config.path,
+                    (gltf) => {
+                        currentModel = gltf.scene;
+                        currentModel.traverse(child => {
+                            if (child.isMesh) {
+                                child.castShadow = true;
+                                child.receiveShadow = true;
+                            }
+                        });
+                        scene.add(currentModel);
+                        resolve();
+                    },
+                    (progress) => {
+                        if (progress.total > 0) {
+                            setLoading(`Loading model... ${((progress.loaded / progress.total) * 100).toFixed(0)}%`,
+                                (progress.loaded / progress.total) * 85);
+                        }
+                    },
+                    reject
+                );
+            });
+        }
+
+        function loadOBJ(config) {
+            return new Promise((resolve, reject) => {
+                const basePath = config.basePath;
+
+                setLoading('Loading materials...', 10);
+                mtlLoader.setPath(basePath);
+                mtlLoader.load(config.mtlFile, (materials) => {
+                    materials.preload();
+                    // No additional color space override needed — Three.js handles it
+                    setLoading('Loading geometry...', 30);
+                    objLoader.setMaterials(materials);
+                    objLoader.setPath(basePath);
+                    objLoader.load(config.objFile,
+                        (object) => {
+                            // ODM georeferenced OBJ coordinate convention:
+                            // X = East (-75 to 62), Y = North (-51 to 47), Z = Elevation (-28 to 0)
+                            // Z is "inverted" — ground is at -28, top at 0 (origin at highest point)
+                            // Three.js uses Y-up convention
+                            // Rotate -90° around X: maps Z→Y (up), Y→-Z
+                            object.rotation.x = -Math.PI / 2;
+                            // After rotation: Y goes from -28 to 0 (ground to top) — correct
+                            // No additional flip needed
+
+                            // Fix materials for photogrammetry rendering
+                            object.traverse(child => {
+                                if (child.isMesh) {
+                                    const mats = Array.isArray(child.material) ? child.material : [child.material];
+                                    mats.forEach(mat => {
+                                        // Ensure proper color for texture-mapped photogrammetry
+                                        mat.color.set(0xffffff);
+                                        mat.side = THREE.DoubleSide;
+                                        mat.shininess = 0;
+                                        if (mat.specular) mat.specular.set(0x000000);
+                                        // Textures from MTLLoader should auto-detect color space
+                                    });
+                                    child.castShadow = true;
+                                    child.receiveShadow = true;
+                                }
+                            });
+
+                            currentModel = object;
+                            scene.add(currentModel);
+                            resolve();
+                        },
+                        (progress) => {
+                            if (progress.total > 0) {
+                                setLoading(`Loading geometry... ${((progress.loaded / progress.total) * 100).toFixed(0)}%`,
+                                    30 + (progress.loaded / progress.total) * 55);
+                            }
+                        },
+                        reject
+                    );
+                }, undefined, reject);
+            });
+        }
+
+        function fitCameraToModel() {
+            if (!currentModel) return;
+            const box = new THREE.Box3().setFromObject(currentModel);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            // Use the horizontal extent to set distance (ignore height for isometric view)
+            const horizontalSize = Math.max(size.x, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            const dist = (horizontalSize / 2) / Math.tan(fov / 2) * 0.8;
+
+            // Position camera for a nice 3/4 aerial view
+            camera.position.set(
+                center.x + dist * 0.5,
+                center.y + dist * 0.6,
+                center.z + dist * 0.5
+            );
+            controls.target.copy(center);
+            controls.update();
+
+            // Adjust shadow camera
+            sunLight.shadow.camera.left = -horizontalSize;
+            sunLight.shadow.camera.right = horizontalSize;
+            sunLight.shadow.camera.top = horizontalSize;
+            sunLight.shadow.camera.bottom = -horizontalSize;
+            sunLight.position.set(center.x + horizontalSize, center.y + horizontalSize * 2, center.z + horizontalSize * 0.8);
+            sunLight.target.position.copy(center);
+            scene.add(sunLight.target);
+        }
+
+        // ========== Raycasting ==========
+        function getIntersection(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(meshes, false);
+            return intersects.length > 0 ? intersects[0] : null;
+        }
+
+        // ========== Measurement Helpers ==========
+        function createPointMarker(position, color = 0xef4444) {
+            const geo = new THREE.SphereGeometry(0.25, 16, 16);
+            const mat = new THREE.MeshBasicMaterial({ color, depthTest: false });
+            const sphere = new THREE.Mesh(geo, mat);
+            sphere.position.copy(position);
+            sphere.renderOrder = 999;
+            scene.add(sphere);
+            return sphere;
+        }
+
+        function createLabel(text, position, options = {}) {
+            const div = document.createElement('div');
+            div.style.cssText = `
+                background: ${options.bg || 'rgba(0,0,0,0.85)'};
+                color: ${options.color || '#fff'};
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: ${options.fontSize || '12px'};
+                font-weight: 600;
+                font-family: -apple-system, sans-serif;
+                white-space: nowrap;
+                pointer-events: ${options.clickable ? 'auto' : 'none'};
+                user-select: none;
+                ${options.border ? `border: 1px solid ${options.border};` : ''}
+            `;
+            div.textContent = text;
+            const label = new CSS2DObject(div);
+            label.position.copy(position);
+            scene.add(label);
+            return label;
+        }
+
+        function createLine(points, color = 0xef4444, dashed = false) {
+            const geo = new THREE.BufferGeometry().setFromPoints(points);
+            let mat;
+            if (dashed) {
+                mat = new THREE.LineDashedMaterial({ color, dashSize: 0.5, gapSize: 0.3, linewidth: 2, depthTest: false });
+            } else {
+                mat = new THREE.LineBasicMaterial({ color, linewidth: 2, depthTest: false });
+            }
+            const line = new THREE.Line(geo, mat);
+            if (dashed) line.computeLineDistances();
+            line.renderOrder = 998;
+            scene.add(line);
+            return line;
+        }
+
+        function formatFeet(meters) {
+            const feet = meters * M_TO_FT;
+            if (feet >= 100) return `${feet.toFixed(1)} ft`;
+            if (feet >= 10) return `${feet.toFixed(2)} ft`;
+            return `${feet.toFixed(2)} ft`;
+        }
+
+        function formatSqFt(sqMeters) {
+            const sqFt = sqMeters * M_TO_FT * M_TO_FT;
+            return `${sqFt.toLocaleString('en-US', { maximumFractionDigits: 0 })} ft²`;
+        }
+
+        function formatCuFt(cuMeters) {
+            const cuFt = cuMeters * M_TO_FT * M_TO_FT * M_TO_FT;
+            return `${cuFt.toLocaleString('en-US', { maximumFractionDigits: 0 })} ft³`;
+        }
+
+        // ========== Measurement Tools ==========
+
+        // --- Height Tool ---
+        function handleHeightClick(point, face) {
+            tempPoints.push(point.clone());
+
+            if (tempPoints.length === 1) {
+                tempVisuals.push(createPointMarker(point));
+                updateMeasureInfo('Click second point for height');
+            } else if (tempPoints.length === 2) {
+                // Remove temp marker from first click
+                tempVisuals.forEach(v => removeObj(v));
+                tempVisuals = [];
+
+                const p1 = tempPoints[0];
+                const p2 = tempPoints[1];
+
+                const s1 = createPointMarker(p1);
+                const s2 = createPointMarker(p2);
+
+                const m = buildHeightVisuals(p1, p2);
+                m.spheres = [s1, s2];
+                measurements.push(m);
+
+                const mIdx = measurements.length - 1;
+                pointSphereMap.set(s1, { mIdx, pIdx: 0 });
+                pointSphereMap.set(s2, { mIdx, pIdx: 1 });
+
+                showMeasureStats({
+                    'Height': formatFeet(m.heightM),
+                    'From Elev': formatFeet(Math.abs(Math.min(p1.y, p2.y))),
+                    'To Elev': formatFeet(Math.abs(Math.max(p1.y, p2.y)))
+                });
+
+                saveMeasurementToDB(m, mIdx);
+                tempPoints = [];
+            }
+        }
+
+        function buildHeightVisuals(p1, p2) {
+            const heightM = Math.abs(p2.y - p1.y);
+            const vertTop = p1.y > p2.y ? p1 : p2;
+            const vertBot = p1.y > p2.y ? p2 : p1;
+            const midY = (p1.y + p2.y) / 2;
+            const topProj = new THREE.Vector3(vertBot.x, vertTop.y, vertBot.z);
+            const line = createLine([vertBot, topProj], 0x22c55e, true);
+            const labelPos = new THREE.Vector3(vertBot.x, midY, vertBot.z);
+            const label = createLabel(formatFeet(heightM), labelPos, { bg: 'rgba(34,197,94,0.9)' });
+            return { type: 'height', points: [p1.clone(), p2.clone()], heightM, lines: [line], label };
+        }
+
+        // --- Length Tool ---
+        function handleLengthClick(point, face) {
+            tempPoints.push(point.clone());
+
+            if (tempPoints.length === 1) {
+                tempVisuals.push(createPointMarker(point));
+                updateMeasureInfo('Click second point for length');
+            } else if (tempPoints.length === 2) {
+                // Remove temp marker from first click
+                tempVisuals.forEach(v => removeObj(v));
+                tempVisuals = [];
+
+                const p1 = tempPoints[0];
+                const p2 = tempPoints[1];
+
+                const s1 = createPointMarker(p1);
+                const s2 = createPointMarker(p2);
+
+                const m = buildLengthVisuals(p1, p2);
+                m.spheres = [s1, s2];
+                measurements.push(m);
+
+                const mIdx = measurements.length - 1;
+                pointSphereMap.set(s1, { mIdx, pIdx: 0 });
+                pointSphereMap.set(s2, { mIdx, pIdx: 1 });
+
+                showMeasureStats({
+                    '3D Length': formatFeet(m.dist3D),
+                    'Horizontal': formatFeet(m.distH),
+                    'Slope': `${m.slopeAngle.toFixed(1)}°`
+                });
+
+                saveMeasurementToDB(m, mIdx);
+                tempPoints = [];
+            }
+        }
+
+        function buildLengthVisuals(p1, p2) {
+            const dist3D = p1.distanceTo(p2);
+            const dx = p2.x - p1.x, dz = p2.z - p1.z;
+            const distH = Math.sqrt(dx * dx + dz * dz);
+            const dy = Math.abs(p2.y - p1.y);
+            const slopeAngle = Math.atan2(dy, distH) * (180 / Math.PI);
+            const line = createLine([p1, p2], 0xef4444);
+            const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+            const label = createLabel(formatFeet(dist3D), mid);
+            return { type: 'length', points: [p1.clone(), p2.clone()], dist3D, distH, slopeAngle, lines: [line], label };
+        }
+
+        // --- Area Tool ---
+        let areaPolygonGroup = null;
+
+        function handleAreaClick(point, face) {
+            tempPoints.push(point.clone());
+            const marker = createPointMarker(point, 0xa855f7);
+            tempVisuals.push(marker);
+
+            if (tempPoints.length > 1) {
+                const line = createLine([tempPoints[tempPoints.length - 2], point], 0xa855f7);
+                tempVisuals.push(line);
+            }
+
+            // Update running perimeter/area
+            if (tempPoints.length >= 3) {
+                updateAreaPreview();
+            }
+
+            const closeHint = tempPoints.length >= 2 ? ' — hover first point to close' : '';
+            updateMeasureInfo(`${tempPoints.length} points${closeHint}`);
+        }
+
+        function finishArea() {
+            if (tempPoints.length < 3) return;
+
+            const points = tempPoints.map(p => p.clone());
+
+            // Remove temp visuals — we'll rebuild clean
+            tempVisuals.forEach(v => { scene.remove(v); if (v.geometry) v.geometry.dispose(); if (v.material) v.material.dispose(); });
+
+            // Build visuals with tracked refs
+            const spheres = points.map(p => createPointMarker(p, 0xa855f7));
+            const lines = [];
+            for (let i = 0; i < points.length; i++) {
+                lines.push(createLine([points[i], points[(i + 1) % points.length]], 0xa855f7));
+            }
+
+            const projArea = shoelaceArea(points.map(p => [p.x, p.z]));
+            const surfArea = triangulatedSurfaceArea(points);
+            const fillMesh = createPolygonFill(points, 0x8b5cf6, 0.3);
+
+            const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
+            const cy = points.reduce((s, p) => s + p.y, 0) / points.length;
+            const cz = points.reduce((s, p) => s + p.z, 0) / points.length;
+            const centroid = new THREE.Vector3(cx, cy + 0.5, cz);
+
+            // Use 3D surface area as primary (works for walls AND floors)
+            const label = createLabel(formatSqFt(surfArea), centroid, {
+                bg: 'rgba(139, 92, 246, 0.9)',
+                border: '#a855f7',
+                clickable: true
+            });
+
+            const measurement = {
+                type: 'area',
+                title: 'Untitled Area',
+                points, projArea, surfArea,
+                date: new Date().toLocaleDateString(),
+                fillMesh, label, spheres, lines
+            };
+            measurements.push(measurement);
+            window.measurements = measurements;
+
+            const mIdx = measurements.length - 1;
+            spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+
+            showAreaPanel(measurement, mIdx);
+            showMeasureStats({
+                'Surface Area': formatSqFt(surfArea),
+                'Projected Area': formatSqFt(projArea),
+                'Perimeter': formatFeet(polygonPerimeter(points))
+            });
+
+            saveMeasurementToDB(measurement, mIdx);
+            tempPoints = [];
+            tempVisuals = [];
+        }
+
+        function shoelaceArea(coords) {
+            let area = 0;
+            const n = coords.length;
+            for (let i = 0; i < n; i++) {
+                const j = (i + 1) % n;
+                area += coords[i][0] * coords[j][1];
+                area -= coords[j][0] * coords[i][1];
+            }
+            return Math.abs(area) / 2;
+        }
+
+        function triangulatedSurfaceArea(points) {
+            // Fan triangulation from first point
+            let area = 0;
+            for (let i = 1; i < points.length - 1; i++) {
+                const a = points[0];
+                const b = points[i];
+                const c = points[i + 1];
+                const ab = new THREE.Vector3().subVectors(b, a);
+                const ac = new THREE.Vector3().subVectors(c, a);
+                area += ab.cross(ac).length() / 2;
+            }
+            return area;
+        }
+
+        function polygonPerimeter(points) {
+            let perim = 0;
+            for (let i = 0; i < points.length; i++) {
+                perim += points[i].distanceTo(points[(i + 1) % points.length]);
+            }
+            return perim;
+        }
+
+        function createPolygonFill(points, color, opacity) {
+            // Fan triangulation
+            const vertices = [];
+            for (let i = 1; i < points.length - 1; i++) {
+                vertices.push(points[0].x, points[0].y + 0.05, points[0].z);
+                vertices.push(points[i].x, points[i].y + 0.05, points[i].z);
+                vertices.push(points[i + 1].x, points[i + 1].y + 0.05, points[i + 1].z);
+            }
+            const geo = new THREE.BufferGeometry();
+            geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            geo.computeVertexNormals();
+            const mat = new THREE.MeshBasicMaterial({
+                color, opacity, transparent: true, side: THREE.DoubleSide, depthTest: false
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.renderOrder = 997;
+            scene.add(mesh);
+            return mesh;
+        }
+
+        function updateAreaPreview() {
+            // Show running stats in bottom bar
+            if (tempPoints.length >= 3) {
+                const surfArea = triangulatedSurfaceArea(tempPoints);
+                const perim = polygonPerimeter(tempPoints);
+                showMeasureStats({
+                    'Area (preview)': formatSqFt(surfArea),
+                    'Perimeter': formatFeet(perim),
+                    'Points': `${tempPoints.length}`
+                });
+            }
+        }
+
+        function showAreaPanel(measurement, index) {
+            const panel = document.getElementById('side-panel');
+            document.getElementById('panel-title').textContent = 'Area Measurement';
+            document.getElementById('panel-content').innerHTML = `
+                <div class="panel-field">
+                    <div class="panel-label">Title</div>
+                    <input class="panel-input" value="${measurement.title}" onchange="measurements[${index}].title = this.value">
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Date</div>
+                    <div class="panel-value">${measurement.date}</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Surface Area (3D)</div>
+                    <div class="panel-value">${formatSqFt(measurement.surfArea)}</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Projected Area (plan view)</div>
+                    <div class="panel-value">${formatSqFt(measurement.projArea)}</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Perimeter</div>
+                    <div class="panel-value">${formatFeet(polygonPerimeter(measurement.points))}</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Points</div>
+                    <div class="panel-value">${measurement.points.length}</div>
+                </div>
+            `;
+            panel.classList.add('open');
+        }
+
+        // --- Volume Tool ---
+        function handleVolumeClick(point, face) {
+            tempPoints.push(point.clone());
+            const marker = createPointMarker(point, 0xeab308);
+            tempVisuals.push(marker);
+
+            if (tempPoints.length > 1) {
+                const line = createLine([tempPoints[tempPoints.length - 2], point], 0xeab308);
+                tempVisuals.push(line);
+            }
+
+            const closeHint = tempPoints.length >= 2 ? ' — hover first point to close' : '';
+            updateMeasureInfo(`${tempPoints.length} points${closeHint}`);
+        }
+
+        function finishVolume() {
+            if (tempPoints.length < 3) return;
+
+            const points = [...tempPoints];
+
+            // Close polygon
+            createLine([points[points.length - 1], points[0]], 0xeab308);
+
+            // Base plane at average elevation of clicked points
+            const avgY = points.reduce((s, p) => s + p.y, 0) / points.length;
+
+            // For volume: we need to sample the mesh surface within the polygon
+            // and compute the volume between mesh and base plane
+            // Simplified: use the 3D triangulated area * average height difference
+            const projArea = shoelaceArea(points.map(p => [p.x, p.z]));
+
+            // Sample some points within polygon to estimate average mesh height
+            const meshHeights = sampleMeshHeightsInPolygon(points, 20);
+            let volume = 0;
+            if (meshHeights.length > 0) {
+                const avgMeshY = meshHeights.reduce((s, h) => s + h, 0) / meshHeights.length;
+                volume = projArea * Math.abs(avgMeshY - avgY);
+            }
+
+            // Create fill
+            createPolygonFill(points, 0xeab308, 0.25);
+
+            // Label
+            const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
+            const cz = points.reduce((s, p) => s + p.z, 0) / points.length;
+            createLabel(formatCuFt(volume), new THREE.Vector3(cx, avgY + 1, cz), {
+                bg: 'rgba(234, 179, 8, 0.9)'
+            });
+
+            // Draw base plane indicator
+            const basePlanePoints = points.map(p => new THREE.Vector3(p.x, avgY, p.z));
+            createPolygonFill(basePlanePoints, 0xeab308, 0.15);
+
+            measurements.push({ type: 'volume', points, volume, baseElevation: avgY });
+            window.measurements = measurements;
+
+            showMeasureStats({
+                'Volume': formatCuFt(volume),
+                'Base Area': formatSqFt(projArea),
+                'Base Elev': formatFeet(Math.abs(avgY))
+            });
+
+            tempPoints = [];
+            tempVisuals = [];
+        }
+
+        function sampleMeshHeightsInPolygon(polygon, sampleCount) {
+            // Cast rays downward at random points within polygon bounding box
+            const heights = [];
+            const xs = polygon.map(p => p.x);
+            const zs = polygon.map(p => p.z);
+            const minX = Math.min(...xs), maxX = Math.max(...xs);
+            const minZ = Math.min(...zs), maxZ = Math.max(...zs);
+
+            for (let i = 0; i < sampleCount * 3; i++) { // oversample
+                const x = minX + Math.random() * (maxX - minX);
+                const z = minZ + Math.random() * (maxZ - minZ);
+
+                // Point-in-polygon test (2D on XZ)
+                if (!pointInPolygon2D(x, z, polygon.map(p => [p.x, p.z]))) continue;
+
+                // Cast ray downward
+                const origin = new THREE.Vector3(x, 100, z);
+                const dir = new THREE.Vector3(0, -1, 0);
+                raycaster.set(origin, dir);
+                const hits = raycaster.intersectObjects(meshes, false);
+                if (hits.length > 0) {
+                    heights.push(hits[0].point.y);
+                }
+                if (heights.length >= sampleCount) break;
+            }
+            return heights;
+        }
+
+        function pointInPolygon2D(x, y, polygon) {
+            let inside = false;
+            for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                const xi = polygon[i][0], yi = polygon[i][1];
+                const xj = polygon[j][0], yj = polygon[j][1];
+                if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+                    inside = !inside;
+                }
+            }
+            return inside;
+        }
+
+        // --- Counter Tool ---
+        function handleCounterClick(point) {
+            counterCount++;
+            const marker = createPointMarker(point, 0x3b82f6);
+            marker.scale.setScalar(1.5);
+
+            const label = createLabel(`${counterCount}`, new THREE.Vector3(point.x, point.y + 0.5, point.z), {
+                bg: 'rgba(59, 130, 246, 0.9)',
+                fontSize: '14px'
+            });
+
+            measurements.push({ type: 'counter', point, count: counterCount });
+
+            // Update badge on counter button
+            updateCounterBadge();
+
+            showMeasureStats({ 'Count': `${counterCount}` });
+        }
+
+        function updateCounterBadge() {
+            const btn = document.querySelector('[data-tool="counter"]');
+            let badge = btn.querySelector('.badge');
+            if (counterCount > 0) {
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge';
+                    btn.appendChild(badge);
+                }
+                badge.textContent = counterCount;
+            } else if (badge) {
+                badge.remove();
+            }
+        }
+
+        // --- Marker Tool ---
+        function handleMarkerClick(point) {
+            const marker = createPointMarker(point, 0xf59e0b);
+            marker.scale.setScalar(1.8);
+
+            const label = createLabel('Marker', new THREE.Vector3(point.x, point.y + 0.8, point.z), {
+                bg: 'rgba(245, 158, 11, 0.9)',
+                clickable: true
+            });
+
+            const measurement = {
+                type: 'marker',
+                title: 'Marker',
+                point: point.clone(),
+                label
+            };
+            measurements.push(measurement);
+
+            saveMeasurementToDB(measurement, measurements.length - 1);
+            showMarkerPanel(measurement, measurements.length - 1);
+        }
+
+        function showMarkerPanel(measurement, index) {
+            const panel = document.getElementById('side-panel');
+            document.getElementById('panel-title').textContent = 'Marker';
+            document.getElementById('panel-content').innerHTML = `
+                <div class="panel-field">
+                    <div class="panel-label">Title</div>
+                    <input class="panel-input" value="${measurement.title}" onchange="updateMarkerTitle(${index}, this.value)">
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Position (model coords)</div>
+                    <div class="panel-value" style="font-family: monospace; font-size: 12px;">
+                        X: ${measurement.point.x.toFixed(3)}m<br>
+                        Y: ${measurement.point.y.toFixed(3)}m<br>
+                        Z: ${measurement.point.z.toFixed(3)}m
+                    </div>
+                </div>
+            `;
+            panel.classList.add('open');
+        }
+
+        // ========== Camera System ==========
+        let camerasVisible = false;
+        let cameraFrustums = []; // {mesh, label, data} for each camera
+        let selectedCamera = null;
+        let savedCameraState = null; // For returning from camera view
+
+        let cameraModelBbox = null; // Model bounding box from cameras.json
+        let cameraOffset = { x: 0, y: 0, z: 0 }; // Manual camera offset adjustment
+
+        async function loadCameras() {
+            try {
+                const resp = await fetch('cameras/cameras.json');
+                if (!resp.ok) { console.log('No cameras.json found'); return; }
+                cameraJson = await resp.json();
+                cameraData = cameraJson.cameras || [];
+                cameraModelBbox = cameraJson.model_bbox || null;
+                console.log(`Loaded ${cameraData.length} cameras (source: ${cameraJson.source || 'exif'})`);
+                if (cameraModelBbox) {
+                    console.log(`Model bbox Z: ${cameraModelBbox.z_min.toFixed(1)} to ${cameraModelBbox.z_max.toFixed(1)}, center_z: ${cameraModelBbox.center_z.toFixed(1)}`);
+                }
+
+                // Build frustum meshes
+                buildCameraFrustums();
+            } catch (e) {
+                console.log('Camera loading skipped:', e.message);
+            }
+        }
+
+        function buildCameraFrustums() {
+            // Remove existing frustums
+            cameraFrustums.forEach(cf => {
+                scene.remove(cf.mesh);
+                scene.remove(cf.label);
+            });
+            cameraFrustums = [];
+
+            // Model ground elevation in Three.js Y = OBJ Z
+            // OBJ Z range: typically -28 to 0 for this model
+            // Ground surface is near the maximum Z (top of terrain), around -12 to -14
+            // Use bbox to compute: after rotation Y = OBJ Z, ground is near z_max
+            const groundY = cameraModelBbox
+                ? cameraModelBbox.z_max - 2 // Top of model surface minus a bit (rooftop vs ground)
+                : -14; // fallback
+
+            // Detect if cameras are bundle-adjusted (from shots.geojson)
+            const isBundleAdjusted = cameraJson.source === 'bundle_adjusted';
+
+            cameraData.forEach((cam, i) => {
+                // Position in Three.js space
+                const x = cam.model_x + cameraOffset.x;
+                const z = cam.model_z + cameraOffset.z;
+                // For bundle-adjusted: model_y is the solved altitude (direct from ODM)
+                // For EXIF: model_y is relative_altitude, needs groundY offset
+                const y = isBundleAdjusted
+                    ? cam.model_y + cameraOffset.y
+                    : groundY + (cam.relative_altitude || 10) + cameraOffset.y;
+
+                // Create frustum wireframe (small pyramid)
+                // Geometry: tip at origin, base opens in -Z (Three.js forward direction)
+                const frustumSize = 1.2;
+                const aspect = (cam.width || 4) / (cam.height || 3);
+                const halfH = frustumSize * 0.5;
+                const halfW = halfH * aspect;
+
+                const geo = new THREE.BufferGeometry();
+                const verts = new Float32Array([
+                    // Tip (camera position)
+                    0, 0, 0,
+                    // Base corners (opening in -Z = forward direction for lookAt)
+                    -halfW, -halfH, -frustumSize,
+                     halfW, -halfH, -frustumSize,
+                     halfW,  halfH, -frustumSize,
+                    -halfW,  halfH, -frustumSize,
+                ]);
+                const indices = [
+                    0,1, 0,2, 0,3, 0,4,  // edges from tip
+                    1,2, 2,3, 3,4, 4,1,  // base rectangle
+                ];
+                geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+                geo.setIndex(indices);
+
+                const mat = new THREE.LineBasicMaterial({
+                    color: 0x00bfff,
+                    linewidth: 2,
+                    depthTest: false,
+                    transparent: true,
+                    opacity: 0.8,
+                });
+                const mesh = new THREE.LineSegments(geo, mat);
+                mesh.position.set(x, y, z);
+
+                // Orient frustum using lookAt
+                let lookDir;
+                if (cam.forward_threejs) {
+                    // Bundle-adjusted: use solved camera direction directly
+                    lookDir = new THREE.Vector3(...cam.forward_threejs).normalize();
+                } else {
+                    // EXIF fallback: DJI compass heading
+                    // 0=North, 90=East, 180=South, -90=West
+                    // Three.js: +X=East, -Z=North, +Z=South
+                    const yawRad = (cam.gimbal_yaw || 0) * Math.PI / 180;
+                    const pitchRad = (cam.gimbal_pitch || -45) * Math.PI / 180;
+                    lookDir = new THREE.Vector3(
+                        Math.sin(yawRad) * Math.cos(pitchRad),
+                        Math.sin(pitchRad),
+                        -Math.cos(yawRad) * Math.cos(pitchRad)
+                    );
+                }
+                const lookTarget = new THREE.Vector3(x, y, z).add(lookDir.clone().multiplyScalar(10));
+                mesh.lookAt(lookTarget);
+
+                mesh.renderOrder = 999;
+                mesh.visible = false;
+                mesh.userData = { cameraIndex: i, isCamera: true };
+                scene.add(mesh);
+
+                // Label
+                const waypointMatch = cam.file.match(/Waypoint(\d+)/);
+                const labelText = waypointMatch ? `WP${waypointMatch[1]}` : `Cam ${i+1}`;
+                const labelDiv = document.createElement('div');
+                labelDiv.style.cssText = `
+                    background: rgba(0, 191, 255, 0.85); color: #fff; padding: 2px 6px;
+                    border-radius: 3px; font-size: 10px; font-weight: 600;
+                    pointer-events: auto; cursor: pointer; user-select: none;
+                    transition: all 0.15s;
+                `;
+                labelDiv.textContent = labelText;
+                labelDiv.addEventListener('click', () => flyToCamera(i));
+                labelDiv.addEventListener('mouseenter', () => {
+                    mesh.material.color.setHex(0xff4444);
+                    mesh.material.opacity = 1;
+                    labelDiv.style.background = 'rgba(255, 68, 68, 0.95)';
+                    labelDiv.style.transform = 'scale(1.2)';
+                });
+                labelDiv.addEventListener('mouseleave', () => {
+                    if (selectedCamera !== i) {
+                        mesh.material.color.setHex(0x00bfff);
+                        mesh.material.opacity = 0.8;
+                        labelDiv.style.background = 'rgba(0, 191, 255, 0.85)';
+                        labelDiv.style.transform = 'scale(1)';
+                    }
+                });
+
+                const label = new CSS2DObject(labelDiv);
+                label.position.set(x, y + 1.5, z);
+                label.visible = false;
+                scene.add(label);
+
+                cameraFrustums.push({ mesh, label, data: cam, index: i });
+            });
+        }
+
+        function toggleCameras() {
+            camerasVisible = !camerasVisible;
+            cameraFrustums.forEach(cf => {
+                cf.mesh.visible = camerasVisible;
+                cf.label.visible = camerasVisible;
+            });
+
+            // Update camera button visual state
+            const btn = document.querySelector('[data-tool="camera"]');
+            btn.classList.toggle('active', camerasVisible);
+            if (camerasVisible) {
+                let badge = btn.querySelector('.badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge';
+                    badge.style.background = '#00bfff';
+                    btn.appendChild(badge);
+                }
+                badge.textContent = cameraData.length;
+            } else {
+                const badge = btn.querySelector('.badge');
+                if (badge) badge.remove();
+            }
+            // Show/hide alignment panel
+            document.getElementById('cam-align-panel').style.display = camerasVisible ? 'block' : 'none';
+            console.log(`Cameras ${camerasVisible ? 'visible' : 'hidden'} (${cameraFrustums.length} frustums)`);
+        }
+
+        function flyToCamera(index) {
+            const cf = cameraFrustums[index];
+            if (!cf) return;
+            const cam = cf.data;
+
+            // Save current camera state for returning
+            savedCameraState = {
+                position: camera.position.clone(),
+                target: controls.target.clone(),
+            };
+
+            // Highlight selected
+            if (selectedCamera !== null) {
+                const prev = cameraFrustums[selectedCamera];
+                prev.mesh.material.color.setHex(0x00bfff);
+                prev.mesh.material.opacity = 0.8;
+            }
+            selectedCamera = index;
+            cf.mesh.material.color.setHex(0xff4444);
+            cf.mesh.material.opacity = 1;
+
+            // Animate camera to drone position
+            const targetPos = cf.mesh.position.clone();
+            // Look direction: use bundle-adjusted if available, else gimbal
+            let lookDir;
+            if (cam.forward_threejs) {
+                lookDir = new THREE.Vector3(...cam.forward_threejs).normalize();
+            } else {
+                const yawRad = (cam.gimbal_yaw || 0) * Math.PI / 180;
+                const pitchRad = (cam.gimbal_pitch || -45) * Math.PI / 180;
+                lookDir = new THREE.Vector3(
+                    Math.sin(yawRad) * Math.cos(pitchRad),
+                    Math.sin(pitchRad),
+                    -Math.cos(yawRad) * Math.cos(pitchRad)
+                );
+            }
+            const lookTarget = targetPos.clone().add(lookDir.clone().multiplyScalar(10));
+
+            // Set camera FOV and up vector to match drone camera
+            // Save original values for restoring on return
+            savedCameraState.fov = camera.fov;
+            savedCameraState.up = camera.up.clone();
+            savedCameraState.aspect = camera.aspect;
+
+            // Use vertical FOV from calibrated camera (Three.js uses vertical FOV)
+            const targetFov = cam.fov_v || cam.fov_h || cam.fov || 55;
+            // Set up vector from bundle-adjusted data
+            const targetUp = cam.up_threejs
+                ? new THREE.Vector3(...cam.up_threejs).normalize()
+                : new THREE.Vector3(0, 1, 0);
+            // Drone camera aspect ratio
+            const droneAspect = (cam.width || 8000) / (cam.height || 6000);
+
+            // Smooth animation using simple lerp
+            const startPos = camera.position.clone();
+            const startTarget = controls.target.clone();
+            const startFov = camera.fov;
+            const startUp = camera.up.clone();
+            const duration = 1500; // ms — slow dramatic fly-in
+            const startTime = Date.now();
+
+            function animateFly() {
+                const elapsed = Date.now() - startTime;
+                const t = Math.min(elapsed / duration, 1);
+                // Smooth cubic ease-in-out for dramatic feel
+                const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+
+                camera.position.lerpVectors(startPos, targetPos, ease);
+                controls.target.lerpVectors(startTarget, lookTarget, ease);
+                // Animate FOV and up vector
+                camera.fov = startFov + (targetFov - startFov) * ease;
+                camera.up.lerpVectors(startUp, targetUp, ease).normalize();
+                camera.updateProjectionMatrix();
+                controls.update();
+
+                if (t < 1) {
+                    requestAnimationFrame(animateFly);
+                } else {
+                    // Final precise values
+                    camera.fov = targetFov;
+                    camera.up.copy(targetUp);
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    // Show photo overlay (no side panel — photo IS the view)
+                    showPhotoOverlay(cam);
+                }
+            }
+            animateFly();
+        }
+
+        function returnFromCamera() {
+            if (savedCameraState) {
+                const startPos = camera.position.clone();
+                const startTarget = controls.target.clone();
+                const startFov = camera.fov;
+                const startUp = camera.up.clone();
+                const endPos = savedCameraState.position.clone();
+                const endTarget = savedCameraState.target.clone();
+                const endFov = savedCameraState.fov || 50;
+                const endUp = savedCameraState.up || new THREE.Vector3(0, 1, 0);
+                const duration = 1000;
+                const startTime = Date.now();
+                savedCameraState = null;
+
+                function animateReturn() {
+                    const elapsed = Date.now() - startTime;
+                    const t = Math.min(elapsed / duration, 1);
+                    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+
+                    camera.position.lerpVectors(startPos, endPos, ease);
+                    controls.target.lerpVectors(startTarget, endTarget, ease);
+                    camera.fov = startFov + (endFov - startFov) * ease;
+                    camera.up.lerpVectors(startUp, endUp, ease).normalize();
+                    camera.updateProjectionMatrix();
+                    controls.update();
+
+                    if (t < 1) {
+                        requestAnimationFrame(animateReturn);
+                    } else {
+                        camera.fov = endFov;
+                        camera.up.copy(endUp);
+                        camera.updateProjectionMatrix();
+                    }
+                }
+                animateReturn();
+            }
+
+            // Hide photo overlay
+            document.getElementById('photo-overlay-img').classList.remove('visible');
+            document.getElementById('photo-overlay').classList.remove('show');
+
+            // Deselect camera
+            if (selectedCamera !== null) {
+                const cf = cameraFrustums[selectedCamera];
+                cf.mesh.material.color.setHex(0x00bfff);
+                cf.mesh.material.opacity = 0.8;
+                selectedCamera = null;
+            }
+
+            // Close side panel
+            closeSidePanel();
+        }
+
+        let showThermal = false; // Toggle between visible and thermal
+
+        function showPhotoOverlay(cam) {
+            const src = showThermal
+                ? (cam.thermal_full ? 'cameras/' + cam.thermal_full : cam.thermal_thumbnail ? 'cameras/' + cam.thermal_thumbnail : null)
+                : (cam.full_image ? 'cameras/' + cam.full_image : cam.thumbnail ? 'cameras/' + cam.thumbnail : null);
+            if (!src) return;
+            const img = document.getElementById('photo-overlay-img');
+            img.classList.remove('visible');
+            img.src = src;
+            document.getElementById('photo-overlay').classList.add('show');
+            // Fade in after image loads (or immediately if cached)
+            img.onload = () => {
+                requestAnimationFrame(() => img.classList.add('visible'));
+            };
+            // In case image is already cached and onload doesn't fire
+            if (img.complete) {
+                requestAnimationFrame(() => img.classList.add('visible'));
+            }
+        }
+
+        function showCameraPanel(cam, index) {
+            const panel = document.getElementById('side-panel');
+            document.getElementById('panel-title').textContent = 'Camera View';
+
+            const waypointMatch = cam.file.match(/Waypoint(\d+)/);
+            const wpName = waypointMatch ? `Waypoint ${waypointMatch[1]}` : cam.file;
+
+            document.getElementById('panel-content').innerHTML = `
+                <div class="panel-field">
+                    <div class="panel-label">Photo</div>
+                    <div class="panel-value">${wpName}</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Altitude</div>
+                    <div class="panel-value">${formatFeet(cam.relative_altitude || 0)} (${(cam.relative_altitude || 0).toFixed(1)}m)</div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Gimbal</div>
+                    <div class="panel-value" style="font-family:monospace;font-size:12px;">
+                        Pitch: ${(cam.gimbal_pitch || 0).toFixed(1)}°<br>
+                        Yaw: ${(cam.gimbal_yaw || 0).toFixed(1)}°
+                    </div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">GPS</div>
+                    <div class="panel-value" style="font-family:monospace;font-size:11px;">
+                        ${cam.lat.toFixed(6)}, ${cam.lon.toFixed(6)}
+                    </div>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Date</div>
+                    <div class="panel-value">${cam.datetime ? new Date(cam.datetime).toLocaleString() : '—'}</div>
+                </div>
+                ${cam.thermal_thumbnail ? `
+                <div class="panel-field">
+                    <div class="panel-label">Image Mode</div>
+                    <div style="display:flex;gap:4px;">
+                        <button class="action-btn ${!showThermal ? 'active' : ''}" style="${!showThermal ? 'background:var(--toolbar-active);border-color:var(--toolbar-active);' : ''}"
+                            onclick="window._setThermal(false, ${index})">Visible</button>
+                        <button class="action-btn ${showThermal ? 'active' : ''}" style="${showThermal ? 'background:#ef4444;border-color:#ef4444;' : ''}"
+                            onclick="window._setThermal(true, ${index})">Thermal</button>
+                    </div>
+                </div>` : ''}
+                <div style="margin-top:12px;">
+                    <button class="action-btn" onclick="window._returnFromCamera()" style="width:100%;padding:8px;">
+                        ← Return to Orbit View
+                    </button>
+                </div>
+                ${cam.thumbnail ? `
+                <div style="margin-top:8px;">
+                    <img id="panel-cam-img" src="cameras/${showThermal && cam.thermal_thumbnail ? cam.thermal_thumbnail : cam.thumbnail}" style="width:100%;border-radius:6px;border:1px solid rgba(255,255,255,0.15);">
+                </div>` : ''}
+            `;
+            panel.classList.add('open');
+        }
+
+        // ========== Clear / Undo ==========
+        // Track temp visual objects so undo can remove them
+        let tempVisuals = []; // {type, object} for each temp point/line
+
+        function clearAllMeasurements() {
+            const modelId = document.getElementById('model-picker').value;
+            deleteAllMeasurementsFromDB(modelId);
+            // Remove all measurement-related objects from scene
+            const toRemove = [];
+            scene.traverse(child => {
+                if (child.isMesh && child.geometry instanceof THREE.SphereGeometry) toRemove.push(child);
+                if (child.isLine) toRemove.push(child);
+                if (child instanceof CSS2DObject) toRemove.push(child);
+                if (child.isMesh && child.material && child.material.transparent && child.material.opacity < 0.5 && child.renderOrder === 997) toRemove.push(child);
+            });
+            toRemove.forEach(obj => {
+                scene.remove(obj);
+                if (obj.geometry) obj.geometry.dispose();
+                if (obj.material) {
+                    if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+                    else obj.material.dispose();
+                }
+            });
+
+            measurements = [];
+            window.measurements = measurements;
+            pointSphereMap.clear();
+            tempPoints = [];
+            tempVisuals = [];
+            counterCount = 0;
+            updateCounterBadge();
+            hideMeasureInfo();
+            closeSidePanel();
+        }
+
+        function undoLastMeasurement() {
+            if (measurements.length === 0) return;
+            const last = measurements.pop();
+            deleteMeasurementFromDB(last);
+            // Clear everything and re-render remaining
+            const saved = [...measurements];
+            clearAllMeasurements();
+            // Note: re-rendering saved measurements would require storing all visual objects.
+            // For now, undo removes the last and clears visuals. User can redo measurements.
+            measurements = saved;
+            window.measurements = measurements;
+        }
+
+        function undoLastPoint() {
+            if (tempPoints.length > 0) {
+                tempPoints.pop();
+                // Remove last visual marker and line
+                if (tempVisuals.length > 0) {
+                    const last = tempVisuals.pop();
+                    if (last) {
+                        scene.remove(last);
+                        if (last.geometry) last.geometry.dispose();
+                        if (last.material) last.material.dispose();
+                    }
+                }
+                // Also remove the connecting line if there was one
+                if (tempVisuals.length > 0 && tempPoints.length > 0) {
+                    const lastLine = tempVisuals[tempVisuals.length - 1];
+                    if (lastLine && lastLine.isLine) {
+                        scene.remove(lastLine);
+                        tempVisuals.pop();
+                    }
+                }
+                if (tempPoints.length > 0) {
+                    updateMeasureInfo(`${tempPoints.length} points — click to add more, or close polygon`);
+                } else {
+                    hideMeasureInfo();
+                }
+            }
+        }
+
+        // ========== Measurement Point Dragging ==========
+        function removeObj(obj) {
+            scene.remove(obj);
+            if (obj.geometry) obj.geometry.dispose();
+            if (obj.material) {
+                if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+                else obj.material.dispose();
+            }
+        }
+
+        function recalcMeasurement(mIdx) {
+            const m = measurements[mIdx];
+            if (!m) return;
+
+            // Remove old lines, label, fillMesh — keep spheres
+            if (m.lines) m.lines.forEach(l => removeObj(l));
+            if (m.label) { scene.remove(m.label); }
+            if (m.fillMesh) removeObj(m.fillMesh);
+
+            const pts = m.points;
+            if (m.type === 'height') {
+                const rebuilt = buildHeightVisuals(pts[0], pts[1]);
+                m.lines = rebuilt.lines; m.label = rebuilt.label; m.heightM = rebuilt.heightM;
+                // Update sphere positions
+                if (m.spheres) { m.spheres[0].position.copy(pts[0]); m.spheres[1].position.copy(pts[1]); }
+            } else if (m.type === 'length') {
+                const rebuilt = buildLengthVisuals(pts[0], pts[1]);
+                m.lines = rebuilt.lines; m.label = rebuilt.label;
+                m.dist3D = rebuilt.dist3D; m.distH = rebuilt.distH; m.slopeAngle = rebuilt.slopeAngle;
+                if (m.spheres) { m.spheres[0].position.copy(pts[0]); m.spheres[1].position.copy(pts[1]); }
+            } else if (m.type === 'area') {
+                // Rebuild lines
+                const lines = [];
+                for (let i = 0; i < pts.length; i++) {
+                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], 0xa855f7));
+                }
+                m.lines = lines;
+                m.projArea = shoelaceArea(pts.map(p => [p.x, p.z]));
+                m.surfArea = triangulatedSurfaceArea(pts);
+                m.fillMesh = createPolygonFill(pts, 0x8b5cf6, 0.3);
+                const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+                const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                m.label = createLabel(formatSqFt(m.surfArea), new THREE.Vector3(cx, cy + 0.5, cz), {
+                    bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7', clickable: true
+                });
+                if (m.spheres) pts.forEach((p, i) => m.spheres[i].position.copy(p));
+            }
+            debouncedUpdateMeasurement(m);
+        }
+
+        // Collect all measurement spheres for raycasting
+        function getMeasurementSpheres() {
+            const spheres = [];
+            for (const m of measurements) {
+                if (m.spheres) spheres.push(...m.spheres);
+            }
+            return spheres;
+        }
+
+        // ========== UI Helpers ==========
+        function showMeasureStats(stats) {
+            const el = document.getElementById('measure-info');
+            el.innerHTML = '';
+            for (const [label, value] of Object.entries(stats)) {
+                el.innerHTML += `
+                    <div class="measure-stat">
+                        <span class="measure-stat-label">${label}</span>
+                        <span class="measure-stat-value">${value}</span>
+                    </div>
+                `;
+            }
+            // Add action buttons
+            el.innerHTML += `
+                <div style="display:flex;gap:6px;margin-left:8px;border-left:1px solid rgba(255,255,255,0.15);padding-left:10px;">
+                    <button class="action-btn" onclick="window._undoLast()" title="Undo last">Undo</button>
+                    <button class="action-btn danger" onclick="window._clearAll()" title="Clear all measurements">Clear All</button>
+                </div>
+            `;
+            el.classList.add('show');
+        }
+
+        function updateMeasureInfo(text) {
+            const el = document.getElementById('measure-info');
+            el.innerHTML = `
+                <div style="font-size:13px;color:var(--text-dim)">${text}</div>
+                <div style="display:flex;gap:6px;margin-left:8px;">
+                    <button class="action-btn" onclick="window._undoPoint()" title="Undo last point">Undo Point</button>
+                    <button class="action-btn danger" onclick="window._clearAll()" title="Clear all">Clear All</button>
+                </div>
+            `;
+            el.classList.add('show');
+        }
+
+        function hideMeasureInfo() {
+            document.getElementById('measure-info').classList.remove('show');
+        }
+
+        function closeSidePanel() {
+            document.getElementById('side-panel').classList.remove('open');
+        }
+
+        // ========== Event Handlers ==========
+
+        // Tool selection
+        function selectTool(toolName) {
+            const btn = document.querySelector(`.tool-btn[data-tool="${toolName}"]`);
+            if (!btn) return;
+
+            // Camera button is a toggle, not a tool mode
+            if (toolName === 'camera') {
+                toggleCameras();
+                return;
+            }
+
+            // Finish pending polygon if switching tools
+            if (currentTool === 'area' && tempPoints.length >= 3 && toolName !== 'area') {
+                finishArea();
+            }
+            if (currentTool === 'volume' && tempPoints.length >= 3 && toolName !== 'volume') {
+                finishVolume();
+            }
+
+            // Set active (skip camera btn — it's a toggle)
+            document.querySelectorAll('.tool-btn:not([data-tool="camera"])').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTool = toolName;
+
+            // Controls always enabled — drag orbits, click places points
+            controls.enabled = true;
+            renderer.domElement.classList.toggle('crosshair', toolName !== 'select' && toolName !== 'crop');
+
+            // Close submenu if not area
+            if (toolName !== 'area') {
+                document.getElementById('area-submenu').classList.remove('show');
+            }
+
+            // Crop tool toggle
+            if (toolName === 'crop') {
+                enableCrop(true);
+            } else {
+                document.getElementById('crop-panel').style.display = 'none';
+            }
+
+            // Hide measure info when switching to non-measurement tools
+            if (toolName === 'select' || toolName === 'crop') hideMeasureInfo();
+        }
+
+        document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tool = btn.dataset.tool;
+
+                // Handle area submenu
+                if (tool === 'area') {
+                    const submenu = document.getElementById('area-submenu');
+                    submenu.classList.toggle('show');
+                    e.stopPropagation();
+                }
+
+                selectTool(tool);
+            });
+        });
+
+        // Area submenu
+        document.querySelectorAll('.submenu-item[data-area]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentAreaMode = item.dataset.area;
+                document.querySelectorAll('.submenu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                document.getElementById('area-submenu').classList.remove('show');
+
+                // Activate area tool
+                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-tool="area"]').classList.add('active');
+                currentTool = 'area';
+                controls.enabled = true;
+                renderer.domElement.classList.add('crosshair');
+            });
+        });
+
+        // Click handler for measurements
+        let nearFirstPoint = false; // Track if we're near the first anchor point
+        const CLOSE_THRESHOLD = 1.5; // meters — distance to snap to close polygon
+
+        // Click vs drag detection — drag orbits, short click places points
+        // Also handles measurement point dragging
+        let _mdownX = 0, _mdownY = 0, _mdownTime = 0;
+        renderer.domElement.addEventListener('mousedown', (e) => {
+            _mdownX = e.clientX; _mdownY = e.clientY; _mdownTime = Date.now();
+
+            // Check if mousedown is on a measurement sphere
+            if (_hoveredSphere && pointSphereMap.has(_hoveredSphere)) {
+                const info = pointSphereMap.get(_hoveredSphere);
+                dragTarget = { sphere: _hoveredSphere, mIdx: info.mIdx, pIdx: info.pIdx };
+                isDraggingPoint = true;
+                controls.enabled = false; // Disable orbit while dragging point
+                renderer.domElement.style.cursor = 'grabbing';
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+        renderer.domElement.addEventListener('mouseup', (e) => {
+            // End point drag
+            if (isDraggingPoint) {
+                isDraggingPoint = false;
+                controls.enabled = true;
+                renderer.domElement.style.cursor = 'grab';
+                dragTarget = null;
+                return;
+            }
+
+            if (currentTool === 'select' || currentTool === 'camera' || currentTool === 'crop') return;
+
+            // Only treat as click if mouse didn't move much and was quick
+            const dx = e.clientX - _mdownX, dy = e.clientY - _mdownY;
+            if (dx * dx + dy * dy > 25 || Date.now() - _mdownTime > 300) return;
+
+            // Don't place points if hovering a measurement sphere
+            if (_hoveredSphere) return;
+
+            const hit = getIntersection(e);
+            if (!hit) return;
+
+            const point = hit.point;
+            const face = hit.face;
+
+            // Check if clicking near first point to close polygon
+            if ((currentTool === 'area' || currentTool === 'volume') && tempPoints.length >= 3 && nearFirstPoint) {
+                if (currentTool === 'area') finishArea();
+                else finishVolume();
+                nearFirstPoint = false;
+                document.getElementById('close-indicator').style.display = 'none';
+                return;
+            }
+
+            switch (currentTool) {
+                case 'height': handleHeightClick(point, face); break;
+                case 'length': handleLengthClick(point, face); break;
+                case 'area': handleAreaClick(point, face); break;
+                case 'volume': handleVolumeClick(point, face); break;
+                case 'counter': handleCounterClick(point); break;
+                case 'marker': handleMarkerClick(point); break;
+            }
+        });
+
+        // Double-click to finish polygon
+        renderer.domElement.addEventListener('dblclick', (e) => {
+            if (currentTool === 'area' && tempPoints.length >= 3) {
+                finishArea();
+            }
+            if (currentTool === 'volume' && tempPoints.length >= 3) {
+                finishVolume();
+            }
+        });
+
+        // Mouse move for coordinate display + close-polygon indicator + point hover/drag
+        let _hoveredSphere = null;
+        const _sphereRaycaster = new THREE.Raycaster();
+        _sphereRaycaster.params.Mesh = { threshold: 0 };
+
+        renderer.domElement.addEventListener('mousemove', (e) => {
+            const el = document.getElementById('coord-display');
+            const closeIndicator = document.getElementById('close-indicator');
+
+            // If dragging a measurement point, move it along model surface
+            if (isDraggingPoint && dragTarget) {
+                const hit = getIntersection(e);
+                if (hit) {
+                    const p = hit.point;
+                    dragTarget.sphere.position.copy(p);
+                    measurements[dragTarget.mIdx].points[dragTarget.pIdx].copy(p);
+                    recalcMeasurement(dragTarget.mIdx);
+                    el.textContent = `X: ${(p.x * M_TO_FT).toFixed(1)}ft  Y: ${(p.y * M_TO_FT).toFixed(1)}ft  Z: ${(p.z * M_TO_FT).toFixed(1)}ft`;
+                }
+                return;
+            }
+
+            // Check hover over measurement spheres
+            const rect = renderer.domElement.getBoundingClientRect();
+            const mx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const my = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            _sphereRaycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
+            const spheres = getMeasurementSpheres();
+            const sphereHits = spheres.length > 0 ? _sphereRaycaster.intersectObjects(spheres, false) : [];
+
+            if (sphereHits.length > 0) {
+                const sphere = sphereHits[0].object;
+                if (_hoveredSphere !== sphere) {
+                    // Unhover previous
+                    if (_hoveredSphere) _hoveredSphere.scale.setScalar(1);
+                    _hoveredSphere = sphere;
+                    sphere.scale.setScalar(2);
+                }
+                renderer.domElement.style.cursor = 'grab';
+            } else {
+                if (_hoveredSphere) { _hoveredSphere.scale.setScalar(1); _hoveredSphere = null; }
+                renderer.domElement.style.cursor = '';
+            }
+
+            const hit = getIntersection(e);
+            if (hit) {
+                const p = hit.point;
+                el.textContent = `X: ${(p.x * M_TO_FT).toFixed(1)}ft  Y: ${(p.y * M_TO_FT).toFixed(1)}ft  Z: ${(p.z * M_TO_FT).toFixed(1)}ft`;
+
+                // Show close-polygon indicator when hovering near first point
+                if ((currentTool === 'area' || currentTool === 'volume') && tempPoints.length >= 3) {
+                    const dist = p.distanceTo(tempPoints[0]);
+                    if (dist < CLOSE_THRESHOLD) {
+                        nearFirstPoint = true;
+                        closeIndicator.style.display = 'block';
+                        closeIndicator.style.left = e.clientX + 'px';
+                        closeIndicator.style.top = e.clientY + 'px';
+                        renderer.domElement.classList.add('cursor-close');
+                        renderer.domElement.classList.remove('crosshair');
+                    } else {
+                        nearFirstPoint = false;
+                        closeIndicator.style.display = 'none';
+                        if (currentTool !== 'select' && currentTool !== 'camera' && currentTool !== 'crop') {
+                            renderer.domElement.classList.remove('cursor-close');
+                            renderer.domElement.classList.add('crosshair');
+                        }
+                    }
+                }
+            } else {
+                el.textContent = 'X: — Y: — Z: —';
+                nearFirstPoint = false;
+                closeIndicator.style.display = 'none';
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Arrow key camera alignment when cameras are visible
+            if (camerasVisible && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                const step = e.altKey ? 0.2 : 1.0; // Alt for fine adjustment
+                if (e.shiftKey) {
+                    // Shift+arrows: elevation
+                    if (e.key === 'ArrowUp') window._adjustCameras(0, step, 0);
+                    if (e.key === 'ArrowDown') window._adjustCameras(0, -step, 0);
+                } else {
+                    // Arrows: horizontal
+                    if (e.key === 'ArrowUp') window._adjustCameras(0, 0, -step);    // North
+                    if (e.key === 'ArrowDown') window._adjustCameras(0, 0, step);   // South
+                    if (e.key === 'ArrowLeft') window._adjustCameras(-step, 0, 0);  // West
+                    if (e.key === 'ArrowRight') window._adjustCameras(step, 0, 0);  // East
+                }
+                return;
+            }
+            switch (e.key.toLowerCase()) {
+                case 'v': selectTool('select'); break;
+                case 'm': selectTool('marker'); break;
+                case 'h': selectTool('height'); break;
+                case 'l': selectTool('length'); break;
+                case 'a': selectTool('area'); break;
+                case 'u': selectTool('volume'); break;
+                case 'c': selectTool('counter'); break;
+                case 'p': selectTool('camera'); break;
+                case 'x': selectTool('crop'); break;
+                case 'escape':
+                    if (selectedCamera !== null) {
+                        returnFromCamera();
+                    } else if (tempPoints.length > 0) {
+                        tempPoints = [];
+                        tempVisuals.forEach(v => scene.remove(v));
+                        tempVisuals = [];
+                        hideMeasureInfo();
+                    }
+                    closeSidePanel();
+                    document.getElementById('photo-overlay-img').classList.remove('visible');
+                    document.getElementById('photo-overlay').classList.remove('show');
+                    break;
+                case 'enter':
+                    if (currentTool === 'area' && tempPoints.length >= 3) finishArea();
+                    if (currentTool === 'volume' && tempPoints.length >= 3) finishVolume();
+                    break;
+                case 'delete':
+                case 'backspace':
+                    if (e.metaKey || e.ctrlKey) {
+                        clearAllMeasurements();
+                    }
+                    break;
+            }
+        });
+
+        // selectTool defined above — keyboard shortcuts use it directly
+
+        // Model picker
+        document.getElementById('model-picker').addEventListener('change', (e) => {
+            loadModel(e.target.value);
+        });
+
+        // Close submenu when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('[data-tool="area"]') && !e.target.closest('.tool-submenu')) {
+                document.getElementById('area-submenu').classList.remove('show');
+            }
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Make functions global for inline handlers
+        window.closeSidePanel = closeSidePanel;
+        window.measurements = measurements;
+        window._undoLast = undoLastMeasurement;
+        window._undoPoint = undoLastPoint;
+        window._clearAll = clearAllMeasurements;
+        window._returnFromCamera = returnFromCamera;
+        window._flyToCamera = flyToCamera;
+        window._setThermal = function(thermal, camIndex) {
+            showThermal = thermal;
+            const cam = cameraData[camIndex];
+            if (cam) {
+                showPhotoOverlay(cam);
+            }
+        };
+        // Camera offset adjustment
+        function rebuildCamerasWithOffset() {
+            buildCameraFrustums();
+            if (camerasVisible) {
+                cameraFrustums.forEach(cf => { cf.mesh.visible = true; cf.label.visible = true; });
+            }
+        }
+        window._adjustCameras = function(dx = 0, dy = 0, dz = 0) {
+            cameraOffset.x += dx;
+            cameraOffset.y += dy;
+            cameraOffset.z += dz;
+            // Sync sliders
+            document.getElementById('cam-offset-x').value = cameraOffset.x;
+            document.getElementById('cam-offset-y').value = cameraOffset.y;
+            document.getElementById('cam-offset-z').value = cameraOffset.z;
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            rebuildCamerasWithOffset();
+        };
+        window._setCameraOffset = function(x, y, z) {
+            cameraOffset = { x: x || 0, y: y || 0, z: z || 0 };
+            document.getElementById('cam-offset-x').value = cameraOffset.x;
+            document.getElementById('cam-offset-y').value = cameraOffset.y;
+            document.getElementById('cam-offset-z').value = cameraOffset.z;
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            rebuildCamerasWithOffset();
+        };
+        window._setCamSliders = function() {
+            cameraOffset.x = parseFloat(document.getElementById('cam-offset-x').value);
+            cameraOffset.y = parseFloat(document.getElementById('cam-offset-y').value);
+            cameraOffset.z = parseFloat(document.getElementById('cam-offset-z').value);
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            rebuildCamerasWithOffset();
+        };
+        window.updateMarkerTitle = function(index, title) {
+            if (measurements[index]) {
+                measurements[index].title = title;
+                if (measurements[index].label) {
+                    measurements[index].label.element.textContent = title;
+                }
+                updateMeasurementInDB(measurements[index]);
+            }
+        };
+
+        // ========== Save/Load View ==========
+        window._saveView = async function() {
+            await saveViewToDB();
+        };
+
+        async function restoreSavedView(modelId) {
+            const view = await loadViewFromDB(modelId);
+            if (!view) return;
+            if (view.camera_position) {
+                camera.position.set(view.camera_position.x, view.camera_position.y, view.camera_position.z);
+            }
+            if (view.camera_target) {
+                controls.target.set(view.camera_target.x, view.camera_target.y, view.camera_target.z);
+            }
+            if (view.camera_fov) {
+                camera.fov = view.camera_fov;
+                camera.updateProjectionMatrix();
+            }
+            if (view.crop_planes && modelBounds) {
+                currentCropPlanes = view.crop_planes;
+                // Apply crop: set slider values and enable
+                ['x', 'y', 'z'].forEach(axis => {
+                    const sMin = document.getElementById(`crop-${axis}-min`);
+                    const sMax = document.getElementById(`crop-${axis}-max`);
+                    if (sMin && sMax) {
+                        sMin.value = view.crop_planes[`${axis}Min`] * 10;
+                        sMax.value = view.crop_planes[`${axis}Max`] * 10;
+                    }
+                });
+                updateClipPlanes();
+                enableCrop(true);
+                document.getElementById('crop-panel').style.display = 'none'; // Hide panel but keep crop
+            }
+            controls.update();
+        }
+
+        async function restoreSavedMeasurements(modelId) {
+            const rows = await loadMeasurementsFromDB(modelId);
+            for (const row of rows) {
+                const pts = row.points.map(p => new THREE.Vector3(p.x, p.y, p.z));
+                let m;
+                if (row.type === 'height' && pts.length >= 2) {
+                    const s1 = createPointMarker(pts[0]);
+                    const s2 = createPointMarker(pts[1]);
+                    m = buildHeightVisuals(pts[0], pts[1]);
+                    m.spheres = [s1, s2];
+                } else if (row.type === 'length' && pts.length >= 2) {
+                    const s1 = createPointMarker(pts[0]);
+                    const s2 = createPointMarker(pts[1]);
+                    m = buildLengthVisuals(pts[0], pts[1]);
+                    m.spheres = [s1, s2];
+                } else if (row.type === 'area' && pts.length >= 3) {
+                    const spheres = pts.map(p => createPointMarker(p, 0xa855f7));
+                    const lines = [];
+                    for (let i = 0; i < pts.length; i++) {
+                        lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], 0xa855f7));
+                    }
+                    const surfArea = triangulatedSurfaceArea(pts);
+                    const projArea = shoelaceArea(pts.map(p => [p.x, p.z]));
+                    const fillMesh = createPolygonFill(pts, 0x8b5cf6, 0.3);
+                    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                    const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+                    const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                    const label = createLabel(formatSqFt(surfArea), new THREE.Vector3(cx, cy + 0.5, cz), {
+                        bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7', clickable: true
+                    });
+                    m = { type: 'area', title: row.title || 'Untitled Area', points: pts, projArea, surfArea, fillMesh, label, spheres, lines };
+                } else if (row.type === 'marker' && pts.length >= 1) {
+                    const marker = createPointMarker(pts[0], 0xf59e0b);
+                    marker.scale.setScalar(1.8);
+                    const label = createLabel(row.title || 'Marker', new THREE.Vector3(pts[0].x, pts[0].y + 0.8, pts[0].z), {
+                        bg: 'rgba(245, 158, 11, 0.9)', clickable: true
+                    });
+                    m = { type: 'marker', title: row.title || 'Marker', point: pts[0], label };
+                } else {
+                    continue;
+                }
+                if (row.title && m) m.title = row.title;
+                m.dbId = row.id;
+                measurements.push(m);
+                const mIdx = measurements.length - 1;
+                if (m.spheres) {
+                    m.spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+                }
+            }
+            window.measurements = measurements;
+        }
+
+        // ========== Animation Loop ==========
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+        animate();
+
+        // Debug: expose to window for console inspection
+        window._scene = scene;
+        window._meshes = meshes;
+        window._camera = camera;
+        window._renderer = renderer;
+
+        // ========== Initial Load ==========
+        // Load Three Rivers by default, then load cameras + restore saved state
+        loadModel('three-rivers').then(async () => {
+            loadCameras();
+            await restoreSavedView('three-rivers');
+            await restoreSavedMeasurements('three-rivers');
+        });
+
+    </script>
+</body>
+</html>

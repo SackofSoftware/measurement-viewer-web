@@ -1,0 +1,1699 @@
+{
+  "source": "bundle_adjusted",
+  "shots_file": "cameras/shots.geojson",
+  "crs": "EPSG:26986",
+  "crs_name": "NAD83 Massachusetts State Plane Mainland (meters)",
+  "camera_count": 27,
+  "model_origin": {
+    "easting": 352282.0,
+    "northing": 4651629.0
+  },
+  "cameras": [
+    {
+      "file": "DJI_20260226162433_0013_V_Waypoint13.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162433_0013_V_Waypoint13.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162433_0013_V_Waypoint13_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162433_0013_V_Waypoint13_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162432_0013_T_Waypoint13_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162432_0013_T_Waypoint13_full.jpg",
+      "thermal_file": "DJI_20260226162432_0013_T_Waypoint13.JPG",
+      "lat": 42.00264120658386,
+      "lon": -70.78360107818877,
+      "altitude": 8.410287626573817,
+      "relative_altitude": 17.139,
+      "translation": [
+        352289.97260345414,
+        4651608.205390247,
+        8.410287626573817
+      ],
+      "rotation": [
+        2.2236065724690137,
+        0.0028445913544260684,
+        0.00285727904012502
+      ],
+      "forward": [
+        0.001049271879546833,
+        0.7943790509844835,
+        -0.6074214536757112
+      ],
+      "up": [
+        -0.0030770752498451653,
+        0.6074214771943892,
+        0.7943737663410676
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:24:33",
+      "gimbal_pitch": -37.1,
+      "gimbal_yaw": -5.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -3.8,
+      "easting": 352289.97260345414,
+      "northing": 4651608.205390247,
+      "model_x": 7.972603454138152,
+      "model_y_obj": -20.79460975341499,
+      "model_z": 20.79460975341499,
+      "model_y": 8.410287626573817,
+      "forward_threejs": [
+        0.001049271879546833,
+        -0.6074214536757112,
+        -0.7943790509844835
+      ],
+      "up_threejs": [
+        -0.0030770752498451653,
+        0.7943737663410676,
+        -0.6074214771943892
+      ]
+    },
+    {
+      "file": "DJI_20260226162330_0007_V_Waypoint7.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162330_0007_V_Waypoint7.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162330_0007_V_Waypoint7_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162330_0007_V_Waypoint7_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162329_0007_T_Waypoint7_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162329_0007_T_Waypoint7_full.jpg",
+      "thermal_file": "DJI_20260226162329_0007_T_Waypoint7.JPG",
+      "lat": 42.00295696566629,
+      "lon": -70.7838347865563,
+      "altitude": -0.42980546030502753,
+      "relative_altitude": 8.28,
+      "translation": [
+        352271.3479072539,
+        4651643.66892953,
+        -0.42980546030502753
+      ],
+      "rotation": [
+        0.675222706236469,
+        -2.2627834721399456,
+        1.547097027842921
+      ],
+      "forward": [
+        0.5065863771433864,
+        -0.781517351098644,
+        -0.36414402703394405
+      ],
+      "up": [
+        0.202151965562388,
+        -0.30291254757779107,
+        0.9313316119080226
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:23:30",
+      "gimbal_pitch": -21.2,
+      "gimbal_yaw": 139.6,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 139.3,
+      "easting": 352271.3479072539,
+      "northing": 4651643.66892953,
+      "model_x": -10.652092746109702,
+      "model_y_obj": 14.66892953030765,
+      "model_z": -14.66892953030765,
+      "model_y": -0.42980546030502753,
+      "forward_threejs": [
+        0.5065863771433864,
+        -0.36414402703394405,
+        0.781517351098644
+      ],
+      "up_threejs": [
+        0.202151965562388,
+        0.9313316119080226,
+        0.30291254757779107
+      ]
+    },
+    {
+      "file": "DJI_20260226162424_0012_V_Waypoint12.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162424_0012_V_Waypoint12.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162424_0012_V_Waypoint12_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162424_0012_V_Waypoint12_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162423_0012_T_Waypoint12_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162423_0012_T_Waypoint12_full.jpg",
+      "thermal_file": "DJI_20260226162423_0012_T_Waypoint12.JPG",
+      "lat": 42.00264971472083,
+      "lon": -70.78371585310316,
+      "altitude": 8.256164840210927,
+      "relative_altitude": 16.983,
+      "translation": [
+        352280.48680827825,
+        4651609.348166615,
+        8.256164840210927
+      ],
+      "rotation": [
+        2.189107667722598,
+        -0.42031993030693926,
+        0.21762783617026088
+      ],
+      "forward": [
+        0.3010965539143144,
+        0.7372442546675643,
+        -0.6048237546431126
+      ],
+      "up": [
+        0.22094921600114012,
+        0.5630606854636359,
+        0.7963316573097556
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:24:24",
+      "gimbal_pitch": -37.1,
+      "gimbal_yaw": 15.5,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 19.5,
+      "easting": 352280.48680827825,
+      "northing": 4651609.348166615,
+      "model_x": -1.5131917217513546,
+      "model_y_obj": -19.65183338522911,
+      "model_z": 19.65183338522911,
+      "model_y": 8.256164840210927,
+      "forward_threejs": [
+        0.3010965539143144,
+        -0.6048237546431126,
+        -0.7372442546675643
+      ],
+      "up_threejs": [
+        0.22094921600114012,
+        0.7963316573097556,
+        -0.5630606854636359
+      ]
+    },
+    {
+      "file": "DJI_20260226162253_0004_V_Waypoint4.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162253_0004_V_Waypoint4.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162253_0004_V_Waypoint4_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162253_0004_V_Waypoint4_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162252_0004_T_Waypoint4_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162252_0004_T_Waypoint4_full.jpg",
+      "thermal_file": "DJI_20260226162252_0004_T_Waypoint4.JPG",
+      "lat": 42.00285285589837,
+      "lon": -70.78353949795874,
+      "altitude": 0.6947442024304685,
+      "relative_altitude": 9.425,
+      "translation": [
+        352295.56226128945,
+        4651631.599522362,
+        0.6947442024304685
+      ],
+      "rotation": [
+        1.5566506016778792,
+        1.8324004401222886,
+        -0.8757773412811694
+      ],
+      "forward": [
+        -0.7761107825905813,
+        -0.11495941068203458,
+        -0.6200293436945341
+      ],
+      "up": [
+        -0.6110209927614176,
+        -0.10599139915993117,
+        0.7844865643903483
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:22:53",
+      "gimbal_pitch": -37.8,
+      "gimbal_yaw": -104.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -103.6,
+      "easting": 352295.56226128945,
+      "northing": 4651631.599522362,
+      "model_x": 13.562261289451271,
+      "model_y_obj": 2.5995223624631763,
+      "model_z": -2.5995223624631763,
+      "model_y": 0.6947442024304685,
+      "forward_threejs": [
+        -0.7761107825905813,
+        -0.6200293436945341,
+        0.11495941068203458
+      ],
+      "up_threejs": [
+        -0.6110209927614176,
+        0.7844865643903483,
+        0.10599139915993117
+      ]
+    },
+    {
+      "file": "DJI_20260226162539_0018_V_Waypoint18.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162539_0018_V_Waypoint18.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162539_0018_V_Waypoint18_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162539_0018_V_Waypoint18_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162538_0018_T_Waypoint18_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162538_0018_T_Waypoint18_full.jpg",
+      "thermal_file": "DJI_20260226162538_0018_T_Waypoint18.JPG",
+      "lat": 42.00298190190939,
+      "lon": -70.78377645247657,
+      "altitude": 8.15251063725568,
+      "relative_altitude": 16.87,
+      "translation": [
+        352276.23672321736,
+        4651646.337034638,
+        8.15251063725568
+      ],
+      "rotation": [
+        0.4841998072760773,
+        -2.8451481163457353,
+        0.9378232861675245
+      ],
+      "forward": [
+        0.19845603349876562,
+        -0.5608023658335451,
+        -0.8038133547307083
+      ],
+      "up": [
+        0.2653395171223124,
+        -0.7587582012941433,
+        0.5948789226575223
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:39",
+      "gimbal_pitch": -52.9,
+      "gimbal_yaw": 157.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 158.6,
+      "easting": 352276.23672321736,
+      "northing": 4651646.337034638,
+      "model_x": -5.763276782643516,
+      "model_y_obj": 17.337034638039768,
+      "model_z": -17.337034638039768,
+      "model_y": 8.15251063725568,
+      "forward_threejs": [
+        0.19845603349876562,
+        -0.8038133547307083,
+        0.5608023658335451
+      ],
+      "up_threejs": [
+        0.2653395171223124,
+        0.5948789226575223,
+        0.7587582012941433
+      ]
+    },
+    {
+      "file": "DJI_20260226162511_0016_V_Waypoint16.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162511_0016_V_Waypoint16.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162511_0016_V_Waypoint16_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162511_0016_V_Waypoint16_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162511_0016_T_Waypoint16_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162511_0016_T_Waypoint16_full.jpg",
+      "thermal_file": "DJI_20260226162511_0016_T_Waypoint16.JPG",
+      "lat": 42.00292133556469,
+      "lon": -70.78343815315804,
+      "altitude": 8.272093799452259,
+      "relative_altitude": 16.997,
+      "translation": [
+        352304.1138817392,
+        4651639.028252104,
+        8.272093799452259
+      ],
+      "rotation": [
+        1.3665888892985063,
+        2.152352546589776,
+        -0.9303827715880116
+      ],
+      "forward": [
+        -0.6585547372929349,
+        -0.3104498926274535,
+        -0.6855118687204739
+      ],
+      "up": [
+        -0.6205500058783777,
+        -0.2912814666424281,
+        0.7280609846674807
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:11",
+      "gimbal_pitch": -42.8,
+      "gimbal_yaw": -119.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -114.5,
+      "easting": 352304.1138817392,
+      "northing": 4651639.028252104,
+      "model_x": 22.11388173920568,
+      "model_y_obj": 10.02825210429728,
+      "model_z": -10.02825210429728,
+      "model_y": 8.272093799452259,
+      "forward_threejs": [
+        -0.6585547372929349,
+        -0.6855118687204739,
+        0.3104498926274535
+      ],
+      "up_threejs": [
+        -0.6205500058783777,
+        0.7280609846674807,
+        0.2912814666424281
+      ]
+    },
+    {
+      "file": "DJI_20260226162554_0020_V_Waypoint20.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162554_0020_V_Waypoint20.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162554_0020_V_Waypoint20_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162554_0020_V_Waypoint20_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162553_0020_T_Waypoint20_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162553_0020_T_Waypoint20_full.jpg",
+      "thermal_file": "DJI_20260226162553_0020_T_Waypoint20.JPG",
+      "lat": 42.00297034433464,
+      "lon": -70.78381003196364,
+      "altitude": 19.15609441220224,
+      "relative_altitude": 27.826,
+      "translation": [
+        352273.4289924941,
+        4651645.1116995495,
+        19.15609441220224
+      ],
+      "rotation": [
+        1.6796089914807355,
+        -2.4622135217184415,
+        0.3147955707671156
+      ],
+      "forward": [
+        0.23539242010019076,
+        -0.0909890890877012,
+        -0.9676318484973331
+      ],
+      "up": [
+        0.9008651658463084,
+        -0.3532063470266359,
+        0.252363288504495
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:54",
+      "gimbal_pitch": -74.4,
+      "gimbal_yaw": 108.6,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 109.4,
+      "easting": 352273.4289924941,
+      "northing": 4651645.1116995495,
+      "model_x": -8.57100750587415,
+      "model_y_obj": 16.111699549481273,
+      "model_z": -16.111699549481273,
+      "model_y": 19.15609441220224,
+      "forward_threejs": [
+        0.23539242010019076,
+        -0.9676318484973331,
+        0.0909890890877012
+      ],
+      "up_threejs": [
+        0.9008651658463084,
+        0.252363288504495,
+        0.3532063470266359
+      ]
+    },
+    {
+      "file": "DJI_20260226162611_0022_V_Waypoint22.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162611_0022_V_Waypoint22.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162611_0022_V_Waypoint22_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162611_0022_V_Waypoint22_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162611_0022_T_Waypoint22_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162611_0022_T_Waypoint22_full.jpg",
+      "thermal_file": "DJI_20260226162611_0022_T_Waypoint22.JPG",
+      "lat": 42.0028786455429,
+      "lon": -70.7836924387004,
+      "altitude": 19.439697998177916,
+      "relative_altitude": 28.163,
+      "translation": [
+        352282.9556594438,
+        4651634.727005017,
+        19.439697998177916
+      ],
+      "rotation": [
+        1.6859622212911018,
+        -2.456806661011709,
+        0.3155316133682332
+      ],
+      "forward": [
+        0.23658035182174247,
+        -0.09032566937891906,
+        -0.9674042642986183
+      ],
+      "up": [
+        0.9026215597665976,
+        -0.3480603303673057,
+        0.2532357128627721
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:11",
+      "gimbal_pitch": -74.5,
+      "gimbal_yaw": 108.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 108.5,
+      "easting": 352282.9556594438,
+      "northing": 4651634.727005017,
+      "model_x": 0.9556594438035972,
+      "model_y_obj": 5.727005016990006,
+      "model_z": -5.727005016990006,
+      "model_y": 19.439697998177916,
+      "forward_threejs": [
+        0.23658035182174247,
+        -0.9674042642986183,
+        0.09032566937891906
+      ],
+      "up_threejs": [
+        0.9026215597665976,
+        0.2532357128627721,
+        0.3480603303673057
+      ]
+    },
+    {
+      "file": "DJI_20260226162545_0019_V_Waypoint19.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162545_0019_V_Waypoint19.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162545_0019_V_Waypoint19_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162545_0019_V_Waypoint19_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162545_0019_T_Waypoint19_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162545_0019_T_Waypoint19_full.jpg",
+      "thermal_file": "DJI_20260226162545_0019_T_Waypoint19.JPG",
+      "lat": 42.0029677758093,
+      "lon": -70.78381543967345,
+      "altitude": 8.314919439931929,
+      "relative_altitude": 17.018,
+      "translation": [
+        352272.9751930365,
+        4651644.835837737,
+        8.314919439931929
+      ],
+      "rotation": [
+        0.49016904987233845,
+        -2.8490105173408997,
+        0.9375889072117776
+      ],
+      "forward": [
+        0.1951580164006318,
+        -0.5604025677407453,
+        -0.8048989444049173
+      ],
+      "up": [
+        0.2700422773508646,
+        -0.7582550498640098,
+        0.5934024332599983
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:45",
+      "gimbal_pitch": -53.0,
+      "gimbal_yaw": 157.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 158.7,
+      "easting": 352272.9751930365,
+      "northing": 4651644.835837737,
+      "model_x": -9.024806963512674,
+      "model_y_obj": 15.835837736725807,
+      "model_z": -15.835837736725807,
+      "model_y": 8.314919439931929,
+      "forward_threejs": [
+        0.1951580164006318,
+        -0.8048989444049173,
+        0.5604025677407453
+      ],
+      "up_threejs": [
+        0.2700422773508646,
+        0.5934024332599983,
+        0.7582550498640098
+      ]
+    },
+    {
+      "file": "DJI_20260226162604_0021_V_Waypoint21.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162604_0021_V_Waypoint21.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162604_0021_V_Waypoint21_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162604_0021_V_Waypoint21_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162603_0021_T_Waypoint21_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162603_0021_T_Waypoint21_full.jpg",
+      "thermal_file": "DJI_20260226162603_0021_T_Waypoint21.JPG",
+      "lat": 42.00293642032058,
+      "lon": -70.78366743158338,
+      "altitude": 19.397762554491457,
+      "relative_altitude": 28.122,
+      "translation": [
+        352285.1603820963,
+        4651641.098848092,
+        19.397762554491457
+      ],
+      "rotation": [
+        1.681864124500778,
+        -2.461844035586362,
+        0.3172243251024181
+      ],
+      "forward": [
+        0.23531421821345258,
+        -0.09276248033270094,
+        -0.967482475783989
+      ],
+      "up": [
+        0.9013103785072036,
+        -0.3516570467201781,
+        0.2529365989477282
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:04",
+      "gimbal_pitch": -74.5,
+      "gimbal_yaw": 108.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 108.6,
+      "easting": 352285.1603820963,
+      "northing": 4651641.098848092,
+      "model_x": 3.160382096306421,
+      "model_y_obj": 12.098848092369735,
+      "model_z": -12.098848092369735,
+      "model_y": 19.397762554491457,
+      "forward_threejs": [
+        0.23531421821345258,
+        -0.967482475783989,
+        0.09276248033270094
+      ],
+      "up_threejs": [
+        0.9013103785072036,
+        0.2529365989477282,
+        0.3516570467201781
+      ]
+    },
+    {
+      "file": "DJI_20260226162411_0011_V_Waypoint11.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162411_0011_V_Waypoint11.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162411_0011_V_Waypoint11_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162411_0011_V_Waypoint11_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162410_0011_T_Waypoint11_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162410_0011_T_Waypoint11_full.jpg",
+      "thermal_file": "DJI_20260226162410_0011_T_Waypoint11.JPG",
+      "lat": 42.002697250147726,
+      "lon": -70.78384700180095,
+      "altitude": 8.22422978545329,
+      "relative_altitude": 16.936,
+      "translation": [
+        352269.73527451523,
+        4651614.85259698,
+        8.22422978545329
+      ],
+      "rotation": [
+        2.0451282784894347,
+        -0.980101746132324,
+        0.48719493496136496
+      ],
+      "forward": [
+        0.6207553722098447,
+        0.4966744267903956,
+        -0.6066113101855661
+      ],
+      "up": [
+        0.4722904864581496,
+        0.3806862226554462,
+        0.7949966643209595
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:24:11",
+      "gimbal_pitch": -37.1,
+      "gimbal_yaw": 44.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 47.5,
+      "easting": 352269.73527451523,
+      "northing": 4651614.85259698,
+      "model_x": -12.26472548476886,
+      "model_y_obj": -14.14740302041173,
+      "model_z": 14.14740302041173,
+      "model_y": 8.22422978545329,
+      "forward_threejs": [
+        0.6207553722098447,
+        -0.6066113101855661,
+        -0.4966744267903956
+      ],
+      "up_threejs": [
+        0.4722904864581496,
+        0.7949966643209595,
+        -0.3806862226554462
+      ]
+    },
+    {
+      "file": "DJI_20260226162702_0027_V_Waypoint27.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162702_0027_V_Waypoint27.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162702_0027_V_Waypoint27_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162702_0027_V_Waypoint27_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162701_0027_T_Waypoint27_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162701_0027_T_Waypoint27_full.jpg",
+      "thermal_file": "DJI_20260226162701_0027_T_Waypoint27.JPG",
+      "lat": 42.00289995292216,
+      "lon": -70.78384918490204,
+      "altitude": 19.8088552203144,
+      "relative_altitude": 28.567,
+      "translation": [
+        352270.023534582,
+        4651637.363391889,
+        19.8088552203144
+      ],
+      "rotation": [
+        1.6964642583649072,
+        -2.462118603375239,
+        0.3282096557201556
+      ],
+      "forward": [
+        0.23160009919946323,
+        -0.1026801965984963,
+        -0.9673769540759656
+      ],
+      "up": [
+        0.9046454247679842,
+        -0.34295194673382046,
+        0.2529834336035396
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:27:02",
+      "gimbal_pitch": -74.4,
+      "gimbal_yaw": 108.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 108.6,
+      "easting": 352270.023534582,
+      "northing": 4651637.363391889,
+      "model_x": -11.9764654180035,
+      "model_y_obj": 8.36339188925922,
+      "model_z": -8.36339188925922,
+      "model_y": 19.8088552203144,
+      "forward_threejs": [
+        0.23160009919946323,
+        -0.9673769540759656,
+        0.1026801965984963
+      ],
+      "up_threejs": [
+        0.9046454247679842,
+        0.2529834336035396,
+        0.34295194673382046
+      ]
+    },
+    {
+      "file": "DJI_20260226162633_0024_V_Waypoint24.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162633_0024_V_Waypoint24.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162633_0024_V_Waypoint24_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162633_0024_V_Waypoint24_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162632_0024_T_Waypoint24_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162632_0024_T_Waypoint24_full.jpg",
+      "thermal_file": "DJI_20260226162632_0024_T_Waypoint24.JPG",
+      "lat": 42.00270507096355,
+      "lon": -70.78368499686718,
+      "altitude": 19.596213487373237,
+      "relative_altitude": 28.33,
+      "translation": [
+        352283.1703580058,
+        4651615.441373232,
+        19.596213487373237
+      ],
+      "rotation": [
+        1.6891880084372646,
+        -2.4415178940968385,
+        0.31167206791142027
+      ],
+      "forward": [
+        0.24481130487904326,
+        -0.08161130318018739,
+        -0.9661299189015169
+      ],
+      "up": [
+        0.9036787853091172,
+        -0.3418632891695335,
+        0.257864585587914
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:33",
+      "gimbal_pitch": -74.4,
+      "gimbal_yaw": 108.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 109.4,
+      "easting": 352283.1703580058,
+      "northing": 4651615.441373232,
+      "model_x": 1.1703580057946965,
+      "model_y_obj": -13.558626768179238,
+      "model_z": 13.558626768179238,
+      "model_y": 19.596213487373237,
+      "forward_threejs": [
+        0.24481130487904326,
+        -0.9661299189015169,
+        0.08161130318018739
+      ],
+      "up_threejs": [
+        0.9036787853091172,
+        0.257864585587914,
+        0.3418632891695335
+      ]
+    },
+    {
+      "file": "DJI_20260226162220_0001_V_Waypoint1.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162220_0001_V_Waypoint1.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162220_0001_V_Waypoint1_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162220_0001_V_Waypoint1_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162219_0001_T_Waypoint1_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162219_0001_T_Waypoint1_full.jpg",
+      "thermal_file": "DJI_20260226162219_0001_T_Waypoint1.JPG",
+      "lat": 42.002717139922446,
+      "lon": -70.78373614951728,
+      "altitude": -2.7942119414550564,
+      "relative_altitude": 5.948,
+      "translation": [
+        352278.9619046384,
+        4651616.869727415,
+        -2.7942119414550564
+      ],
+      "rotation": [
+        1.7540994763524083,
+        -0.4858669313078129,
+        0.39015903699076454
+      ],
+      "forward": [
+        0.5041694088387415,
+        0.8323868619663299,
+        -0.2300984989456474
+      ],
+      "up": [
+        0.11564449565911057,
+        0.19896756467203816,
+        0.973158907287103
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:22:20",
+      "gimbal_pitch": -13.1,
+      "gimbal_yaw": 29.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 24.5,
+      "easting": 352278.9619046384,
+      "northing": 4651616.869727415,
+      "model_x": -3.03809536161134,
+      "model_y_obj": -12.130272584967315,
+      "model_z": 12.130272584967315,
+      "model_y": -2.7942119414550564,
+      "forward_threejs": [
+        0.5041694088387415,
+        -0.2300984989456474,
+        -0.8323868619663299
+      ],
+      "up_threejs": [
+        0.11564449565911057,
+        0.973158907287103,
+        -0.19896756467203816
+      ]
+    },
+    {
+      "file": "DJI_20260226162241_0003_V_Waypoint3.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162241_0003_V_Waypoint3.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162241_0003_V_Waypoint3_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162241_0003_V_Waypoint3_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162241_0003_T_Waypoint3_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162241_0003_T_Waypoint3_full.jpg",
+      "thermal_file": "DJI_20260226162241_0003_T_Waypoint3.JPG",
+      "lat": 42.00278425862847,
+      "lon": -70.78353329585462,
+      "altitude": -0.5537120806709533,
+      "relative_altitude": 8.191,
+      "translation": [
+        352295.91719999624,
+        4651623.972147347,
+        -0.5537120806709533
+      ],
+      "rotation": [
+        1.8192026905051288,
+        1.0726634859367385,
+        -0.644338391665287
+      ],
+      "forward": [
+        -0.7739534098626915,
+        0.43611583448417746,
+        -0.4591286293339616
+      ],
+      "up": [
+        -0.4038471583511134,
+        0.21853022227568908,
+        0.888342284619993
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:22:41",
+      "gimbal_pitch": -26.9,
+      "gimbal_yaw": -65.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -64.5,
+      "easting": 352295.91719999624,
+      "northing": 4651623.972147347,
+      "model_x": 13.917199996241834,
+      "model_y_obj": -5.027852652594447,
+      "model_z": 5.027852652594447,
+      "model_y": -0.5537120806709533,
+      "forward_threejs": [
+        -0.7739534098626915,
+        -0.4591286293339616,
+        -0.43611583448417746
+      ],
+      "up_threejs": [
+        -0.4038471583511134,
+        0.888342284619993,
+        -0.21853022227568908
+      ]
+    },
+    {
+      "file": "DJI_20260226162229_0002_V_Waypoint2.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162229_0002_V_Waypoint2.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162229_0002_V_Waypoint2_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162229_0002_V_Waypoint2_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162228_0002_T_Waypoint2_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162228_0002_T_Waypoint2_full.jpg",
+      "thermal_file": "DJI_20260226162228_0002_T_Waypoint2.JPG",
+      "lat": 42.00270104989382,
+      "lon": -70.78362556847479,
+      "altitude": -2.4718578419141606,
+      "relative_altitude": 6.281,
+      "translation": [
+        352288.08281736245,
+        4651614.892333889,
+        -2.4718578419141606
+      ],
+      "rotation": [
+        1.800385810509385,
+        0.11487839443497912,
+        -0.07969778287687682
+      ],
+      "forward": [
+        -0.1161150355085534,
+        0.9661311065697408,
+        -0.23045169438989976
+      ],
+      "up": [
+        -0.03527286766183349,
+        0.22786370880290963,
+        0.973053932224465
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:22:29",
+      "gimbal_pitch": -13.1,
+      "gimbal_yaw": -10.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -11.9,
+      "easting": 352288.08281736245,
+      "northing": 4651614.892333889,
+      "model_x": 6.082817362446804,
+      "model_y_obj": -14.107666110619903,
+      "model_z": 14.107666110619903,
+      "model_y": -2.4718578419141606,
+      "forward_threejs": [
+        -0.1161150355085534,
+        -0.23045169438989976,
+        -0.9661311065697408
+      ],
+      "up_threejs": [
+        -0.03527286766183349,
+        0.973053932224465,
+        -0.22786370880290963
+      ]
+    },
+    {
+      "file": "DJI_20260226162303_0005_V_Waypoint5.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162303_0005_V_Waypoint5.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162303_0005_V_Waypoint5_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162303_0005_V_Waypoint5_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162302_0005_T_Waypoint5_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162302_0005_T_Waypoint5_full.jpg",
+      "thermal_file": "DJI_20260226162302_0005_T_Waypoint5.JPG",
+      "lat": 42.00289837691508,
+      "lon": -70.78355453820873,
+      "altitude": 0.3719346424836127,
+      "relative_altitude": 9.085,
+      "translation": [
+        352294.42197497276,
+        4651636.679886307,
+        0.3719346424836127
+      ],
+      "rotation": [
+        1.2502307809292883,
+        2.030061202196904,
+        -1.1001539638972788
+      ],
+      "forward": [
+        -0.7543983138633155,
+        -0.3708501510312255,
+        -0.541621038661077
+      ],
+      "up": [
+        -0.48167161012798937,
+        -0.2478208198678472,
+        0.8405815256337354
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:23:03",
+      "gimbal_pitch": -32.4,
+      "gimbal_yaw": -122.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -120.6,
+      "easting": 352294.42197497276,
+      "northing": 4651636.679886307,
+      "model_x": 12.421974972763564,
+      "model_y_obj": 7.679886306636035,
+      "model_z": -7.679886306636035,
+      "model_y": 0.3719346424836127,
+      "forward_threejs": [
+        -0.7543983138633155,
+        -0.541621038661077,
+        0.3708501510312255
+      ],
+      "up_threejs": [
+        -0.48167161012798937,
+        0.8405815256337354,
+        0.2478208198678472
+      ]
+    },
+    {
+      "file": "DJI_20260226162313_0006_V_Waypoint6.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162313_0006_V_Waypoint6.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162313_0006_V_Waypoint6_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162313_0006_V_Waypoint6_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162313_0006_T_Waypoint6_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162313_0006_T_Waypoint6_full.jpg",
+      "thermal_file": "DJI_20260226162313_0006_T_Waypoint6.JPG",
+      "lat": 42.00294876850659,
+      "lon": -70.78362902713693,
+      "altitude": 0.2692387490873201,
+      "relative_altitude": 8.991,
+      "translation": [
+        352288.3695351876,
+        4651642.4036462335,
+        0.2692387490873201
+      ],
+      "rotation": [
+        0.5501157372776209,
+        2.5299309966305716,
+        -1.3763471837927146
+      ],
+      "forward": [
+        -0.35360097627280895,
+        -0.7621584048015017,
+        -0.5422922787292356
+      ],
+      "up": [
+        -0.22262576558983307,
+        -0.49451548906586357,
+        0.8401739103123178
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:23:13",
+      "gimbal_pitch": -32.4,
+      "gimbal_yaw": -162.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -160.6,
+      "easting": 352288.3695351876,
+      "northing": 4651642.4036462335,
+      "model_x": 6.369535187608562,
+      "model_y_obj": 13.4036462334916,
+      "model_z": -13.4036462334916,
+      "model_y": 0.2692387490873201,
+      "forward_threejs": [
+        -0.35360097627280895,
+        -0.5422922787292356,
+        0.7621584048015017
+      ],
+      "up_threejs": [
+        -0.22262576558983307,
+        0.8401739103123178,
+        0.49451548906586357
+      ]
+    },
+    {
+      "file": "DJI_20260226162449_0014_V_Waypoint14.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162449_0014_V_Waypoint14.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162449_0014_V_Waypoint14_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162449_0014_V_Waypoint14_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162448_0014_T_Waypoint14_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162448_0014_T_Waypoint14_full.jpg",
+      "thermal_file": "DJI_20260226162448_0014_T_Waypoint14.JPG",
+      "lat": 42.002731371577894,
+      "lon": -70.78345357310636,
+      "altitude": 8.288638737685387,
+      "relative_altitude": 17.016,
+      "translation": [
+        352302.39734529605,
+        4651617.962280717,
+        8.288638737685387
+      ],
+      "rotation": [
+        1.9819160580598414,
+        1.1346683685585874,
+        -0.5551249377030023
+      ],
+      "forward": [
+        -0.6825946402987564,
+        0.40564380186778715,
+        -0.6078796451943911
+      ],
+      "up": [
+        -0.525280148154025,
+        0.30596777098618017,
+        0.794017940019641
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:24:49",
+      "gimbal_pitch": -37.2,
+      "gimbal_yaw": -63.1,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -59.7,
+      "easting": 352302.39734529605,
+      "northing": 4651617.962280717,
+      "model_x": 20.397345296049025,
+      "model_y_obj": -11.037719283252954,
+      "model_z": 11.037719283252954,
+      "model_y": 8.288638737685387,
+      "forward_threejs": [
+        -0.6825946402987564,
+        -0.6078796451943911,
+        -0.40564380186778715
+      ],
+      "up_threejs": [
+        -0.525280148154025,
+        0.794017940019641,
+        -0.30596777098618017
+      ]
+    },
+    {
+      "file": "DJI_20260226162503_0015_V_Waypoint15.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162503_0015_V_Waypoint15.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162503_0015_V_Waypoint15_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162503_0015_V_Waypoint15_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162502_0015_T_Waypoint15_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162502_0015_T_Waypoint15_full.jpg",
+      "thermal_file": "DJI_20260226162502_0015_T_Waypoint15.JPG",
+      "lat": 42.00286505012569,
+      "lon": -70.78341495267989,
+      "altitude": 8.389321749176894,
+      "relative_altitude": 17.104,
+      "translation": [
+        352305.90508627193,
+        4651632.738585229,
+        8.389321749176894
+      ],
+      "rotation": [
+        1.6021298425783084,
+        1.7548396942641054,
+        -0.8709401702730927
+      ],
+      "forward": [
+        -0.7940192161265084,
+        -0.07102112448913218,
+        -0.6037296450383604
+      ],
+      "up": [
+        -0.6011757353610868,
+        -0.05548944648200738,
+        0.7971879681368611
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:03",
+      "gimbal_pitch": -37.1,
+      "gimbal_yaw": -99.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -96.5,
+      "easting": 352305.90508627193,
+      "northing": 4651632.738585229,
+      "model_x": 23.905086271930486,
+      "model_y_obj": 3.7385852290317416,
+      "model_z": -3.7385852290317416,
+      "model_y": 8.389321749176894,
+      "forward_threejs": [
+        -0.7940192161265084,
+        -0.6037296450383604,
+        0.07102112448913218
+      ],
+      "up_threejs": [
+        -0.6011757353610868,
+        0.7971879681368611,
+        0.05548944648200738
+      ]
+    },
+    {
+      "file": "DJI_20260226162649_0026_V_Waypoint26.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162649_0026_V_Waypoint26.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162649_0026_V_Waypoint26_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162649_0026_V_Waypoint26_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162648_0026_T_Waypoint26_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162648_0026_T_Waypoint26_full.jpg",
+      "thermal_file": "DJI_20260226162648_0026_T_Waypoint26.JPG",
+      "lat": 42.002769370254626,
+      "lon": -70.7839020622919,
+      "altitude": 19.914136148087827,
+      "relative_altitude": 28.618,
+      "translation": [
+        352265.3421464215,
+        4651622.95546103,
+        19.914136148087827
+      ],
+      "rotation": [
+        1.6983847148972424,
+        -2.4536568529671605,
+        0.3108467253103397
+      ],
+      "forward": [
+        0.23191254711031908,
+        -0.08887844083515518,
+        -0.9686677414095691
+      ],
+      "up": [
+        0.9066849110010119,
+        -0.3409427564502644,
+        0.24835560993700756
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:49",
+      "gimbal_pitch": -74.5,
+      "gimbal_yaw": 108.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 109.4,
+      "easting": 352265.3421464215,
+      "northing": 4651622.95546103,
+      "model_x": -16.657853578508366,
+      "model_y_obj": -6.04453897010535,
+      "model_z": 6.04453897010535,
+      "model_y": 19.914136148087827,
+      "forward_threejs": [
+        0.23191254711031908,
+        -0.9686677414095691,
+        0.08887844083515518
+      ],
+      "up_threejs": [
+        0.9066849110010119,
+        0.24835560993700756,
+        0.3409427564502644
+      ]
+    },
+    {
+      "file": "DJI_20260226162404_0010_V_Waypoint10.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162404_0010_V_Waypoint10.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162404_0010_V_Waypoint10_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162404_0010_V_Waypoint10_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162403_0010_T_Waypoint10_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162403_0010_T_Waypoint10_full.jpg",
+      "thermal_file": "DJI_20260226162403_0010_T_Waypoint10.JPG",
+      "lat": 42.00269740294107,
+      "lon": -70.78384942463181,
+      "altitude": -0.33408187740524475,
+      "relative_altitude": 8.382,
+      "translation": [
+        352269.5349731342,
+        4651614.873744099,
+        -0.33408187740524475
+      ],
+      "rotation": [
+        1.8100050903225615,
+        -0.863182577671022,
+        0.5866061819164842
+      ],
+      "forward": [
+        0.7226014310304739,
+        0.5789468347468707,
+        -0.377713826076424
+      ],
+      "up": [
+        0.2914304836424832,
+        0.240334018322571,
+        0.9259091925458104
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:24:04",
+      "gimbal_pitch": -22.1,
+      "gimbal_yaw": 44.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 47.3,
+      "easting": 352269.5349731342,
+      "northing": 4651614.873744099,
+      "model_x": -12.465026865771506,
+      "model_y_obj": -14.126255900599062,
+      "model_z": 14.126255900599062,
+      "model_y": -0.33408187740524475,
+      "forward_threejs": [
+        0.7226014310304739,
+        -0.377713826076424,
+        -0.5789468347468707
+      ],
+      "up_threejs": [
+        0.2914304836424832,
+        0.9259091925458104,
+        -0.240334018322571
+      ]
+    },
+    {
+      "file": "DJI_20260226162352_0009_V_Waypoint9.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162352_0009_V_Waypoint9.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162352_0009_V_Waypoint9_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162352_0009_V_Waypoint9_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162351_0009_T_Waypoint9_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162351_0009_T_Waypoint9_full.jpg",
+      "thermal_file": "DJI_20260226162351_0009_T_Waypoint9.JPG",
+      "lat": 42.002774811503414,
+      "lon": -70.78392067848227,
+      "altitude": -0.37051182975270336,
+      "relative_altitude": 8.348,
+      "translation": [
+        352263.81297699135,
+        4651623.591760458,
+        -0.37051182975270336
+      ],
+      "rotation": [
+        1.596220851756269,
+        -1.3225946227639713,
+        0.8929820418989065
+      ],
+      "forward": [
+        0.9103773001098725,
+        0.1683391840233668,
+        -0.37798821485200584
+      ],
+      "up": [
+        0.37093881673757567,
+        0.07275908473276284,
+        0.9258026300600889
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:23:52",
+      "gimbal_pitch": -22.1,
+      "gimbal_yaw": 71.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 73.4,
+      "easting": 352263.81297699135,
+      "northing": 4651623.591760458,
+      "model_x": -18.187023008649703,
+      "model_y_obj": -5.408239541575313,
+      "model_z": 5.408239541575313,
+      "model_y": -0.37051182975270336,
+      "forward_threejs": [
+        0.9103773001098725,
+        -0.37798821485200584,
+        -0.1683391840233668
+      ],
+      "up_threejs": [
+        0.37093881673757567,
+        0.9258026300600889,
+        -0.07275908473276284
+      ]
+    },
+    {
+      "file": "DJI_20260226162524_0017_V_Waypoint17.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162524_0017_V_Waypoint17.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162524_0017_V_Waypoint17_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162524_0017_V_Waypoint17_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162523_0017_T_Waypoint17_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162523_0017_T_Waypoint17_full.jpg",
+      "thermal_file": "DJI_20260226162523_0017_T_Waypoint17.JPG",
+      "lat": 42.00295141231924,
+      "lon": -70.78359597341567,
+      "altitude": 8.128492697308024,
+      "relative_altitude": 16.853,
+      "translation": [
+        352291.1130973225,
+        4651642.6401582705,
+        8.128492697308024
+      ],
+      "rotation": [
+        0.7554319431005876,
+        2.7339517151967674,
+        -0.9054126603027361
+      ],
+      "forward": [
+        -0.30335899707719577,
+        -0.5132330764203674,
+        -0.8028481351790034
+      ],
+      "up": [
+        -0.4131133907207742,
+        -0.6884131117741327,
+        0.5961750698785053
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:25:24",
+      "gimbal_pitch": -52.9,
+      "gimbal_yaw": -152.5,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -150.6,
+      "easting": 352291.1130973225,
+      "northing": 4651642.6401582705,
+      "model_x": 9.113097322522663,
+      "model_y_obj": 13.6401582704857,
+      "model_z": -13.6401582704857,
+      "model_y": 8.128492697308024,
+      "forward_threejs": [
+        -0.30335899707719577,
+        -0.8028481351790034,
+        0.5132330764203674
+      ],
+      "up_threejs": [
+        -0.4131133907207742,
+        0.5961750698785053,
+        0.6884131117741327
+      ]
+    },
+    {
+      "file": "DJI_20260226162338_0008_V_Waypoint8.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162338_0008_V_Waypoint8.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162338_0008_V_Waypoint8_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162338_0008_V_Waypoint8_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162338_0008_T_Waypoint8_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162338_0008_T_Waypoint8_full.jpg",
+      "thermal_file": "DJI_20260226162338_0008_T_Waypoint8.JPG",
+      "lat": 42.00289821448273,
+      "lon": -70.78390007318761,
+      "altitude": -0.27970156840301513,
+      "relative_altitude": 8.431,
+      "translation": [
+        352265.80503920827,
+        4651637.258198667,
+        -0.27970156840301513
+      ],
+      "rotation": [
+        1.1309859333419063,
+        -1.9210855510366542,
+        1.2871776660929823
+      ],
+      "forward": [
+        0.8060322249975228,
+        -0.4517325716232011,
+        -0.3824261183552092
+      ],
+      "up": [
+        0.3356561460202653,
+        -0.18330230820682583,
+        0.9239779301719669
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:23:38",
+      "gimbal_pitch": -22.2,
+      "gimbal_yaw": 111.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 112.2,
+      "easting": 352265.80503920827,
+      "northing": 4651637.258198667,
+      "model_x": -16.194960791734047,
+      "model_y_obj": 8.258198667317629,
+      "model_z": -8.258198667317629,
+      "model_y": -0.27970156840301513,
+      "forward_threejs": [
+        0.8060322249975228,
+        -0.3824261183552092,
+        0.4517325716232011
+      ],
+      "up_threejs": [
+        0.3356561460202653,
+        0.9239779301719669,
+        0.18330230820682583
+      ]
+    },
+    {
+      "file": "DJI_20260226162641_0025_V_Waypoint25.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162641_0025_V_Waypoint25.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162641_0025_V_Waypoint25_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162641_0025_V_Waypoint25_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162641_0025_T_Waypoint25_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162641_0025_T_Waypoint25_full.jpg",
+      "thermal_file": "DJI_20260226162641_0025_T_Waypoint25.JPG",
+      "lat": 42.002735584064,
+      "lon": -70.78379448477293,
+      "altitude": 19.787838708805513,
+      "relative_altitude": 28.505,
+      "translation": [
+        352274.17335326097,
+        4651619.018346824,
+        19.787838708805513
+      ],
+      "rotation": [
+        1.6964586697289201,
+        -2.4456854671707746,
+        0.3106864068846975
+      ],
+      "forward": [
+        0.23833340872115544,
+        -0.08461825120595617,
+        -0.967490019509349
+      ],
+      "up": [
+        0.9060065365959737,
+        -0.3394215568157641,
+        0.2528738072915651
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:41",
+      "gimbal_pitch": -74.4,
+      "gimbal_yaw": 108.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 109.2,
+      "easting": 352274.17335326097,
+      "northing": 4651619.018346824,
+      "model_x": -7.8266467390349135,
+      "model_y_obj": -9.981653176248074,
+      "model_z": 9.981653176248074,
+      "model_y": 19.787838708805513,
+      "forward_threejs": [
+        0.23833340872115544,
+        -0.967490019509349,
+        0.08461825120595617
+      ],
+      "up_threejs": [
+        0.9060065365959737,
+        0.2528738072915651,
+        0.3394215568157641
+      ]
+    },
+    {
+      "file": "DJI_20260226162618_0023_V_Waypoint23.JPG",
+      "path": "/Volumes/Untitled/DCIM/DJI_202602261620_042_Waypoint9/DJI_20260226162618_0023_V_Waypoint23.JPG",
+      "thumbnail": "thumbnails/DJI_20260226162618_0023_V_Waypoint23_thumb.jpg",
+      "full_image": "thumbnails/DJI_20260226162618_0023_V_Waypoint23_full.jpg",
+      "thermal_thumbnail": "thumbnails/DJI_20260226162617_0023_T_Waypoint23_thumb.jpg",
+      "thermal_full": "thumbnails/DJI_20260226162617_0023_T_Waypoint23_full.jpg",
+      "thermal_file": "DJI_20260226162617_0023_T_Waypoint23.JPG",
+      "lat": 42.00286225577419,
+      "lon": -70.78361212137662,
+      "altitude": 19.63080423480693,
+      "relative_altitude": 28.354,
+      "translation": [
+        352289.56947033847,
+        4651632.768561866,
+        19.63080423480693
+      ],
+      "rotation": [
+        1.690395975395445,
+        -2.4523120002335648,
+        0.3121458655012957
+      ],
+      "forward": [
+        0.2368196492463619,
+        -0.08721118938420341,
+        -0.9676314702287347
+      ],
+      "up": [
+        0.904189697897025,
+        -0.3446146373163088,
+        0.25235241620447385
+      ],
+      "focal_normalized": 0.7167439482389478,
+      "fov_h": 69.79919300979323,
+      "fov_v": 55.23707435235918,
+      "thermal_fov_h": 61.0,
+      "thermal_fov_v": 50.3,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-02-26T11:26:18",
+      "gimbal_pitch": -74.5,
+      "gimbal_yaw": 108.7,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 109.5,
+      "easting": 352289.56947033847,
+      "northing": 4651632.768561866,
+      "model_x": 7.56947033846518,
+      "model_y_obj": 3.768561866134405,
+      "model_z": -3.768561866134405,
+      "model_y": 19.63080423480693,
+      "forward_threejs": [
+        0.2368196492463619,
+        -0.9676314702287347,
+        0.08721118938420341
+      ],
+      "up_threejs": [
+        0.904189697897025,
+        0.25235241620447385,
+        0.3446146373163088
+      ]
+    }
+  ],
+  "model_bbox": {
+    "x_min": -75.485077,
+    "x_max": 62.343094,
+    "y_min": -51.198261,
+    "y_max": 47.426476,
+    "z_min": -28.463928,
+    "z_max": 0.284759,
+    "center_x": -6.570991500000002,
+    "center_y": -1.8858925000000006,
+    "center_z": -14.089584499999999,
+    "vertex_count": 369252
+  }
+}
