@@ -2464,19 +2464,25 @@
                 camera.fov = view.camera_fov;
                 camera.updateProjectionMatrix();
             }
-            if (view.crop_planes && modelBounds) {
+            if (view.crop_planes) {
                 currentCropPlanes = view.crop_planes;
-                // Apply crop: set slider values and enable
+                // Enable crop FIRST (this sets up sliders to full range)
+                enableCrop(true);
+                // THEN override slider values with saved crop
                 ['x', 'y', 'z'].forEach(axis => {
                     const sMin = document.getElementById(`crop-${axis}-min`);
                     const sMax = document.getElementById(`crop-${axis}-max`);
+                    const vMin = document.getElementById(`crop-${axis}-min-val`);
+                    const vMax = document.getElementById(`crop-${axis}-max-val`);
                     if (sMin && sMax) {
                         sMin.value = view.crop_planes[`${axis}Min`] * 10;
                         sMax.value = view.crop_planes[`${axis}Max`] * 10;
+                        if (vMin) vMin.textContent = `${(view.crop_planes[`${axis}Min`] * M_TO_FT).toFixed(0)}ft`;
+                        if (vMax) vMax.textContent = `${(view.crop_planes[`${axis}Max`] * M_TO_FT).toFixed(0)}ft`;
                     }
                 });
+                // THEN update clip planes with the saved values
                 updateClipPlanes();
-                enableCrop(true);
                 document.getElementById('crop-panel').style.display = 'none'; // Hide panel but keep crop
             }
             controls.update();
