@@ -479,12 +479,25 @@
 
         async function saveViewToDB() {
             const modelId = document.getElementById('model-picker').value;
+            // Always read crop state from sliders if crop is enabled
+            let cropData = null;
+            if (cropEnabled) {
+                cropData = {
+                    xMin: parseFloat(document.getElementById('crop-x-min').value) / 10,
+                    xMax: parseFloat(document.getElementById('crop-x-max').value) / 10,
+                    yMin: parseFloat(document.getElementById('crop-y-min').value) / 10,
+                    yMax: parseFloat(document.getElementById('crop-y-max').value) / 10,
+                    zMin: parseFloat(document.getElementById('crop-z-min').value) / 10,
+                    zMax: parseFloat(document.getElementById('crop-z-max').value) / 10
+                };
+                currentCropPlanes = cropData;
+            }
             const viewData = {
                 model_id: modelId,
                 camera_position: { x: camera.position.x, y: camera.position.y, z: camera.position.z },
                 camera_target: { x: controls.target.x, y: controls.target.y, z: controls.target.z },
                 camera_fov: camera.fov,
-                crop_planes: currentCropPlanes || null,
+                crop_planes: cropData || currentCropPlanes || null,
                 updated_at: new Date().toISOString()
             };
             const { error } = await supabase.from('model_views').upsert(viewData, { onConflict: 'model_id' });
