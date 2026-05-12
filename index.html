@@ -51,8 +51,15 @@
         }
         #loading.hidden { opacity: 0; pointer-events: none; }
         #loading-text { font-size: 14px; color: var(--text-dim); }
-        #loading-bar-outer { width: 240px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        #loading-bar-outer { width: 240px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
         #loading-bar-inner { height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+        #loading-bar-inner.indeterminate {
+            width: 40%; animation: load-pulse 1.4s ease-in-out infinite; transition: none;
+        }
+        @keyframes load-pulse {
+            0%   { margin-left: -40%; }
+            100% { margin-left: 100%; }
+        }
 
         /* Mobile / unsupported-device notice */
         #mobile-notice {
@@ -405,9 +412,25 @@
         THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
         // ========== Supabase ==========
+        // If the Supabase CDN script fails to load (transient outage, ad blocker, etc.),
+        // fall back to a stub that no-ops every chained query. The viewer still works
+        // for displaying models and cameras — only measurement persistence is disabled.
         const SUPABASE_URL = 'https://bkeupqstqhzmygpzohwd.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_tINiov1W4DjwDO6Y2GacUw_hNXTkMo8';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let supabase;
+        if (window.supabase && typeof window.supabase.createClient === 'function') {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } else {
+            console.warn('Supabase failed to load — measurement persistence disabled.');
+            const stub = new Proxy(function () {}, {
+                get(_t, prop) {
+                    if (prop === 'then') return (resolve) => resolve({ data: null, error: null });
+                    return stub;
+                },
+                apply() { return stub; }
+            });
+            supabase = stub;
+        }
 
         async function saveMeasurementToDB(measurement, mIdx) {
             const modelId = document.getElementById('model-picker').value;
@@ -1036,7 +1059,17 @@
         // ========== Model Loading ==========
         function setLoading(text, progress) {
             document.getElementById('loading-text').textContent = text;
-            document.getElementById('loading-bar-inner').style.width = `${progress}%`;
+            const bar = document.getElementById('loading-bar-inner');
+            bar.classList.remove('indeterminate');
+            bar.style.width = `${progress}%`;
+        }
+        // Use when the server doesn't expose Content-Length (typical for gzip-encoded
+        // responses on GH Pages) — animate a pulsing bar and show bytes loaded.
+        function setLoadingIndeterminate(text) {
+            document.getElementById('loading-text').textContent = text;
+            const bar = document.getElementById('loading-bar-inner');
+            bar.style.width = '';
+            bar.classList.add('indeterminate');
         }
 
         function showLoading() {
@@ -1122,6 +1155,11 @@
                     // Clamp: Content-Encoding (gzip/br) makes loaded > total possible.
                     const ratio = Math.min(progress.loaded / progress.total, 1);
                     setLoading(`Loading model... ${(ratio * 100).toFixed(0)}%`, ratio * 85);
+                } else if (progress.loaded > 0) {
+                    // GH Pages serves these gzip-compressed; the compressed Content-Length
+                    // is hidden from JS, so progress.total is 0. Show bytes + pulse bar.
+                    const mb = (progress.loaded / 1048576).toFixed(1);
+                    setLoadingIndeterminate(`Loading model... ${mb} MB`);
                 }
             };
             const onLoaded = (resolve) => (gltf) => {
@@ -1197,6 +1235,9 @@
                             if (progress.total > 0) {
                                 const ratio = Math.min(progress.loaded / progress.total, 1);
                                 setLoading(`Loading geometry... ${(ratio * 100).toFixed(0)}%`, 30 + ratio * 55);
+                            } else if (progress.loaded > 0) {
+                                const mb = (progress.loaded / 1048576).toFixed(1);
+                                setLoadingIndeterminate(`Loading geometry... ${mb} MB`);
                             }
                         },
                         reject
@@ -1939,6 +1980,7 @@
 
         function updateCounterBadge() {
             const btn = document.querySelector('[data-tool="counter"]');
+            if (!btn) return; // Counter tool removed from camera-only viewer
             let badge = btn.querySelector('.badge');
             if (counterCount > 0) {
                 if (!badge) {
