@@ -161,10 +161,11 @@
         #photo-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 8; pointer-events: none; display: none;
+            background: #000;
         }
         #photo-overlay img {
             width: 100%; height: 100%;
-            object-fit: contain; /* letterboxes to match camera aspect — transparent sides show 3D model */
+            object-fit: cover; /* fills viewport, crops edges — no letterbox bars */
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
@@ -194,6 +195,60 @@
         .photo-thumb:hover { border-color: var(--accent); }
         .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* POI Photo Gallery Panel */
+        #poi-gallery-panel {
+            position: absolute; top: 0; left: 0; bottom: 0; width: 320px;
+            background: var(--panel-bg); backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            transform: translateX(-100%); transition: transform 0.3s ease;
+            z-index: 20; overflow-y: auto; display: flex; flex-direction: column;
+        }
+        #poi-gallery-panel.open { transform: translateX(0); }
+        #poi-gallery-panel .panel-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: sticky; top: 0; background: var(--panel-bg); z-index: 1;
+        }
+        #poi-gallery-status {
+            padding: 6px 14px; font-size: 11px; color: var(--text-dim);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        #poi-gallery-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4px; padding: 8px; flex: 1;
+        }
+        .poi-photo-card {
+            position: relative; cursor: pointer; border-radius: 6px;
+            overflow: hidden; border: 2px solid transparent;
+            transition: border-color 0.15s;
+        }
+        .poi-photo-card:hover { border-color: var(--accent); }
+        .poi-photo-card.active { border-color: #ef4444; }
+        .poi-photo-card img {
+            width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+        }
+        .poi-photo-card .rank-badge {
+            position: absolute; top: 4px; left: 4px;
+            background: rgba(0,0,0,0.75); color: #fff;
+            font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px;
+        }
+        .poi-photo-card .dist-badge {
+            position: absolute; bottom: 4px; right: 4px;
+            background: rgba(0,0,0,0.75); color: var(--text-dim);
+            font-size: 10px; padding: 2px 6px; border-radius: 3px;
+        }
+        .poi-mode-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text); padding: 3px 8px; border-radius: 4px; cursor: pointer;
+            font-size: 11px; transition: background 0.15s;
+        }
+        .poi-mode-btn:hover { background: rgba(255,255,255,0.2); }
+        .poi-clear-btn {
+            background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4);
+            color: #fca5a5; padding: 3px 8px; border-radius: 4px; cursor: pointer;
+            font-size: 11px;
+        }
+
         /* Coordinate display */
         #coord-display {
             position: absolute; bottom: 16px; left: 16px; z-index: 10;
@@ -216,9 +271,11 @@
         <!-- Logo -->
         <img id="logo" src="logo.svg" alt="AR Drone Ops">
 
-        <!-- Model Picker -->
+        <!-- Model Picker (hidden in prod — each model has its own ?model=<slug> URL) -->
         <select id="model-picker" style="display:none;">
             <option value="three-rivers" data-path="models/three-rivers/" data-type="obj">Three Rivers Drive</option>
+            <option value="hadley" data-path="models/hadley/odm_textured_model_geo.glb" data-type="glb">Hadley School</option>
+            <option value="1572-mass-ave" data-path="models/1572-mass-ave/odm_textured_model_geo.glb" data-type="glb">1572 Mass Ave</option>
         </select>
 
         <!-- Loading overlay -->
@@ -274,6 +331,22 @@
             <button class="tool-btn" data-tool="counter" title="Counter (C)">
                 <span style="font-weight:700;font-size:15px;">123</span>
             </button>
+            <!-- Window -->
+            <button class="tool-btn" data-tool="window" title="Window (W)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+            </button>
+            <!-- Door -->
+            <button class="tool-btn" data-tool="door" title="Door (D)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="1"/><circle cx="15" cy="13" r="1.5"/></svg>
+            </button>
+            <!-- Wall -->
+            <button class="tool-btn" data-tool="wall" title="Wall (B)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="1"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg>
+            </button>
+            <!-- Roof -->
+            <button class="tool-btn" data-tool="roof" title="Roof (R)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20L12 4l9 16"/><line x1="6" y1="15" x2="18" y2="15"/></svg>
+            </button>
             <div class="tool-divider"></div>
             <!-- Crop -->
             <button class="tool-btn" data-tool="crop" title="Crop Model (X)">
@@ -284,10 +357,18 @@
             <button class="tool-btn toggle-btn" data-tool="camera" title="Toggle Cameras (P)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
+            <!-- POI Photo Lookup -->
+            <button class="tool-btn" data-tool="poi" title="Photo Lookup (F)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M2 17l5-5 4 4 3-3 8 8"/></svg>
+            </button>
             <div class="tool-divider"></div>
             <!-- Save View -->
             <button class="tool-btn" id="save-view-btn" title="Save Current View" onclick="window._saveView()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            </button>
+            <!-- Toggle Model Visibility -->
+            <button class="tool-btn toggle-btn" id="toggle-model-btn" title="Hide/Show Building Model (shapes stay visible)" onclick="window._toggleModel()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
             </button>
         </div>
 
@@ -316,9 +397,9 @@
                 <button onclick="window._setCameraOffset(0,0,0)" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text); padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Reset</button>
             </div>
             <div style="display:grid; grid-template-columns:auto 1fr auto; gap:4px 8px; align-items:center;">
-                <label>E/W</label><input type="range" id="cam-offset-x" min="-30" max="30" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-x-val">0.0m</span>
-                <label>Elev</label><input type="range" id="cam-offset-y" min="-20" max="20" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-y-val">0.0m</span>
-                <label>N/S</label><input type="range" id="cam-offset-z" min="-30" max="30" value="0" step="0.5" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-z-val">0.0m</span>
+                <label>E/W</label><input type="range" id="cam-offset-x" min="-30" max="30" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-x-val">0.00m</span>
+                <label>Elev</label><input type="range" id="cam-offset-y" min="-20" max="20" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-y-val">0.00m</span>
+                <label>N/S</label><input type="range" id="cam-offset-z" min="-30" max="30" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-z-val">0.00m</span>
             </div>
         </div>
 
@@ -349,6 +430,20 @@
 
         <!-- Close polygon indicator -->
         <div class="close-indicator" id="close-indicator"></div>
+
+        <!-- POI Photo Gallery Panel -->
+        <div id="poi-gallery-panel">
+            <div class="panel-header">
+                <span class="panel-title" style="font-size:13px;font-weight:600;">Photo Lookup</span>
+                <div style="display:flex;gap:4px;">
+                    <button class="poi-mode-btn" id="poi-mode-toggle" onclick="window._togglePoiMode()">Mode: Any</button>
+                    <button class="poi-clear-btn" onclick="window._clearPoiPoints()">Clear</button>
+                    <button class="panel-close" onclick="window._closePoiGallery()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--text);width:24px;height:24px;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">&times;</button>
+                </div>
+            </div>
+            <div id="poi-gallery-status"></div>
+            <div id="poi-gallery-grid"></div>
+        </div>
 
         <!-- Coordinate display -->
         <div id="coord-display">X: — Y: — Z: —</div>
@@ -433,7 +528,9 @@
                 : measurement.point
                     ? [{ x: measurement.point.x, y: measurement.point.y, z: measurement.point.z }]
                     : [];
-            const metadata = {};
+            // Preserve any existing metadata (e.g. surfArea, stoop_roof_sqft, notes)
+            // and only overwrite the computed fields for the current measurement type.
+            const metadata = Object.assign({}, measurement.metadata || {});
             if (measurement.type === 'height') metadata.heightM = measurement.heightM;
             if (measurement.type === 'length') {
                 metadata.dist3D = measurement.dist3D;
@@ -443,6 +540,10 @@
             if (measurement.type === 'area') {
                 metadata.surfArea = measurement.surfArea;
                 metadata.projArea = measurement.projArea;
+            }
+            if (measurement.type === 'wall' || measurement.type === 'roof') {
+                if (measurement.surfArea != null) metadata.surfArea = measurement.surfArea;
+                if (measurement.projArea != null) metadata.projArea = measurement.projArea;
             }
             await supabase.from('model_measurements').update({
                 title: measurement.title || 'Untitled',
@@ -532,19 +633,39 @@
                 objFile: 'odm_textured_model_geo.obj',
                 mtlFile: 'odm_textured_model_geo.mtl',
                 name: 'Three Rivers Drive',
-                crs: 'EPSG:32619' // WGS 84 / UTM zone 19N
+                crs: 'EPSG:32619', // WGS 84 / UTM zone 19N
+                camerasPath: 'cameras/',
+                hasThermal: true
             },
-            'medfield': {
+            'hadley': {
                 type: 'glb',
-                path: '../3D_Model/Medfield-State-textured_model.glb',
-                name: 'Medfield State Hospital'
+                path: 'models/hadley/odm_textured_model_geo.glb',
+                name: 'Hadley School',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/hadley/cameras/',
+                hasThermal: false
             },
-            'cordage': {
+            '1572-mass-ave': {
                 type: 'glb',
-                path: '../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb',
-                name: 'Cordage Park Marketplace'
+                path: 'models/1572-mass-ave/odm_textured_model_geo.glb',
+                name: '1572 Mass Ave',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/1572-mass-ave/cameras/',
+                hasThermal: false
             }
         };
+
+        // ========== Read-only mode ==========
+        const urlParams = new URLSearchParams(window.location.search);
+        const VIEW_ONLY = urlParams.get('mode') === 'view';
+
+        // ========== Per-model URL routing ==========
+        // ?model=<slug> selects which model loads on initial page load.
+        // Falls back to three-rivers if missing or unknown.
+        const initialModelId = (() => {
+            const requested = urlParams.get('model');
+            return (requested && MODELS[requested]) ? requested : 'three-rivers';
+        })();
 
         // ========== State ==========
         let currentTool = 'select';
@@ -558,6 +679,171 @@
         const pointSphereMap = new Map(); // sphere → { mIdx, pIdx } for dragging
         let dragTarget = null; // { sphere, mIdx, pIdx, origColor }
         let isDraggingPoint = false;
+        let _midpointMarker = null; // Floating + marker for edge insert
+        let _midpointInfo = null;   // { mIdx, edgeIdx, position }
+
+        function createMidpointMarker() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64; canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            // Circle with +
+            ctx.beginPath();
+            ctx.arc(32, 32, 28, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fill();
+            ctx.strokeStyle = '#4ade80';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            // Plus sign
+            ctx.beginPath();
+            ctx.moveTo(32, 18); ctx.lineTo(32, 46);
+            ctx.moveTo(18, 32); ctx.lineTo(46, 32);
+            ctx.strokeStyle = '#4ade80';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            const tex = new THREE.CanvasTexture(canvas);
+            const mat = new THREE.SpriteMaterial({ map: tex, depthTest: false, sizeAttenuation: false });
+            const sprite = new THREE.Sprite(mat);
+            sprite.scale.set(0.04, 0.04, 1);
+            sprite.visible = false;
+            sprite.renderOrder = 999;
+            scene.add(sprite);
+            return sprite;
+        }
+
+        function findNearestEdge(screenX, screenY) {
+            // Find the nearest polygon edge to the mouse cursor
+            const rect = renderer.domElement.getBoundingClientRect();
+            const mouse = new THREE.Vector2(
+                ((screenX - rect.left) / rect.width) * 2 - 1,
+                -((screenY - rect.top) / rect.height) * 2 + 1
+            );
+            let bestDist = Infinity, bestInfo = null;
+            for (let mIdx = 0; mIdx < measurements.length; mIdx++) {
+                const m = measurements[mIdx];
+                if ((m.type !== 'area' && m.type !== 'wall' && m.type !== 'roof' && m.type !== 'volume') || !m.points || m.points.length < 3) continue;
+                for (let i = 0; i < m.points.length; i++) {
+                    const j = (i + 1) % m.points.length;
+                    const a = m.points[i].clone().project(camera);
+                    const b = m.points[j].clone().project(camera);
+                    // Distance from mouse to line segment in screen space
+                    const dx = b.x - a.x, dy = b.y - a.y;
+                    const len2 = dx * dx + dy * dy;
+                    if (len2 < 0.0001) continue;
+                    let t = ((mouse.x - a.x) * dx + (mouse.y - a.y) * dy) / len2;
+                    // Only stay off the very-ends so the + doesn't hide the vertex sphere,
+                    // but otherwise follow the cursor exactly along the edge.
+                    t = Math.max(0.02, Math.min(0.98, t));
+                    const px = a.x + t * dx, py = a.y + t * dy;
+                    const dist = Math.sqrt((mouse.x - px) ** 2 + (mouse.y - py) ** 2);
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        // Compute 3D midpoint
+                        const mid = m.points[i].clone().lerp(m.points[j], t);
+                        bestInfo = { mIdx, edgeIdx: i, position: mid, screenDist: dist };
+                    }
+                }
+            }
+            return bestInfo;
+        }
+
+        // ========== Edit history (for Undo Point on EXISTING measurements) ==========
+        // Each entry: { kind: 'insert'|'delete', mIdx, dbId, pIdx, point, snapshot? }
+        const _editHistory = [];
+        const _EDIT_HISTORY_MAX = 50;
+        function _pushHistory(entry) {
+            _editHistory.push(entry);
+            if (_editHistory.length > _EDIT_HISTORY_MAX) _editHistory.shift();
+        }
+        window._editHistory = _editHistory;
+
+        function insertPointOnEdge(mIdx, edgeIdx, insertPos) {
+            const m = measurements[mIdx];
+            if (!m || !m.points) return;
+            // Use explicit insert position if provided (from mouse hover/click);
+            // otherwise fall back to midpoint of the edge.
+            const j = (edgeIdx + 1) % m.points.length;
+            let newPt;
+            if (insertPos) {
+                newPt = insertPos.clone ? insertPos.clone() : new THREE.Vector3(insertPos.x, insertPos.y, insertPos.z);
+            } else {
+                newPt = m.points[edgeIdx].clone().lerp(m.points[j], 0.5);
+            }
+            // Snap to wall plane if applicable (wall/area only)
+            const snapped = snapToWallPlane(newPt, mIdx);
+            newPt.copy(snapped);
+            m.points.splice(edgeIdx + 1, 0, newPt);
+            // Add new sphere
+            const mc = m.color || { line: 0xa855f7 };
+            const newSphere = createPointMarker(newPt, mc.line);
+            m.spheres.splice(edgeIdx + 1, 0, newSphere);
+            // Rebuild pointSphereMap for this measurement
+            m.spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+            _pushHistory({ kind: 'insert', mIdx, dbId: m.dbId, pIdx: edgeIdx + 1 });
+            recalcMeasurement(mIdx);
+            debouncedUpdateMeasurement(m);
+        }
+
+        function getWallPlane(m) {
+            // Compute best-fit plane from polygon points using first 3 non-collinear points
+            if (!m.points || m.points.length < 3) return null;
+            const v1 = new THREE.Vector3().subVectors(m.points[1], m.points[0]);
+            const v2 = new THREE.Vector3().subVectors(m.points[2], m.points[0]);
+            const normal = new THREE.Vector3().crossVectors(v1, v2).normalize();
+            if (normal.length() < 0.001) return null;
+            return new THREE.Plane().setFromNormalAndCoplanarPoint(normal, m.points[0]);
+        }
+
+        function snapToWallPlane(point, mIdx) {
+            const m = measurements[mIdx];
+            if (!m || (m.type !== 'wall' && m.type !== 'area')) return point;
+            const plane = getWallPlane(m);
+            if (!plane) return point;
+            const projected = new THREE.Vector3();
+            plane.projectPoint(point, projected);
+            return projected;
+        }
+
+        function deletePointFromMeasurement(mIdx, pIdx, recordHistory = true) {
+            const m = measurements[mIdx];
+            if (!m || !m.points || m.points.length <= 3) return; // Min 3 points for polygon
+            const removedPoint = { x: m.points[pIdx].x, y: m.points[pIdx].y, z: m.points[pIdx].z };
+            // Remove point and sphere
+            const sphere = m.spheres[pIdx];
+            pointSphereMap.delete(sphere);
+            scene.remove(sphere);
+            if (sphere.geometry) sphere.geometry.dispose();
+            if (sphere.material) sphere.material.dispose();
+            m.points.splice(pIdx, 1);
+            m.spheres.splice(pIdx, 1);
+            // Rebuild pointSphereMap
+            m.spheres.forEach((s, i) => pointSphereMap.set(s, { mIdx, pIdx: i }));
+            if (recordHistory) _pushHistory({ kind: 'delete', mIdx, dbId: m.dbId, pIdx, point: removedPoint });
+            recalcMeasurement(mIdx);
+            debouncedUpdateMeasurement(m);
+        }
+        let selectedMeasurementIdx = -1; // Index of currently selected measurement (-1 = none)
+        let _lastHitObject = null; // Last raycast hit mesh (for normal transforms)
+
+        // Color palette for unique measurement colors
+        const MEASUREMENT_COLORS = [
+            { line: 0xef4444, fill: 0xef4444, bg: 'rgba(239, 68, 68, 0.9)', border: '#ef4444' },   // red
+            { line: 0x3b82f6, fill: 0x3b82f6, bg: 'rgba(59, 130, 246, 0.9)', border: '#3b82f6' },   // blue
+            { line: 0x22c55e, fill: 0x22c55e, bg: 'rgba(34, 197, 94, 0.9)', border: '#22c55e' },     // green
+            { line: 0xf59e0b, fill: 0xf59e0b, bg: 'rgba(245, 158, 11, 0.9)', border: '#f59e0b' },    // amber
+            { line: 0xa855f7, fill: 0x8b5cf6, bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7' },    // purple
+            { line: 0xec4899, fill: 0xec4899, bg: 'rgba(236, 72, 153, 0.9)', border: '#ec4899' },    // pink
+            { line: 0x06b6d4, fill: 0x06b6d4, bg: 'rgba(6, 182, 212, 0.9)', border: '#06b6d4' },     // cyan
+            { line: 0xf97316, fill: 0xf97316, bg: 'rgba(249, 115, 22, 0.9)', border: '#f97316' },    // orange
+            { line: 0x84cc16, fill: 0x84cc16, bg: 'rgba(132, 204, 22, 0.9)', border: '#84cc16' },    // lime
+            { line: 0xe879f9, fill: 0xe879f9, bg: 'rgba(232, 121, 249, 0.9)', border: '#e879f9' },   // fuchsia
+        ];
+        let measurementColorIndex = 0;
+        function getNextMeasurementColor() {
+            const color = MEASUREMENT_COLORS[measurementColorIndex % MEASUREMENT_COLORS.length];
+            measurementColorIndex++;
+            return color;
+        }
         let cameraData = []; // Loaded camera positions
         let cameraJson = {}; // Full cameras.json data (includes source, model_origin, etc.)
         let cameraMeshes = []; // Camera frustum meshes
@@ -839,18 +1125,18 @@
                 loadEl.style.opacity = '0';
                 setTimeout(() => { loadEl.style.display = 'none'; }, 600);
 
-                // Compute BVH asynchronously (non-blocking)
-                let bvhIdx = 0;
-                function computeNextBVH() {
-                    if (bvhIdx < meshes.length) {
-                        meshes[bvhIdx].geometry.computeBoundsTree();
-                        bvhIdx++;
-                        requestAnimationFrame(computeNextBVH);
-                    } else {
-                        console.log('BVH complete for', meshes.length, 'meshes');
+                // Compute BVH for all meshes, then restore measurements
+                const bvhMeshes = [...meshes]; // snapshot to avoid race conditions
+                for (let i = 0; i < bvhMeshes.length; i++) {
+                    try {
+                        bvhMeshes[i].geometry.computeBoundsTree();
+                    } catch (e) {
+                        console.warn('BVH error on mesh', i, e.message);
                     }
                 }
-                requestAnimationFrame(computeNextBVH);
+                console.log('BVH complete for', bvhMeshes.length, 'meshes');
+                restoreSavedView(modelId);
+                restoreSavedMeasurements(modelId);
             }
         }
 
@@ -859,6 +1145,9 @@
                 gltfLoader.load(config.path,
                     (gltf) => {
                         currentModel = gltf.scene;
+                        // ODM exports use Z-up convention (same as OBJ)
+                        // Rotate -90° around X to convert to Three.js Y-up
+                        currentModel.rotation.x = -Math.PI / 2;
                         currentModel.traverse(child => {
                             if (child.isMesh) {
                                 child.castShadow = true;
@@ -972,12 +1261,16 @@
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(meshes, false);
-            return intersects.length > 0 ? intersects[0] : null;
+            if (intersects.length > 0) {
+                _lastHitObject = intersects[0].object;
+                return intersects[0];
+            }
+            return null;
         }
 
         // ========== Measurement Helpers ==========
         function createPointMarker(position, color = 0xef4444) {
-            const geo = new THREE.SphereGeometry(0.25, 16, 16);
+            const geo = new THREE.SphereGeometry(0.08, 16, 16); // larger radius so it's easier to grab
             const mat = new THREE.MeshBasicMaterial({ color, depthTest: false });
             const sphere = new THREE.Mesh(geo, mat);
             sphere.position.copy(position);
@@ -1012,13 +1305,13 @@
             const geo = new THREE.BufferGeometry().setFromPoints(points);
             let mat;
             if (dashed) {
-                mat = new THREE.LineDashedMaterial({ color, dashSize: 0.5, gapSize: 0.3, linewidth: 2, depthTest: false });
+                mat = new THREE.LineDashedMaterial({ color, dashSize: 0.5, gapSize: 0.3, linewidth: 2, depthTest: false, transparent: true, opacity: 0.95 });
             } else {
-                mat = new THREE.LineBasicMaterial({ color, linewidth: 2, depthTest: false });
+                mat = new THREE.LineBasicMaterial({ color, linewidth: 2, depthTest: false, transparent: true, opacity: 0.95 });
             }
             const line = new THREE.Line(geo, mat);
             if (dashed) line.computeLineDistances();
-            line.renderOrder = 998;
+            line.renderOrder = 999; // draw on top of mesh so edges are always visible
             scene.add(line);
             return line;
         }
@@ -1056,12 +1349,14 @@
 
                 const p1 = tempPoints[0];
                 const p2 = tempPoints[1];
+                const mc = getNextMeasurementColor();
 
-                const s1 = createPointMarker(p1);
-                const s2 = createPointMarker(p2);
+                const s1 = createPointMarker(p1, mc.line);
+                const s2 = createPointMarker(p2, mc.line);
 
-                const m = buildHeightVisuals(p1, p2);
+                const m = buildHeightVisuals(p1, p2, mc);
                 m.spheres = [s1, s2];
+                m.color = mc;
                 measurements.push(m);
 
                 const mIdx = measurements.length - 1;
@@ -1079,15 +1374,16 @@
             }
         }
 
-        function buildHeightVisuals(p1, p2) {
+        function buildHeightVisuals(p1, p2, mc) {
             const heightM = Math.abs(p2.y - p1.y);
             const vertTop = p1.y > p2.y ? p1 : p2;
             const vertBot = p1.y > p2.y ? p2 : p1;
             const midY = (p1.y + p2.y) / 2;
             const topProj = new THREE.Vector3(vertBot.x, vertTop.y, vertBot.z);
-            const line = createLine([vertBot, topProj], 0x22c55e, true);
+            const c = mc || { line: 0x22c55e, bg: 'rgba(34,197,94,0.9)' };
+            const line = createLine([vertBot, topProj], c.line, true);
             const labelPos = new THREE.Vector3(vertBot.x, midY, vertBot.z);
-            const label = createLabel(formatFeet(heightM), labelPos, { bg: 'rgba(34,197,94,0.9)' });
+            const label = createLabel(formatFeet(heightM), labelPos, { bg: c.bg });
             return { type: 'height', points: [p1.clone(), p2.clone()], heightM, lines: [line], label };
         }
 
@@ -1105,12 +1401,14 @@
 
                 const p1 = tempPoints[0];
                 const p2 = tempPoints[1];
+                const mc = getNextMeasurementColor();
 
-                const s1 = createPointMarker(p1);
-                const s2 = createPointMarker(p2);
+                const s1 = createPointMarker(p1, mc.line);
+                const s2 = createPointMarker(p2, mc.line);
 
-                const m = buildLengthVisuals(p1, p2);
+                const m = buildLengthVisuals(p1, p2, mc);
                 m.spheres = [s1, s2];
+                m.color = mc;
                 measurements.push(m);
 
                 const mIdx = measurements.length - 1;
@@ -1128,28 +1426,34 @@
             }
         }
 
-        function buildLengthVisuals(p1, p2) {
+        function buildLengthVisuals(p1, p2, mc) {
             const dist3D = p1.distanceTo(p2);
             const dx = p2.x - p1.x, dz = p2.z - p1.z;
             const distH = Math.sqrt(dx * dx + dz * dz);
             const dy = Math.abs(p2.y - p1.y);
             const slopeAngle = Math.atan2(dy, distH) * (180 / Math.PI);
-            const line = createLine([p1, p2], 0xef4444);
+            const c = mc || { line: 0xef4444, bg: 'rgba(239,68,68,0.9)' };
+            const line = createLine([p1, p2], c.line);
             const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
-            const label = createLabel(formatFeet(dist3D), mid);
+            const label = createLabel(formatFeet(dist3D), mid, { bg: c.bg });
             return { type: 'length', points: [p1.clone(), p2.clone()], dist3D, distH, slopeAngle, lines: [line], label };
         }
 
         // --- Area Tool ---
         let areaPolygonGroup = null;
+        let pendingAreaColor = null; // Color assigned when area drawing starts
 
         function handleAreaClick(point, face) {
+            // Assign color on first point
+            if (tempPoints.length === 0) {
+                pendingAreaColor = getNextMeasurementColor();
+            }
             tempPoints.push(point.clone());
-            const marker = createPointMarker(point, 0xa855f7);
+            const marker = createPointMarker(point, pendingAreaColor.line);
             tempVisuals.push(marker);
 
             if (tempPoints.length > 1) {
-                const line = createLine([tempPoints[tempPoints.length - 2], point], 0xa855f7);
+                const line = createLine([tempPoints[tempPoints.length - 2], point], pendingAreaColor.line);
                 tempVisuals.push(line);
             }
 
@@ -1166,20 +1470,21 @@
             if (tempPoints.length < 3) return;
 
             const points = tempPoints.map(p => p.clone());
+            const mc = pendingAreaColor || getNextMeasurementColor();
 
             // Remove temp visuals — we'll rebuild clean
             tempVisuals.forEach(v => { scene.remove(v); if (v.geometry) v.geometry.dispose(); if (v.material) v.material.dispose(); });
 
             // Build visuals with tracked refs
-            const spheres = points.map(p => createPointMarker(p, 0xa855f7));
+            const spheres = points.map(p => createPointMarker(p, mc.line));
             const lines = [];
             for (let i = 0; i < points.length; i++) {
-                lines.push(createLine([points[i], points[(i + 1) % points.length]], 0xa855f7));
+                lines.push(createLine([points[i], points[(i + 1) % points.length]], mc.line));
             }
 
             const projArea = shoelaceArea(points.map(p => [p.x, p.z]));
             const surfArea = triangulatedSurfaceArea(points);
-            const fillMesh = createPolygonFill(points, 0x8b5cf6, 0.3);
+            const fillMesh = createPolygonFill(points, mc.fill, 0.3);
 
             const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
             const cy = points.reduce((s, p) => s + p.y, 0) / points.length;
@@ -1188,8 +1493,8 @@
 
             // Use 3D surface area as primary (works for walls AND floors)
             const label = createLabel(formatSqFt(surfArea), centroid, {
-                bg: 'rgba(139, 92, 246, 0.9)',
-                border: '#a855f7',
+                bg: mc.bg,
+                border: mc.border,
                 clickable: true
             });
 
@@ -1198,10 +1503,12 @@
                 title: 'Untitled Area',
                 points, projArea, surfArea,
                 date: new Date().toLocaleDateString(),
-                fillMesh, label, spheres, lines
+                fillMesh, label, spheres, lines,
+                color: mc
             };
             measurements.push(measurement);
             window.measurements = measurements;
+            pendingAreaColor = null;
 
             const mIdx = measurements.length - 1;
             spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
@@ -1252,13 +1559,129 @@
         }
 
         function createPolygonFill(points, color, opacity) {
-            // Fan triangulation
+            // Compute polygon face normal for z-fighting offset
+            const v1 = new THREE.Vector3().subVectors(points[1], points[0]);
+            const v2 = new THREE.Vector3().subVectors(points[points.length - 1], points[0]);
+            const normal = new THREE.Vector3().crossVectors(v1, v2).normalize().multiplyScalar(0.05);
+
+            // Fan triangulation offset along face normal
             const vertices = [];
             for (let i = 1; i < points.length - 1; i++) {
-                vertices.push(points[0].x, points[0].y + 0.05, points[0].z);
-                vertices.push(points[i].x, points[i].y + 0.05, points[i].z);
-                vertices.push(points[i + 1].x, points[i + 1].y + 0.05, points[i + 1].z);
+                vertices.push(points[0].x + normal.x, points[0].y + normal.y, points[0].z + normal.z);
+                vertices.push(points[i].x + normal.x, points[i].y + normal.y, points[i].z + normal.z);
+                vertices.push(points[i + 1].x + normal.x, points[i + 1].y + normal.y, points[i + 1].z + normal.z);
             }
+            const geo = new THREE.BufferGeometry();
+            geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            geo.computeVertexNormals();
+            const mat = new THREE.MeshBasicMaterial({
+                color, opacity, transparent: true, side: THREE.DoubleSide,
+                depthTest: true, depthWrite: false,
+                polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.renderOrder = 2;
+            scene.add(mesh);
+            return mesh;
+        }
+
+        // Create a fill mesh that drapes over the actual model surface via raycast grid.
+        // Strategy: raycast a grid onto the mesh for roof hits, then fill ALL gaps
+        // by interpolating from the mesh hits. Result: full polygon coverage that
+        // follows the real roof where data exists and smoothly bridges gaps.
+        function createDrapedFill(polygon, color, opacity, gridRes) {
+            gridRes = gridRes || 30;
+            const poly2D = polygon.map(p => [p.x, p.z]);
+            const xs = polygon.map(p => p.x);
+            const zs = polygon.map(p => p.z);
+            const minX = Math.min(...xs), maxX = Math.max(...xs);
+            const minZ = Math.min(...zs), maxZ = Math.max(...zs);
+            const stepX = (maxX - minX) / gridRes;
+            const stepZ = (maxZ - minZ) / gridRes;
+            const downDir = new THREE.Vector3(0, -1, 0);
+
+            const ys = polygon.map(p => p.y);
+            const minY = Math.min(...ys);
+            const maxY = Math.max(...ys);
+            const yTop = maxY + 15;
+            const yBottom = minY - 0.3;
+
+            // Step 1: Raycast grid — get real mesh heights where available
+            const grid = [];
+            const inPoly = []; // track which cells are inside polygon
+            for (let r = 0; r <= gridRes; r++) {
+                grid[r] = [];
+                inPoly[r] = [];
+                const z = minZ + r * stepZ;
+                for (let c = 0; c <= gridRes; c++) {
+                    const x = minX + c * stepX;
+                    const inside = pointInPolygon2D(x, z, poly2D);
+                    inPoly[r][c] = inside;
+                    if (!inside) { grid[r][c] = null; continue; }
+
+                    raycaster.set(new THREE.Vector3(x, 200, z), downDir);
+                    const hits = raycaster.intersectObjects(meshes, false);
+                    let hitY = null;
+                    for (const h of hits) {
+                        if (h.point.y >= yBottom && h.point.y <= yTop) {
+                            hitY = h.point.y;
+                            break;
+                        }
+                    }
+                    grid[r][c] = hitY;
+                }
+            }
+
+            // Step 2: Seed polygon corners into the grid so we always have anchor points
+            for (const p of polygon) {
+                const c = Math.round((p.x - minX) / stepX);
+                const r = Math.round((p.z - minZ) / stepZ);
+                if (r >= 0 && r <= gridRes && c >= 0 && c <= gridRes) {
+                    if (grid[r][c] === null) grid[r][c] = p.y;
+                    inPoly[r][c] = true;
+                }
+            }
+
+            // Step 3: Flood-fill gaps from known values (fast iterative spread)
+            for (let pass = 0; pass < gridRes * 2; pass++) {
+                let changed = false;
+                for (let r = 0; r <= gridRes; r++) {
+                    for (let c = 0; c <= gridRes; c++) {
+                        if (grid[r][c] !== null || !inPoly[r][c]) continue;
+                        let sum = 0, cnt = 0;
+                        if (r > 0 && grid[r-1][c] !== null) { sum += grid[r-1][c]; cnt++; }
+                        if (r < gridRes && grid[r+1][c] !== null) { sum += grid[r+1][c]; cnt++; }
+                        if (c > 0 && grid[r][c-1] !== null) { sum += grid[r][c-1]; cnt++; }
+                        if (c < gridRes && grid[r][c+1] !== null) { sum += grid[r][c+1]; cnt++; }
+                        if (cnt > 0) { grid[r][c] = sum / cnt; changed = true; }
+                    }
+                }
+                if (!changed) break;
+            }
+
+            // Step 4: Build triangle mesh
+            const vertices = [];
+            const offset = 0.12;
+            for (let r = 0; r < gridRes; r++) {
+                for (let c = 0; c < gridRes; c++) {
+                    const tl = grid[r][c], tr = grid[r][c + 1];
+                    const bl = grid[r + 1][c], br = grid[r + 1][c + 1];
+                    const x0 = minX + c * stepX, x1 = minX + (c + 1) * stepX;
+                    const z0 = minZ + r * stepZ, z1 = minZ + (r + 1) * stepZ;
+
+                    if (tl !== null && bl !== null && tr !== null) {
+                        vertices.push(x0, tl + offset, z0, x0, bl + offset, z1, x1, tr + offset, z0);
+                    }
+                    if (tr !== null && bl !== null && br !== null) {
+                        vertices.push(x1, tr + offset, z0, x0, bl + offset, z1, x1, br + offset, z1);
+                    }
+                }
+            }
+
+            if (vertices.length === 0) {
+                return createPolygonFill(polygon, color, opacity);
+            }
+
             const geo = new THREE.BufferGeometry();
             geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
             geo.computeVertexNormals();
@@ -1317,13 +1740,18 @@
         }
 
         // --- Volume Tool ---
+        let pendingVolumeColor = null;
+
         function handleVolumeClick(point, face) {
+            if (tempPoints.length === 0) {
+                pendingVolumeColor = getNextMeasurementColor();
+            }
             tempPoints.push(point.clone());
-            const marker = createPointMarker(point, 0xeab308);
+            const marker = createPointMarker(point, pendingVolumeColor.line);
             tempVisuals.push(marker);
 
             if (tempPoints.length > 1) {
-                const line = createLine([tempPoints[tempPoints.length - 2], point], 0xeab308);
+                const line = createLine([tempPoints[tempPoints.length - 2], point], pendingVolumeColor.line);
                 tempVisuals.push(line);
             }
 
@@ -1335,16 +1763,14 @@
             if (tempPoints.length < 3) return;
 
             const points = [...tempPoints];
+            const mc = pendingVolumeColor || getNextMeasurementColor();
 
             // Close polygon
-            createLine([points[points.length - 1], points[0]], 0xeab308);
+            createLine([points[points.length - 1], points[0]], mc.line);
 
             // Base plane at average elevation of clicked points
             const avgY = points.reduce((s, p) => s + p.y, 0) / points.length;
 
-            // For volume: we need to sample the mesh surface within the polygon
-            // and compute the volume between mesh and base plane
-            // Simplified: use the 3D triangulated area * average height difference
             const projArea = shoelaceArea(points.map(p => [p.x, p.z]));
 
             // Sample some points within polygon to estimate average mesh height
@@ -1356,20 +1782,20 @@
             }
 
             // Create fill
-            createPolygonFill(points, 0xeab308, 0.25);
+            createPolygonFill(points, mc.fill, 0.25);
 
             // Label
             const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
             const cz = points.reduce((s, p) => s + p.z, 0) / points.length;
             createLabel(formatCuFt(volume), new THREE.Vector3(cx, avgY + 1, cz), {
-                bg: 'rgba(234, 179, 8, 0.9)'
+                bg: mc.bg
             });
 
             // Draw base plane indicator
             const basePlanePoints = points.map(p => new THREE.Vector3(p.x, avgY, p.z));
-            createPolygonFill(basePlanePoints, 0xeab308, 0.15);
+            createPolygonFill(basePlanePoints, mc.fill, 0.15);
 
-            measurements.push({ type: 'volume', points, volume, baseElevation: avgY });
+            measurements.push({ type: 'volume', points, volume, baseElevation: avgY, color: mc });
             window.measurements = measurements;
 
             showMeasureStats({
@@ -1380,6 +1806,7 @@
 
             tempPoints = [];
             tempVisuals = [];
+            pendingVolumeColor = null;
         }
 
         function sampleMeshHeightsInPolygon(polygon, sampleCount) {
@@ -1410,6 +1837,92 @@
             return heights;
         }
 
+        // Sample the actual mesh surface inside a polygon via dense raycast grid.
+        // Returns the average slope factor (trueArea/projArea ratio) from mesh geometry.
+        // Strategy: measure local slope at each grid cell that has mesh, then use the
+        // average slope factor × total projected area for the final true area.
+        // This avoids the coverage-scaling bug where gaps inflate the area.
+        function sampleMeshSurfaceArea(polygon, gridRes) {
+            gridRes = gridRes || 40;
+            const poly2D = polygon.map(p => [p.x, p.z]);
+            const xs = polygon.map(p => p.x);
+            const zs = polygon.map(p => p.z);
+            const minX = Math.min(...xs), maxX = Math.max(...xs);
+            const minZ = Math.min(...zs), maxZ = Math.max(...zs);
+            const stepX = (maxX - minX) / gridRes;
+            const stepZ = (maxZ - minZ) / gridRes;
+
+            // Elevation bounds — only accept hits near the polygon's Y range (roof level)
+            // The clicked points are at eave level; ridge is ABOVE (higher Y), so allow generous upward range
+            const ys = polygon.map(p => p.y);
+            const minY = Math.min(...ys);
+            const maxY = Math.max(...ys);
+            const yTop = maxY + 15;      // ridge could be many meters above eaves
+            const yBottom = minY - 0.3;  // eaves are the lowest roof point; walls are below
+
+            // Build height grid via downward raycasts
+            const grid = [];
+            const downDir = new THREE.Vector3(0, -1, 0);
+            for (let r = 0; r <= gridRes; r++) {
+                grid[r] = [];
+                const z = minZ + r * stepZ;
+                for (let c = 0; c <= gridRes; c++) {
+                    const x = minX + c * stepX;
+                    if (!pointInPolygon2D(x, z, poly2D)) {
+                        grid[r][c] = null;
+                        continue;
+                    }
+                    raycaster.set(new THREE.Vector3(x, 200, z), downDir);
+                    const hits = raycaster.intersectObjects(meshes, false);
+                    let hitY = null;
+                    for (const h of hits) {
+                        if (h.point.y >= yBottom && h.point.y <= yTop) {
+                            hitY = h.point.y;
+                            break;
+                        }
+                    }
+                    grid[r][c] = hitY;
+                }
+            }
+
+            // Compute slope factor per grid cell: ratio of 3D triangle area to flat cell area
+            const cellFlatArea = stepX * stepZ;
+            let slopeFactorSum = 0;
+            let cellCount = 0;
+            const v = (r, c) => new THREE.Vector3(minX + c * stepX, grid[r][c], minZ + r * stepZ);
+            for (let r = 0; r < gridRes; r++) {
+                for (let c = 0; c < gridRes; c++) {
+                    const tl = grid[r][c], tr = grid[r][c + 1];
+                    const bl = grid[r + 1][c], br = grid[r + 1][c + 1];
+                    if (tl !== null && tr !== null && bl !== null && br !== null) {
+                        // Two triangles per quad
+                        const ab1 = new THREE.Vector3().subVectors(v(r, c + 1), v(r, c));
+                        const ac1 = new THREE.Vector3().subVectors(v(r + 1, c), v(r, c));
+                        const area1 = ab1.cross(ac1).length() / 2;
+
+                        const ab2 = new THREE.Vector3().subVectors(v(r + 1, c + 1), v(r, c + 1));
+                        const ac2 = new THREE.Vector3().subVectors(v(r + 1, c), v(r, c + 1));
+                        const area2 = ab2.cross(ac2).length() / 2;
+
+                        const cellTrueArea = area1 + area2;
+                        slopeFactorSum += cellTrueArea / cellFlatArea;
+                        cellCount++;
+                    }
+                }
+            }
+
+            const totalCells = gridRes * gridRes;
+            const coverage = cellCount / totalCells;
+            // Average slope factor: how much larger the true area is vs flat per unit area
+            const avgSlopeFactor = cellCount > 0 ? slopeFactorSum / cellCount : 1.0;
+
+            // True area = projected footprint × average slope factor
+            const projArea = shoelaceArea(polygon.map(p => [p.x, p.z]));
+            const totalArea = projArea * avgSlopeFactor;
+
+            return { totalArea, coverage, cellCount, totalCells, avgSlopeFactor, projArea };
+        }
+
         function pointInPolygon2D(x, y, polygon) {
             let inside = false;
             for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
@@ -1433,7 +1946,9 @@
                 fontSize: '14px'
             });
 
-            measurements.push({ type: 'counter', point, count: counterCount });
+            measurements.push({ type: 'counter', point, count: counterCount, spheres: [marker], label });
+            const mIdx = measurements.length - 1;
+            pointSphereMap.set(marker, { mIdx, pIdx: 0 });
 
             // Update badge on counter button
             updateCounterBadge();
@@ -1470,9 +1985,11 @@
                 type: 'marker',
                 title: 'Marker',
                 point: point.clone(),
+                spheres: [marker],
                 label
             };
             measurements.push(measurement);
+            pointSphereMap.set(marker, { mIdx: measurements.length - 1, pIdx: 0 });
 
             saveMeasurementToDB(measurement, measurements.length - 1);
             showMarkerPanel(measurement, measurements.length - 1);
@@ -1498,6 +2015,497 @@
             panel.classList.add('open');
         }
 
+        // --- Window & Door Tools (2-click rectangles, vertical-wall assumed) ---
+        let pendingRectPoint1 = null;  // First corner point
+        let pendingRectType = null;    // 'window' or 'door'
+
+        function handleWindowClick(point, face) {
+            handleRectClick(point, face, 'window');
+        }
+
+        function handleDoorClick(point, face) {
+            handleRectClick(point, face, 'door');
+        }
+
+        function handleRectClick(point, face, type) {
+            if (!pendingRectPoint1) {
+                // First click — store corner
+                pendingRectPoint1 = point.clone();
+                pendingRectType = type;
+
+                const marker = createPointMarker(point, type === 'window' ? 0x06b6d4 : 0xd97706);
+                tempVisuals.push(marker);
+                tempPoints.push(point.clone());
+
+                updateMeasureInfo(`Click opposite corner of ${type}`);
+            } else {
+                // Second click — build the rectangle
+                finishRect(point.clone());
+            }
+        }
+
+        function finishRect(p2) {
+            const p1 = pendingRectPoint1;
+            const type = pendingRectType;
+            const isWindow = type === 'window';
+            const mc = getNextMeasurementColor();
+
+            // Build rectangle assuming vertical wall (true for all buildings)
+            // Height = Y difference, Width = horizontal (XZ) distance
+            const up = new THREE.Vector3(0, 1, 0);
+
+            // Horizontal direction from p1 to p2 (project onto XZ plane)
+            const horizDiff = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z);
+            const horizLen = horizDiff.length();
+            const right = horizLen > 0.001 ? horizDiff.normalize() : new THREE.Vector3(1, 0, 0);
+
+            // Width and height
+            const width = horizLen;
+            const height = p2.y - p1.y;
+
+            // Build 4 corners as a perfect rectangle on the wall
+            // Average the depth (distance from camera) between p1 and p2
+            const c0 = p1.clone(); // bottom-left (first click)
+            const c1 = p1.clone().add(right.clone().multiplyScalar(width)); // bottom-right
+            const c2 = p1.clone().add(right.clone().multiplyScalar(width)).add(up.clone().multiplyScalar(height)); // top-right
+            const c3 = p1.clone().add(up.clone().multiplyScalar(height)); // top-left
+            const corners = [c0, c1, c2, c3];
+
+            // Clean up temp visuals
+            tempVisuals.forEach(v => { scene.remove(v); if (v.geometry) v.geometry.dispose(); if (v.material) v.material.dispose(); });
+            tempVisuals = [];
+            tempPoints = [];
+
+            // Build visuals
+            const spheres = corners.map(c => createPointMarker(c, mc.line));
+            const lines = [];
+            for (let i = 0; i < 4; i++) {
+                lines.push(createLine([corners[i], corners[(i + 1) % 4]], mc.line));
+            }
+
+            const absW = Math.abs(width);
+            const absH = Math.abs(height);
+            const area = absW * absH;
+            const fillMesh = createPolygonFill(corners, mc.fill, 0.3);
+
+            // Label at centroid
+            const cx = corners.reduce((s, c) => s + c.x, 0) / 4;
+            const cy = corners.reduce((s, c) => s + c.y, 0) / 4;
+            const cz = corners.reduce((s, c) => s + c.z, 0) / 4;
+            // Compute outward normal from the rectangle plane (right × up)
+            const N = new THREE.Vector3().crossVectors(right, up).normalize();
+            const centroid = new THREE.Vector3(cx, cy, cz).add(N.clone().multiplyScalar(0.1));
+
+            const labelText = `${isWindow ? '🪟' : '🚪'} ${formatFeet(absW)} × ${formatFeet(absH)}`;
+            const label = createLabel(labelText, centroid, {
+                bg: mc.bg,
+                border: mc.border,
+                clickable: true
+            });
+
+            const measurement = {
+                type,
+                title: isWindow ? 'Window' : 'Door',
+                points: corners,
+                width: absW, height: absH, surfArea: area,
+                date: new Date().toLocaleDateString(),
+                fillMesh, label, spheres, lines,
+                color: mc
+            };
+            measurements.push(measurement);
+            const mIdx = measurements.length - 1;
+            spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+
+            saveMeasurementToDB(measurement, mIdx);
+
+            showMeasureStats({
+                'Type': isWindow ? 'Window' : 'Door',
+                'Width': formatFeet(absW),
+                'Height': formatFeet(absH),
+                'Area': formatSqFt(area)
+            });
+
+            // Reset state
+            pendingRectPoint1 = null;
+            pendingRectType = null;
+        }
+
+        function getLastHitObject() { return _lastHitObject; }
+
+        // --- Wall Tool (multipoint, surface-accurate) ---
+        let pendingWallColor = null;
+
+        function handleWallClick(point, face) {
+            if (tempPoints.length === 0) {
+                pendingWallColor = getNextMeasurementColor();
+            }
+
+            // Use raw raycaster point — always on model surface, no plane snapping
+            // (photogrammetry mesh face normals are unreliable for plane definition)
+            tempPoints.push(point.clone());
+
+            const marker = createPointMarker(point, pendingWallColor.line);
+            tempVisuals.push(marker);
+
+            if (tempPoints.length > 1) {
+                const line = createLine([tempPoints[tempPoints.length - 2], point], pendingWallColor.line);
+                tempVisuals.push(line);
+            }
+
+            if (tempPoints.length >= 3) {
+                updateWallPreview();
+            }
+
+            const hint = tempPoints.length >= 2 ? ' — hover first point or Enter to close' : '';
+            updateMeasureInfo(`Wall: ${tempPoints.length} points${hint}`);
+        }
+
+        function updateWallPreview() {
+            const surfArea = triangulatedSurfaceArea(tempPoints);
+            const perim = polygonPerimeter(tempPoints);
+            showMeasureStats({
+                'Wall Area': formatSqFt(surfArea),
+                'Perimeter': formatFeet(perim),
+                'Points': `${tempPoints.length}`
+            });
+        }
+
+        function finishWall() {
+            if (tempPoints.length < 3) return;
+            const points = tempPoints.map(p => p.clone());
+            const mc = pendingWallColor || getNextMeasurementColor();
+
+            tempVisuals.forEach(v => { scene.remove(v); if (v.geometry) v.geometry.dispose(); if (v.material) v.material.dispose(); });
+            tempVisuals = [];
+            tempPoints = [];
+
+            const spheres = points.map(p => createPointMarker(p, mc.line));
+            const lines = [];
+            for (let i = 0; i < points.length; i++) {
+                lines.push(createLine([points[i], points[(i + 1) % points.length]], mc.line));
+            }
+
+            const surfArea = triangulatedSurfaceArea(points);
+            const fillMesh = createPolygonFill(points, mc.fill, 0.3);
+
+            const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
+            const cy = points.reduce((s, p) => s + p.y, 0) / points.length;
+            const cz = points.reduce((s, p) => s + p.z, 0) / points.length;
+            const centroid = new THREE.Vector3(cx, cy, cz);
+
+            const label = createLabel(`Wall ${formatSqFt(surfArea)}`, centroid, {
+                bg: mc.bg, border: mc.border, clickable: true
+            });
+
+            const measurement = {
+                type: 'wall',
+                title: 'Wall',
+                points, surfArea,
+                date: new Date().toLocaleDateString(),
+                fillMesh, label, spheres, lines,
+                color: mc
+            };
+            measurements.push(measurement);
+            const mIdx = measurements.length - 1;
+            spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+
+            saveMeasurementToDB(measurement, mIdx);
+
+            showMeasureStats({
+                'Type': 'Wall',
+                'Area': formatSqFt(surfArea),
+                'Perimeter': formatFeet(polygonPerimeter(points)),
+                'Points': `${points.length}`
+            });
+
+            pendingWallColor = null;
+        }
+
+        function snapToPlane(point, planeOrigin, planeNormal) {
+            const diff = new THREE.Vector3().subVectors(point, planeOrigin);
+            const dist = diff.dot(planeNormal);
+            return point.clone().sub(planeNormal.clone().multiplyScalar(dist));
+        }
+
+        // --- Roof Tool (multipoint, pitch calculation, feature detection) ---
+        let pendingRoofColor = null;
+        let roofPlane = null; // { origin, normal } — last defined roof plane for scanning
+
+        function handleRoofClick(point, face) {
+            if (tempPoints.length === 0) {
+                pendingRoofColor = getNextMeasurementColor();
+            }
+            tempPoints.push(point.clone());
+
+            const marker = createPointMarker(point, pendingRoofColor.line);
+            tempVisuals.push(marker);
+
+            if (tempPoints.length > 1) {
+                const line = createLine([tempPoints[tempPoints.length - 2], point], pendingRoofColor.line);
+                tempVisuals.push(line);
+            }
+
+            if (tempPoints.length >= 3) {
+                updateRoofPreview();
+            }
+
+            const hint = tempPoints.length >= 2 ? ' — hover first point or Enter to finish' : '';
+            updateMeasureInfo(`Roof: ${tempPoints.length} points${hint}`);
+        }
+
+        function updateRoofPreview() {
+            const pitchInfo = calculateRoofPitch(tempPoints);
+            showMeasureStats({
+                'Pitch': pitchInfo.pitchStr,
+                'Slope': `${pitchInfo.slopeDeg.toFixed(1)}°`,
+                'True Area': formatSqFt(pitchInfo.trueArea),
+                'Projected': formatSqFt(pitchInfo.projArea),
+                'Factor': `${pitchInfo.avgSlopeFactor.toFixed(2)}x`,
+                'Points': `${tempPoints.length}`
+            });
+        }
+
+        function calculateRoofPitch(points) {
+            // Best-fit plane via SVD-lite (use first 3 points for normal, then average)
+            const v1 = new THREE.Vector3().subVectors(points[1], points[0]);
+            const v2 = new THREE.Vector3().subVectors(points[2], points[0]);
+            const normal = new THREE.Vector3().crossVectors(v1, v2).normalize();
+
+            // Ensure normal points "up" (positive Y component)
+            if (normal.y < 0) normal.negate();
+
+            // Slope angle = angle between normal and vertical (Y axis)
+            const slopeDeg = Math.acos(Math.abs(normal.y)) * (180 / Math.PI);
+
+            // Pitch as rise/12 run (standard roofing convention)
+            const slopeRad = slopeDeg * (Math.PI / 180);
+            const rise = Math.tan(slopeRad) * 12;
+            const pitchStr = `${rise.toFixed(1)}/12`;
+
+            // Projected area (plan view footprint)
+            const projArea = shoelaceArea(points.map(p => [p.x, p.z]));
+
+            // True surface area — raycast grid onto actual mesh, measure average slope,
+            // then apply slope factor to full projected footprint.
+            // This correctly handles gaps (they don't inflate the area).
+            const meshSample = sampleMeshSurfaceArea(points, 50);
+
+            let trueArea;
+            let avgSlopeFactor = 1.0;
+            if (meshSample.cellCount > 10) {
+                // Use mesh-derived slope factor applied to full projected area
+                trueArea = meshSample.totalArea;
+                avgSlopeFactor = meshSample.avgSlopeFactor;
+            } else {
+                // Not enough mesh data — use flat polygon area
+                trueArea = triangulatedSurfaceArea(points);
+            }
+
+            // Derive effective pitch from slope factor: factor = 1/cos(slope)
+            let effectiveSlopeDeg = slopeDeg;
+            let effectiveRise = rise;
+            let effectivePitchStr = pitchStr;
+            if (avgSlopeFactor > 1.0) {
+                effectiveSlopeDeg = Math.acos(1.0 / avgSlopeFactor) * (180 / Math.PI);
+                const effRad = effectiveSlopeDeg * (Math.PI / 180);
+                effectiveRise = Math.tan(effRad) * 12;
+                effectivePitchStr = `${effectiveRise.toFixed(1)}/12`;
+            }
+
+            return {
+                normal, slopeDeg: effectiveSlopeDeg, rise: effectiveRise,
+                pitchStr: effectivePitchStr, trueArea, projArea,
+                meshCoverage: meshSample.coverage, avgSlopeFactor
+            };
+        }
+
+        function finishRoof() {
+            if (tempPoints.length < 3) return;
+            const points = tempPoints.map(p => p.clone());
+            const mc = pendingRoofColor || getNextMeasurementColor();
+
+            tempVisuals.forEach(v => { scene.remove(v); if (v.geometry) v.geometry.dispose(); if (v.material) v.material.dispose(); });
+            tempVisuals = [];
+            tempPoints = [];
+
+            const pitchInfo = calculateRoofPitch(points);
+
+            // Store the roof plane for feature scanning
+            const centroidX = points.reduce((s, p) => s + p.x, 0) / points.length;
+            const centroidY = points.reduce((s, p) => s + p.y, 0) / points.length;
+            const centroidZ = points.reduce((s, p) => s + p.z, 0) / points.length;
+            roofPlane = {
+                origin: new THREE.Vector3(centroidX, centroidY, centroidZ),
+                normal: pitchInfo.normal.clone(),
+                points: points
+            };
+
+            const spheres = points.map(p => createPointMarker(p, mc.line));
+            const lines = [];
+            for (let i = 0; i < points.length; i++) {
+                lines.push(createLine([points[i], points[(i + 1) % points.length]], mc.line));
+            }
+
+            const fillMesh = createPolygonFill(points, mc.fill, 0.3);
+            const centroid = new THREE.Vector3(centroidX, centroidY + 0.3, centroidZ);
+
+            const slopeInfo = pitchInfo.avgSlopeFactor > 1 ? ` · ${pitchInfo.avgSlopeFactor.toFixed(2)}x slope` : '';
+            const labelText = `⛺ ${pitchInfo.pitchStr} pitch · ${formatSqFt(pitchInfo.trueArea)}${slopeInfo}`;
+            const label = createLabel(labelText, centroid, {
+                bg: mc.bg, border: mc.border, clickable: true
+            });
+
+            const measurement = {
+                type: 'roof',
+                title: 'Roof Face',
+                points,
+                pitch: pitchInfo.pitchStr,
+                slopeDeg: pitchInfo.slopeDeg,
+                surfArea: pitchInfo.trueArea,
+                projArea: pitchInfo.projArea,
+                date: new Date().toLocaleDateString(),
+                fillMesh, label, spheres, lines,
+                color: mc
+            };
+            measurements.push(measurement);
+            const mIdx = measurements.length - 1;
+            spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx, pIdx }));
+
+            saveMeasurementToDB(measurement, mIdx);
+
+            showMeasureStats({
+                'Pitch': pitchInfo.pitchStr,
+                'Slope': `${pitchInfo.slopeDeg.toFixed(1)}°`,
+                'True Area': formatSqFt(pitchInfo.trueArea),
+                'Projected': formatSqFt(pitchInfo.projArea),
+                'Slope Factor': `${pitchInfo.avgSlopeFactor.toFixed(2)}x`,
+                'Mesh': `${(pitchInfo.meshCoverage * 100).toFixed(0)}%`
+            });
+
+            // Auto-scan for roof features above this plane
+            const features = scanRoofFeatures(roofPlane, points);
+            if (features.length > 0) {
+                features.forEach((f, i) => {
+                    const fmc = getNextMeasurementColor();
+                    const fLabel = createLabel(
+                        `⚠ Feature ${i + 1}: ${formatFeet(f.width)}×${formatFeet(f.height)} · ${formatFeet(f.protrusion)} above`,
+                        f.center.clone().add(new THREE.Vector3(0, 0.3, 0)),
+                        { bg: 'rgba(245, 158, 11, 0.9)', border: '#f59e0b', clickable: true }
+                    );
+                    const fMeasurement = {
+                        type: 'roof_feature',
+                        title: `Roof Feature ${i + 1}`,
+                        points: [f.center],
+                        width: f.width, height: f.height, protrusion: f.protrusion,
+                        featureType: 'unknown', // User can relabel: dormer, vent, chimney, skylight
+                        date: new Date().toLocaleDateString(),
+                        label: fLabel, spheres: [], lines: [],
+                        color: fmc
+                    };
+                    measurements.push(fMeasurement);
+                });
+                window.measurements = measurements;
+                console.log(`Found ${features.length} roof features above the defined plane`);
+            }
+
+            pendingRoofColor = null;
+        }
+
+        function scanRoofFeatures(plane, boundaryPoints) {
+            // Cast a grid of rays downward over the roof polygon
+            // Any hits significantly above the expected plane = feature
+            const features = [];
+            if (!plane || !boundaryPoints || boundaryPoints.length < 3) return features;
+
+            const N = plane.normal;
+            const O = plane.origin;
+
+            // Compute bounding box of the roof polygon in XZ
+            let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity, maxY = -Infinity;
+            boundaryPoints.forEach(p => {
+                minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
+                minZ = Math.min(minZ, p.z); maxZ = Math.max(maxZ, p.z);
+                maxY = Math.max(maxY, p.y);
+            });
+
+            const STEP = 0.15; // Ray grid spacing in meters
+            const THRESHOLD = 0.3; // Min protrusion above plane to count as feature (meters)
+            const protrusions = []; // {x, z, protrusion, hitY}
+
+            const downDir = new THREE.Vector3(0, -1, 0);
+            const scanRay = new THREE.Raycaster();
+
+            for (let x = minX; x <= maxX; x += STEP) {
+                for (let z = minZ; z <= maxZ; z += STEP) {
+                    // Check if (x, z) is inside the roof polygon
+                    if (!pointInPoly2D(x, z, boundaryPoints.map(p => [p.x, p.z]))) continue;
+
+                    // Expected Y on the roof plane at this (x, z)
+                    // Plane equation: N · (P - O) = 0 → N.x*(x-O.x) + N.y*(y-O.y) + N.z*(z-O.z) = 0
+                    // Solve for y: y = O.y - (N.x*(x-O.x) + N.z*(z-O.z)) / N.y
+                    if (Math.abs(N.y) < 0.01) continue; // Near-vertical plane, skip
+                    const expectedY = O.y - (N.x * (x - O.x) + N.z * (z - O.z)) / N.y;
+
+                    // Cast ray from above
+                    scanRay.set(new THREE.Vector3(x, maxY + 5, z), downDir);
+                    const hits = scanRay.intersectObjects(meshes, false);
+                    if (hits.length > 0) {
+                        const hitY = hits[0].point.y;
+                        const protrusion = hitY - expectedY;
+                        if (protrusion > THRESHOLD) {
+                            protrusions.push({ x, z, protrusion, hitY });
+                        }
+                    }
+                }
+            }
+
+            if (protrusions.length === 0) return features;
+
+            // Simple clustering: group nearby protrusion points
+            const visited = new Set();
+            for (let i = 0; i < protrusions.length; i++) {
+                if (visited.has(i)) continue;
+                const cluster = [protrusions[i]];
+                visited.add(i);
+                const queue = [i];
+                while (queue.length > 0) {
+                    const ci = queue.shift();
+                    const cp = protrusions[ci];
+                    for (let j = 0; j < protrusions.length; j++) {
+                        if (visited.has(j)) continue;
+                        const jp = protrusions[j];
+                        const dx = cp.x - jp.x, dz = cp.z - jp.z;
+                        if (dx * dx + dz * dz < (STEP * 2.5) * (STEP * 2.5)) {
+                            cluster.push(jp);
+                            visited.add(j);
+                            queue.push(j);
+                        }
+                    }
+                }
+
+                // Only report clusters with enough points (filter noise)
+                if (cluster.length >= 3) {
+                    let fMinX = Infinity, fMaxX = -Infinity, fMinZ = Infinity, fMaxZ = -Infinity;
+                    let totalProt = 0, totalY = 0;
+                    cluster.forEach(p => {
+                        fMinX = Math.min(fMinX, p.x); fMaxX = Math.max(fMaxX, p.x);
+                        fMinZ = Math.min(fMinZ, p.z); fMaxZ = Math.max(fMaxZ, p.z);
+                        totalProt += p.protrusion;
+                        totalY += p.hitY;
+                    });
+                    features.push({
+                        center: new THREE.Vector3((fMinX + fMaxX) / 2, totalY / cluster.length, (fMinZ + fMaxZ) / 2),
+                        width: fMaxX - fMinX,
+                        height: fMaxZ - fMinZ,
+                        protrusion: totalProt / cluster.length,
+                        pointCount: cluster.length
+                    });
+                }
+            }
+
+            return features;
+        }
+
         // ========== Camera System ==========
         let camerasVisible = false;
         let cameraFrustums = []; // {mesh, label, data} for each camera
@@ -1507,10 +2515,32 @@
         let cameraModelBbox = null; // Model bounding box from cameras.json
         let cameraOffset = { x: 0, y: 0, z: 0 }; // Manual camera offset adjustment
 
-        async function loadCameras() {
+        let currentCamerasPath = 'cameras/'; // Per-model cameras path
+        let currentModelHasThermal = true; // Per-model thermal flag
+
+        async function loadCameras(modelId) {
+            // Clear existing camera data
+            cameraFrustums.forEach(cf => {
+                scene.remove(cf.mesh);
+                scene.remove(cf.label);
+            });
+            cameraFrustums = [];
+            cameraData = [];
+            cameraJson = {};
+            cameraModelBbox = null;
+
+            const config = modelId ? MODELS[modelId] : null;
+            currentCamerasPath = (config && config.camerasPath) || 'cameras/';
+            currentModelHasThermal = config ? (config.hasThermal !== false) : true;
+
+            // Reset thermal mode if model doesn't support it
+            if (!currentModelHasThermal) {
+                showThermal = false;
+            }
+
             try {
-                const resp = await fetch('cameras/cameras.json');
-                if (!resp.ok) { console.log('No cameras.json found'); return; }
+                const resp = await fetch(currentCamerasPath + 'cameras.json');
+                if (!resp.ok) { console.log('No cameras.json found at ' + currentCamerasPath); return; }
                 cameraJson = await resp.json();
                 cameraData = cameraJson.cameras || [];
                 cameraModelBbox = cameraJson.model_bbox || null;
@@ -1823,21 +2853,32 @@
 
         let showThermal = false; // Toggle between visible and thermal
 
+        function resolvePhotoUrl(path) {
+            if (!path) return null;
+            return path.startsWith('http') ? path : currentCamerasPath + path;
+        }
+
         function showPhotoOverlay(cam) {
+            // Prefer local files first, then Dropbox permanent URL as fallback
             const src = showThermal
-                ? (cam.thermal_full ? 'cameras/' + cam.thermal_full : cam.thermal_thumbnail ? 'cameras/' + cam.thermal_thumbnail : null)
-                : (cam.full_image ? 'cameras/' + cam.full_image : cam.thumbnail ? 'cameras/' + cam.thumbnail : null);
-            if (!src) return;
+                ? (resolvePhotoUrl(cam.thermal_full) || resolvePhotoUrl(cam.thermal_thumbnail))
+                : (resolvePhotoUrl(cam.full_image) || resolvePhotoUrl(cam.thumbnail));
+            const fallbackSrc = !showThermal && cam.fullResUrl ? resolvePhotoUrl(cam.fullResUrl) : null;
+            if (!src && !fallbackSrc) return;
             const img = document.getElementById('photo-overlay-img');
             img.classList.remove('visible');
-            img.src = src;
-            document.getElementById('photo-overlay').classList.add('show');
-            // Fade in after image loads (or immediately if cached)
+            img.onerror = () => {
+                // If local file fails, try Dropbox URL
+                if (fallbackSrc && img.src !== fallbackSrc) {
+                    img.src = fallbackSrc;
+                }
+            };
             img.onload = () => {
                 requestAnimationFrame(() => img.classList.add('visible'));
             };
-            // In case image is already cached and onload doesn't fire
-            if (img.complete) {
+            img.src = src || fallbackSrc;
+            document.getElementById('photo-overlay').classList.add('show');
+            if (img.complete && img.naturalWidth > 0) {
                 requestAnimationFrame(() => img.classList.add('visible'));
             }
         }
@@ -1875,7 +2916,7 @@
                     <div class="panel-label">Date</div>
                     <div class="panel-value">${cam.datetime ? new Date(cam.datetime).toLocaleString() : '—'}</div>
                 </div>
-                ${cam.thermal_thumbnail ? `
+                ${(currentModelHasThermal && cam.thermal_thumbnail) ? `
                 <div class="panel-field">
                     <div class="panel-label">Image Mode</div>
                     <div style="display:flex;gap:4px;">
@@ -1892,7 +2933,7 @@
                 </div>
                 ${cam.thumbnail ? `
                 <div style="margin-top:8px;">
-                    <img id="panel-cam-img" src="cameras/${showThermal && cam.thermal_thumbnail ? cam.thermal_thumbnail : cam.thumbnail}" style="width:100%;border-radius:6px;border:1px solid rgba(255,255,255,0.15);">
+                    <img id="panel-cam-img" src="${resolvePhotoUrl(showThermal && cam.thermal_thumbnail ? cam.thermal_thumbnail : cam.thumbnail)}" style="width:100%;border-radius:6px;border:1px solid rgba(255,255,255,0.15);">
                 </div>` : ''}
             `;
             panel.classList.add('open');
@@ -1949,9 +2990,9 @@
         }
 
         function undoLastPoint() {
+            // Case 1: drawing a NEW polygon — undo the most recent tempPoint
             if (tempPoints.length > 0) {
                 tempPoints.pop();
-                // Remove last visual marker and line
                 if (tempVisuals.length > 0) {
                     const last = tempVisuals.pop();
                     if (last) {
@@ -1960,7 +3001,6 @@
                         if (last.material) last.material.dispose();
                     }
                 }
-                // Also remove the connecting line if there was one
                 if (tempVisuals.length > 0 && tempPoints.length > 0) {
                     const lastLine = tempVisuals[tempVisuals.length - 1];
                     if (lastLine && lastLine.isLine) {
@@ -1973,7 +3013,149 @@
                 } else {
                     hideMeasureInfo();
                 }
+                return;
             }
+
+            // Case 2: editing an EXISTING measurement — reverse the last insert/delete
+            if (_editHistory.length === 0) {
+                updateMeasureInfo('Nothing to undo');
+                return;
+            }
+            const entry = _editHistory.pop();
+            // Find the measurement by dbId (the index may have shifted if something was deleted)
+            let mIdx = entry.mIdx;
+            if (!measurements[mIdx] || measurements[mIdx].dbId !== entry.dbId) {
+                mIdx = measurements.findIndex(mm => mm.dbId === entry.dbId);
+            }
+            if (mIdx < 0) {
+                updateMeasureInfo('Undo target is gone');
+                return;
+            }
+            if (entry.kind === 'insert') {
+                // Reverse an insert by deleting the same pIdx (no new history entry)
+                deletePointFromMeasurement(mIdx, entry.pIdx, false);
+            } else if (entry.kind === 'delete') {
+                // Reverse a delete by inserting the point back at the same pIdx
+                const m = measurements[mIdx];
+                const pos = new THREE.Vector3(entry.point.x, entry.point.y, entry.point.z);
+                m.points.splice(entry.pIdx, 0, pos);
+                const mc = m.color || { line: 0xa855f7 };
+                const newSphere = createPointMarker(pos, mc.line);
+                m.spheres.splice(entry.pIdx, 0, newSphere);
+                m.spheres.forEach((s, i) => pointSphereMap.set(s, { mIdx, pIdx: i }));
+                recalcMeasurement(mIdx);
+                debouncedUpdateMeasurement(m);
+            }
+            const sel = selectedMeasurementIdx >= 0 ? measurements[selectedMeasurementIdx] : null;
+            if (sel) {
+                updateMeasureInfo(`${sel.type} selected — undid last point edit (${_editHistory.length} left)`);
+            }
+        }
+
+        // ========== Measurement Selection & Deletion ==========
+        // Legacy static edge handles removed — the hover + marker is the insert UI.
+        function _buildEdgeHandles(m, mIdx) { /* no-op */ }
+        function _clearEdgeHandles(m) {
+            if (!m._edgeHandles) return;
+            m._edgeHandles.forEach(h => removeObj(h));
+            m._edgeHandles = null;
+        }
+
+        function selectMeasurement(mIdx) {
+            deselectMeasurement(); // Clear previous selection
+            if (mIdx < 0 || mIdx >= measurements.length) return;
+            selectedMeasurementIdx = mIdx;
+            const m = measurements[mIdx];
+            // Highlight spheres with a pulsing outline effect
+            if (m.spheres) {
+                m.spheres.forEach(s => {
+                    s.scale.setScalar(2.5);
+                    s._wasSelected = true;
+                });
+            }
+            // Boost fill opacity so the selected shape stands out
+            if (m.fillMesh && m.fillMesh.material) {
+                if (m.fillMesh.material._origOpacity == null) {
+                    m.fillMesh.material._origOpacity = m.fillMesh.material.opacity;
+                }
+                m.fillMesh.material.opacity = Math.min(0.7, (m.fillMesh.material._origOpacity || 0.3) + 0.4);
+                m.fillMesh.material.transparent = true;
+                m.fillMesh.material.needsUpdate = true;
+            }
+            // Thicken the outline lines
+            if (m.lines) {
+                m.lines.forEach(l => {
+                    if (l.material) {
+                        if (l.material._origOpacity == null) l.material._origOpacity = l.material.opacity;
+                        l.material.opacity = 1.0;
+                        l.material.needsUpdate = true;
+                    }
+                });
+            }
+            _buildEdgeHandles(m, mIdx);
+            updateMeasureInfo(`${m.type} selected — hover an edge for a + marker and click to add a vertex, drag corners to reshape, Delete to remove`);
+        }
+
+        function deselectMeasurement() {
+            if (selectedMeasurementIdx >= 0 && selectedMeasurementIdx < measurements.length) {
+                const m = measurements[selectedMeasurementIdx];
+                if (m.spheres) {
+                    m.spheres.forEach(s => {
+                        s.scale.setScalar(1);
+                        s._wasSelected = false;
+                    });
+                }
+                // Restore fill opacity
+                if (m.fillMesh && m.fillMesh.material && m.fillMesh.material._origOpacity != null) {
+                    m.fillMesh.material.opacity = m.fillMesh.material._origOpacity;
+                    m.fillMesh.material.needsUpdate = true;
+                }
+                // Restore line opacity
+                if (m.lines) {
+                    m.lines.forEach(l => {
+                        if (l.material && l.material._origOpacity != null) {
+                            l.material.opacity = l.material._origOpacity;
+                            l.material.needsUpdate = true;
+                        }
+                    });
+                }
+                _clearEdgeHandles(m);
+            }
+            selectedMeasurementIdx = -1;
+        }
+
+        function deleteMeasurementByIndex(mIdx) {
+            if (mIdx < 0 || mIdx >= measurements.length) return;
+            const m = measurements[mIdx];
+
+            // Remove visuals from scene
+            if (m.spheres) m.spheres.forEach(s => {
+                pointSphereMap.delete(s);
+                removeObj(s);
+            });
+            if (m.lines) m.lines.forEach(l => removeObj(l));
+            if (m.label) scene.remove(m.label);
+            if (m.fillMesh) removeObj(m.fillMesh);
+            if (m.marker) scene.remove(m.marker); // for counter/marker types
+            _clearEdgeHandles(m);
+
+            // Delete from DB
+            deleteMeasurementFromDB(m);
+
+            // Remove from array
+            measurements.splice(mIdx, 1);
+
+            // Rebuild pointSphereMap indices (they shifted)
+            pointSphereMap.clear();
+            measurements.forEach((meas, idx) => {
+                if (meas.spheres) {
+                    meas.spheres.forEach((s, pIdx) => pointSphereMap.set(s, { mIdx: idx, pIdx }));
+                }
+            });
+
+            selectedMeasurementIdx = -1;
+            window.measurements = measurements;
+            hideMeasureInfo();
         }
 
         // ========== Measurement Point Dragging ==========
@@ -1997,32 +3179,96 @@
 
             const pts = m.points;
             if (m.type === 'height') {
-                const rebuilt = buildHeightVisuals(pts[0], pts[1]);
+                const rebuilt = buildHeightVisuals(pts[0], pts[1], m.color);
                 m.lines = rebuilt.lines; m.label = rebuilt.label; m.heightM = rebuilt.heightM;
                 // Update sphere positions
                 if (m.spheres) { m.spheres[0].position.copy(pts[0]); m.spheres[1].position.copy(pts[1]); }
             } else if (m.type === 'length') {
-                const rebuilt = buildLengthVisuals(pts[0], pts[1]);
+                const rebuilt = buildLengthVisuals(pts[0], pts[1], m.color);
                 m.lines = rebuilt.lines; m.label = rebuilt.label;
                 m.dist3D = rebuilt.dist3D; m.distH = rebuilt.distH; m.slopeAngle = rebuilt.slopeAngle;
                 if (m.spheres) { m.spheres[0].position.copy(pts[0]); m.spheres[1].position.copy(pts[1]); }
             } else if (m.type === 'area') {
-                // Rebuild lines
+                const mc = m.color || { line: 0xa855f7, fill: 0x8b5cf6, bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7' };
                 const lines = [];
                 for (let i = 0; i < pts.length; i++) {
-                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], 0xa855f7));
+                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
                 }
                 m.lines = lines;
                 m.projArea = shoelaceArea(pts.map(p => [p.x, p.z]));
                 m.surfArea = triangulatedSurfaceArea(pts);
-                m.fillMesh = createPolygonFill(pts, 0x8b5cf6, 0.3);
+                m.fillMesh = createPolygonFill(pts, mc.fill, 0.3);
                 const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
                 const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
                 const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
                 m.label = createLabel(formatSqFt(m.surfArea), new THREE.Vector3(cx, cy + 0.5, cz), {
-                    bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7', clickable: true
+                    bg: mc.bg, border: mc.border, clickable: true
                 });
                 if (m.spheres) pts.forEach((p, i) => m.spheres[i].position.copy(p));
+            } else if (m.type === 'wall' || m.type === 'roof') {
+                const mc = m.color || { line: 0xa855f7, fill: 0x8b5cf6, bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7' };
+                // Rebuild edge lines
+                const lines = [];
+                for (let i = 0; i < pts.length; i++) {
+                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
+                }
+                m.lines = lines;
+                // Rebuild fill mesh — use a FLAT polygon fill for roofs so the overlay
+                // follows the user's anchor plane, not every bump on the mesh.
+                m.fillMesh = createPolygonFill(pts, mc.fill, 0.3);
+                // Recompute areas + label
+                const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+                const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                let labelText;
+                if (m.type === 'roof') {
+                    const pitchInfo = calculateRoofPitch(pts);
+                    m.surfArea = pitchInfo.trueArea;
+                    m.pitch = pitchInfo.pitchStr;
+                    m.slopeDeg = pitchInfo.slopeDeg;
+                    const slopeInfo = pitchInfo.avgSlopeFactor > 1 ? ` · ${pitchInfo.avgSlopeFactor.toFixed(2)}x slope` : '';
+                    labelText = `⛺ ${pitchInfo.pitchStr} pitch · ${formatSqFt(m.surfArea)}${slopeInfo}`;
+                } else {
+                    m.surfArea = triangulatedSurfaceArea(pts);
+                    labelText = `Wall ${formatSqFt(m.surfArea)}`;
+                }
+                m.label = createLabel(labelText, new THREE.Vector3(cx, cy + 0.3, cz), {
+                    bg: mc.bg, border: mc.border, clickable: true
+                });
+                if (m.spheres) pts.forEach((p, i) => m.spheres[i] && m.spheres[i].position.copy(p));
+            } else if (m.type === 'volume') {
+                // Volume rebuild is complex; rebuild the lines at least so the polygon outline
+                // doesn't vanish. Area/height recomputation is intentionally left to full rebuild.
+                const mc = m.color || { line: 0xa855f7, fill: 0x8b5cf6 };
+                const lines = [];
+                for (let i = 0; i < pts.length; i++) {
+                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
+                }
+                m.lines = lines;
+                if (m.spheres) pts.forEach((p, i) => m.spheres[i] && m.spheres[i].position.copy(p));
+            } else if (m.type === 'window' || m.type === 'door') {
+                const mc = m.color || { line: 0xa855f7, fill: 0x8b5cf6, bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7' };
+                const lines = [];
+                for (let i = 0; i < pts.length; i++) {
+                    lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
+                }
+                m.lines = lines;
+                m.fillMesh = createPolygonFill(pts, mc.fill, 0.3);
+                if (pts.length === 4) {
+                    const v1 = new THREE.Vector3().subVectors(pts[1], pts[0]);
+                    const v2 = new THREE.Vector3().subVectors(pts[3], pts[0]);
+                    m.width = v1.length();
+                    m.height = v2.length();
+                    m.surfArea = m.width * m.height;
+                }
+                const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+                const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                const icon = m.type === 'window' ? '🪟' : '🚪';
+                m.label = createLabel(`${icon} ${formatFeet(m.width || 0)} × ${formatFeet(m.height || 0)}`,
+                    new THREE.Vector3(cx, cy, cz),
+                    { bg: mc.bg, border: mc.border, clickable: true });
+                if (m.spheres) pts.forEach((p, i) => m.spheres[i] && m.spheres[i].position.copy(p));
             }
             debouncedUpdateMeasurement(m);
         }
@@ -2048,11 +3294,11 @@
                     </div>
                 `;
             }
-            // Add action buttons
+            // Add action buttons — scoped to selected measurement
             el.innerHTML += `
                 <div style="display:flex;gap:6px;margin-left:8px;border-left:1px solid rgba(255,255,255,0.15);padding-left:10px;">
-                    <button class="action-btn" onclick="window._undoLast()" title="Undo last">Undo</button>
-                    <button class="action-btn danger" onclick="window._clearAll()" title="Clear all measurements">Clear All</button>
+                    <button class="action-btn" onclick="window._deleteLastPointFromSelected()" title="Remove last vertex from selected polygon">Del Point</button>
+                    <button class="action-btn" onclick="window._deleteSelectedMeasurement()" title="Delete selected measurement">Delete Shape</button>
                 </div>
             `;
             el.classList.add('show');
@@ -2060,11 +3306,14 @@
 
         function updateMeasureInfo(text) {
             const el = document.getElementById('measure-info');
+            const anyHidden = window._anyOthersHidden && window._anyOthersHidden();
             el.innerHTML = `
                 <div style="font-size:13px;color:var(--text-dim)">${text}</div>
                 <div style="display:flex;gap:6px;margin-left:8px;">
                     <button class="action-btn" onclick="window._undoPoint()" title="Undo last point">Undo Point</button>
-                    <button class="action-btn danger" onclick="window._clearAll()" title="Clear all">Clear All</button>
+                    <button class="action-btn" onclick="window._hideOthers()" title="Hide every other measurement so only the selected shape is visible">Hide Others</button>
+                    <button class="action-btn" onclick="window._showAll()" title="Make every measurement visible again"${anyHidden ? '' : ' style="opacity:0.5"'}>Show All</button>
+                    <button class="action-btn" onclick="window._deleteSelectedMeasurement()" title="Delete selected shape">Delete Shape</button>
                 </div>
             `;
             el.classList.add('show');
@@ -2081,6 +3330,246 @@
         // ========== Event Handlers ==========
 
         // Tool selection
+        // ========== POI Photo Lookup ==========
+        let poiPoints = [];     // [{position: Vector3, marker: CSS2DObject, sphere: Mesh}]
+        let poiPhotos = [];     // RPC results
+        let poiMode = 'any';    // 'any' or 'all'
+
+        function handlePoiClick(point) {
+            // Create amber marker sphere on model surface
+            const geo = new THREE.SphereGeometry(0.03, 16, 16);
+            const mat = new THREE.MeshBasicMaterial({ color: 0xf59e0b, depthTest: false, transparent: true, opacity: 0.9 });
+            const sphere = new THREE.Mesh(geo, mat);
+            sphere.position.copy(point);
+            sphere.renderOrder = 999;
+            scene.add(sphere);
+
+            // CSS2D label showing POI number
+            const div = document.createElement('div');
+            div.style.cssText = 'width:20px;height:20px;border-radius:50%;background:#f59e0b;border:2px solid #fff;box-shadow:0 0 8px rgba(245,158,11,0.6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#000;cursor:pointer;';
+            div.textContent = poiPoints.length + 1;
+            div.title = 'Click to remove';
+            const label = new CSS2DObject(div);
+            label.position.copy(point).add(new THREE.Vector3(0, 0.5, 0));
+            scene.add(label);
+
+            const idx = poiPoints.length;
+            div.addEventListener('click', (e) => {
+                e.stopPropagation();
+                removePoiPoint(idx);
+            });
+
+            poiPoints.push({ position: point.clone(), marker: label, sphere });
+            queryPoiPhotos();
+        }
+
+        async function queryPoiPhotos() {
+            const modelId = document.getElementById('model-picker').value;
+            const statusEl = document.getElementById('poi-gallery-status');
+            statusEl.textContent = 'Searching photos...';
+
+            // Open gallery panel
+            document.getElementById('poi-gallery-panel').classList.add('open');
+
+            try {
+                if (poiPoints.length === 1) {
+                    const p = poiPoints[0].position;
+                    const { data, error } = await supabase.rpc('photos_seeing_point', {
+                        p_model_id: modelId,
+                        p_x: p.x,
+                        p_y: p.y,
+                        p_z: p.z,
+                        p_max_results: 50
+                    });
+                    if (error) { statusEl.textContent = `Error: ${error.message}`; return; }
+                    poiPhotos = data || [];
+                } else if (poiPoints.length > 1) {
+                    const points = poiPoints.map(pp => ({
+                        x: pp.position.x, y: pp.position.y, z: pp.position.z
+                    }));
+                    const { data, error } = await supabase.rpc('photos_seeing_points', {
+                        p_model_id: modelId,
+                        p_points: points,
+                        p_mode: poiMode,
+                        p_max_results: 50
+                    });
+                    if (error) { statusEl.textContent = `Error: ${error.message}`; return; }
+                    poiPhotos = data || [];
+                }
+
+                const poiCount = poiPoints.length;
+                statusEl.textContent = `${poiPhotos.length} photo${poiPhotos.length !== 1 ? 's' : ''} found for ${poiCount} POI${poiCount > 1 ? 's' : ''}${poiCount > 1 ? ` (${poiMode})` : ''}`;
+                renderPoiGallery();
+            } catch (err) {
+                statusEl.textContent = `Error: ${err.message}`;
+            }
+        }
+
+        function renderPoiGallery() {
+            const grid = document.getElementById('poi-gallery-grid');
+            grid.innerHTML = '';
+
+            if (poiPhotos.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-dim);font-size:12px;">No photos can see this point.<br>Try clicking a different spot on the model.</div>';
+                return;
+            }
+
+            poiPhotos.forEach((photo, i) => {
+                const card = document.createElement('div');
+                card.className = 'poi-photo-card';
+
+                const thumbSrc = photo.thumbnail_path
+                    ? (photo.thumbnail_path.startsWith('http') ? photo.thumbnail_path : `${currentCamerasPath}${photo.thumbnail_path}`)
+                    : photo.full_image_path
+                        ? (photo.full_image_path.startsWith('http') ? photo.full_image_path : `${currentCamerasPath}${photo.full_image_path}`)
+                        : '';
+
+                const dist = typeof photo.distance === 'number'
+                    ? `${(photo.distance * 3.28084).toFixed(0)}ft`
+                    : photo.avg_view_score
+                        ? `score: ${photo.avg_view_score.toFixed(1)}`
+                        : '';
+
+                const rank = i + 1;
+                const ptsVis = photo.points_visible ? ` · ${photo.points_visible}pts` : '';
+
+                if (thumbSrc) {
+                    card.innerHTML = `
+                        <img src="${thumbSrc}" loading="lazy" alt="${photo.filename || ''}">
+                        <span class="rank-badge">#${rank}${ptsVis}</span>
+                        <span class="dist-badge">${dist}</span>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div style="aspect-ratio:4/3;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-dim);">${photo.filename || 'No thumb'}</div>
+                        <span class="rank-badge">#${rank}${ptsVis}</span>
+                    `;
+                }
+
+                card.addEventListener('click', () => flyToPoiPhoto(photo, i));
+                grid.appendChild(card);
+            });
+        }
+
+        function flyToPoiPhoto(photo, cardIndex) {
+            // Highlight active card
+            document.querySelectorAll('.poi-photo-card').forEach((c, i) => {
+                c.classList.toggle('active', i === cardIndex);
+            });
+
+            // Build camera-compatible data object from DB row
+            const fovHDeg = (photo.fov_h_rad || 0.6) * 360 / Math.PI;
+            const fovVDeg = (photo.fov_v_rad || 0.48) * 360 / Math.PI;
+            const cam = {
+                forward_threejs: [photo.fwd_x, photo.fwd_y, photo.fwd_z],
+                up_threejs: [photo.up_x, photo.up_y, photo.up_z],
+                fov_v: fovVDeg,
+                fov_h: fovHDeg,
+                width: photo.image_width || 8000,
+                height: photo.image_height || 6000,
+                thumbnail: photo.thumbnail_path || null,
+                full_image: photo.full_image_path || null,
+                thermal_thumbnail: photo.thermal_thumbnail_path || null,
+                thermal_full: photo.thermal_full_path || null,
+                file: photo.filename,
+            };
+
+            // Use the existing flyToCamera animation logic
+            // Save current camera state
+            savedCameraState = {
+                position: camera.position.clone(),
+                target: controls.target.clone(),
+                fov: camera.fov,
+                up: camera.up.clone(),
+            };
+
+            const targetPos = new THREE.Vector3(photo.pos_x, photo.pos_y, photo.pos_z);
+            const lookDir = new THREE.Vector3(photo.fwd_x, photo.fwd_y, photo.fwd_z).normalize();
+            const lookTarget = targetPos.clone().add(lookDir.clone().multiplyScalar(10));
+            const targetFov = cam.fov_v || 55;
+            const targetUp = cam.up_threejs
+                ? new THREE.Vector3(...cam.up_threejs).normalize()
+                : new THREE.Vector3(0, 1, 0);
+
+            const startPos = camera.position.clone();
+            const startTarget = controls.target.clone();
+            const startFov = camera.fov;
+            const startUp = camera.up.clone();
+            const duration = 1500;
+            const startTime = Date.now();
+
+            function animatePoiFly() {
+                const elapsed = Date.now() - startTime;
+                const t = Math.min(elapsed / duration, 1);
+                const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+
+                camera.position.lerpVectors(startPos, targetPos, ease);
+                controls.target.lerpVectors(startTarget, lookTarget, ease);
+                camera.fov = startFov + (targetFov - startFov) * ease;
+                camera.up.lerpVectors(startUp, targetUp, ease).normalize();
+                camera.updateProjectionMatrix();
+                controls.update();
+
+                if (t < 1) {
+                    requestAnimationFrame(animatePoiFly);
+                } else {
+                    camera.fov = targetFov;
+                    camera.up.copy(targetUp);
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                    showPhotoOverlay(cam);
+                }
+            }
+            animatePoiFly();
+        }
+
+        function removePoiPoint(index) {
+            if (index < 0 || index >= poiPoints.length) return;
+            const poi = poiPoints[index];
+            scene.remove(poi.marker);
+            scene.remove(poi.sphere);
+            poi.sphere.geometry.dispose();
+            poi.sphere.material.dispose();
+            poiPoints.splice(index, 1);
+            // Re-number remaining labels
+            poiPoints.forEach((p, i) => {
+                p.marker.element.textContent = i + 1;
+            });
+            if (poiPoints.length > 0) {
+                queryPoiPhotos();
+            } else {
+                closePoiGallery();
+            }
+        }
+
+        window._clearPoiPoints = function() {
+            poiPoints.forEach(poi => {
+                scene.remove(poi.marker);
+                scene.remove(poi.sphere);
+                poi.sphere.geometry.dispose();
+                poi.sphere.material.dispose();
+            });
+            poiPoints = [];
+            poiPhotos = [];
+            closePoiGallery();
+        };
+
+        window._closePoiGallery = function() {
+            document.getElementById('poi-gallery-panel').classList.remove('open');
+        };
+
+        function closePoiGallery() {
+            document.getElementById('poi-gallery-panel').classList.remove('open');
+            document.getElementById('poi-gallery-grid').innerHTML = '';
+            document.getElementById('poi-gallery-status').textContent = '';
+        }
+
+        window._togglePoiMode = function() {
+            poiMode = poiMode === 'any' ? 'all' : 'any';
+            document.getElementById('poi-mode-toggle').textContent = `Mode: ${poiMode === 'any' ? 'Any' : 'All'}`;
+            if (poiPoints.length > 1) queryPoiPhotos();
+        };
+
         function selectTool(toolName) {
             const btn = document.querySelector(`.tool-btn[data-tool="${toolName}"]`);
             if (!btn) return;
@@ -2092,12 +3581,19 @@
             }
 
             // Finish pending polygon if switching tools
-            if (currentTool === 'area' && tempPoints.length >= 3 && toolName !== 'area') {
-                finishArea();
+            if (currentTool === 'area' && tempPoints.length >= 3 && toolName !== 'area') finishArea();
+            if (currentTool === 'volume' && tempPoints.length >= 3 && toolName !== 'volume') finishVolume();
+            if (currentTool === 'wall' && tempPoints.length >= 3 && toolName !== 'wall') finishWall();
+            if (currentTool === 'roof' && tempPoints.length >= 3 && toolName !== 'roof') finishRoof();
+            // Reset pending rect state
+            if (currentTool !== toolName) {
+                pendingRectPoint1 = null; pendingRectType = null;
+                pendingWallColor = null;
+                pendingRoofColor = null;
             }
-            if (currentTool === 'volume' && tempPoints.length >= 3 && toolName !== 'volume') {
-                finishVolume();
-            }
+
+            // Deselect any selected measurement when switching tools
+            deselectMeasurement();
 
             // Set active (skip camera btn — it's a toggle)
             document.querySelectorAll('.tool-btn:not([data-tool="camera"])').forEach(b => b.classList.remove('active'));
@@ -2159,7 +3655,7 @@
 
         // Click handler for measurements
         let nearFirstPoint = false; // Track if we're near the first anchor point
-        const CLOSE_THRESHOLD = 1.5; // meters — distance to snap to close polygon
+        const CLOSE_THRESHOLD = 0.15; // meters — distance to snap to close polygon
 
         // Click vs drag detection — drag orbits, short click places points
         // Also handles measurement point dragging
@@ -2167,7 +3663,9 @@
         renderer.domElement.addEventListener('mousedown', (e) => {
             _mdownX = e.clientX; _mdownY = e.clientY; _mdownTime = Date.now();
 
-            // Check if mousedown is on a measurement sphere
+            // Only engage drag if the hovered sphere is TIGHTLY under the cursor.
+            // The mousemove handler already uses a screen-pixel radius for _hoveredSphere,
+            // so this check trusts that state rather than re-running a raycaster.
             if (_hoveredSphere && pointSphereMap.has(_hoveredSphere)) {
                 const info = pointSphereMap.get(_hoveredSphere);
                 dragTarget = { sphere: _hoveredSphere, mIdx: info.mIdx, pIdx: info.pIdx };
@@ -2181,21 +3679,137 @@
         renderer.domElement.addEventListener('mouseup', (e) => {
             // End point drag
             if (isDraggingPoint) {
+                // If the user mousedown'd on a sphere but didn't actually move it,
+                // treat the release as a selection click on that sphere's measurement.
+                const wasShortClickOnSphere = dragTarget &&
+                    Math.abs(e.clientX - _mdownX) < 4 && Math.abs(e.clientY - _mdownY) < 4 &&
+                    Date.now() - _mdownTime <= 500;
+                const clickTarget = wasShortClickOnSphere ? dragTarget : null;
                 isDraggingPoint = false;
                 controls.enabled = true;
                 renderer.domElement.style.cursor = 'grab';
                 dragTarget = null;
+                if (clickTarget) {
+                    selectMeasurement(clickTarget.mIdx);
+                }
                 return;
             }
 
-            if (currentTool === 'select' || currentTool === 'camera' || currentTool === 'crop') return;
+            // Short-click handling shared by select/camera/crop/view modes AND
+            // the drawing tools. We no longer early-return from select mode — we
+            // want the hover-sphere-select and fill-click-select paths below to run.
+            const dx0 = e.clientX - _mdownX, dy0 = e.clientY - _mdownY;
+            const isShortClick = dx0 * dx0 + dy0 * dy0 < 100 && Date.now() - _mdownTime <= 500;
+
+            if ((currentTool === 'select' || currentTool === 'camera' || currentTool === 'crop' || currentTool === 'view') && isShortClick && _midpointInfo) {
+                // If this shape isn't selected yet, the click is a SELECT, not an insert.
+                // Second click on the same shape's edge inserts a vertex at the cursor.
+                if (selectedMeasurementIdx !== _midpointInfo.mIdx) {
+                    selectMeasurement(_midpointInfo.mIdx);
+                    if (_midpointMarker) _midpointMarker.visible = false;
+                    _midpointInfo = null;
+                    return;
+                }
+                const meshHit = getIntersection(e);
+                const insertPos = (meshHit && meshHit.point) ? meshHit.point : _midpointInfo.position;
+                insertPointOnEdge(_midpointInfo.mIdx, _midpointInfo.edgeIdx, insertPos);
+                if (_midpointMarker) _midpointMarker.visible = false;
+                _midpointInfo = null;
+                return;
+            }
+            // For non-drawing tools, bail out here if it wasn't a short click —
+            // those modes have no further short-click behavior (orbit etc is handled elsewhere).
+            if ((currentTool === 'select' || currentTool === 'camera' || currentTool === 'crop' || currentTool === 'view') && !isShortClick) {
+                return;
+            }
 
             // Only treat as click if mouse didn't move much and was quick
             const dx = e.clientX - _mdownX, dy = e.clientY - _mdownY;
-            if (dx * dx + dy * dy > 25 || Date.now() - _mdownTime > 300) return;
+            if (dx * dx + dy * dy > 100 || Date.now() - _mdownTime > 500) return;
 
-            // Don't place points if hovering a measurement sphere
-            if (_hoveredSphere) return;
+            // Check for click on an edge-midpoint green handle: insert new vertex there.
+            {
+                const rectH = renderer.domElement.getBoundingClientRect();
+                const hx = ((e.clientX - rectH.left) / rectH.width) * 2 - 1;
+                const hy = -((e.clientY - rectH.top) / rectH.height) * 2 + 1;
+                const handleRay = new THREE.Raycaster();
+                handleRay.setFromCamera(new THREE.Vector2(hx, hy), camera);
+                const handleObjs = [];
+                for (const mm of measurements) {
+                    if (mm._edgeHandles) handleObjs.push(...mm._edgeHandles);
+                }
+                if (handleObjs.length) {
+                    const hh = handleRay.intersectObjects(handleObjs, false);
+                    if (hh.length) {
+                        const ud = hh[0].object.userData;
+                        // Prefer raycasting to the actual mesh for the real click point,
+                        // so the new vertex sits on the roof surface.
+                        const meshHit2 = getIntersection(e);
+                        const insertPos2 = (meshHit2 && meshHit2.point) ? meshHit2.point : hh[0].object.position;
+                        insertPointOnEdge(ud.mIdx, ud.edgeIdx, insertPos2);
+                        // Rebuild handles for the freshly-modified measurement
+                        const mm = measurements[ud.mIdx];
+                        _clearEdgeHandles(mm);
+                        _buildEdgeHandles(mm, ud.mIdx);
+                        return;
+                    }
+                }
+            }
+
+            // If hovering a COMPLETED measurement sphere, select it instead of placing points
+            if (_hoveredSphere && pointSphereMap.has(_hoveredSphere)) {
+                const info = pointSphereMap.get(_hoveredSphere);
+                selectMeasurement(info.mIdx);
+                return;
+            }
+
+            // In select mode, try raycasting against measurement fillMeshes and edge lines
+            // so the user can click anywhere on a shape to select it.
+            if (currentTool === 'select' || currentTool === 'camera' || !currentTool) {
+                const rect2 = renderer.domElement.getBoundingClientRect();
+                const fx = ((e.clientX - rect2.left) / rect2.width) * 2 - 1;
+                const fy = -((e.clientY - rect2.top) / rect2.height) * 2 + 1;
+
+                // 1) Try clicking on an edge line first (nice fat hit test)
+                const lineRay = new THREE.Raycaster();
+                lineRay.setFromCamera(new THREE.Vector2(fx, fy), camera);
+                lineRay.params.Line = { threshold: 0.25 }; // meters, ~reasonable click radius
+                const lineObjs = [];
+                const lineOwner = new Map();
+                measurements.forEach((mm, i) => {
+                    if (mm.lines) mm.lines.forEach(l => { lineObjs.push(l); lineOwner.set(l, i); });
+                });
+                if (lineObjs.length) {
+                    const lineHits = lineRay.intersectObjects(lineObjs, false);
+                    if (lineHits.length) {
+                        const owner = lineOwner.get(lineHits[0].object);
+                        if (owner != null) { selectMeasurement(owner); return; }
+                    }
+                }
+
+                // 2) Then fill meshes
+                const fillMeshes = measurements
+                    .map((mm, i) => ({ mm, i }))
+                    .filter(x => x.mm.fillMesh);
+                if (fillMeshes.length) {
+                    const fillRay = new THREE.Raycaster();
+                    fillRay.setFromCamera(new THREE.Vector2(fx, fy), camera);
+                    const fillHits = fillRay.intersectObjects(fillMeshes.map(x => x.mm.fillMesh), false);
+                    if (fillHits.length) {
+                        const hitMesh = fillHits[0].object;
+                        const picked = fillMeshes.find(x => x.mm.fillMesh === hitMesh);
+                        if (picked) {
+                            selectMeasurement(picked.i);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Deselect if clicking elsewhere
+            if (selectedMeasurementIdx >= 0) {
+                deselectMeasurement();
+            }
 
             const hit = getIntersection(e);
             if (!hit) return;
@@ -2204,9 +3818,11 @@
             const face = hit.face;
 
             // Check if clicking near first point to close polygon
-            if ((currentTool === 'area' || currentTool === 'volume') && tempPoints.length >= 3 && nearFirstPoint) {
+            if ((currentTool === 'area' || currentTool === 'volume' || currentTool === 'wall' || currentTool === 'roof') && tempPoints.length >= 3 && nearFirstPoint) {
                 if (currentTool === 'area') finishArea();
-                else finishVolume();
+                else if (currentTool === 'volume') finishVolume();
+                else if (currentTool === 'wall') finishWall();
+                else if (currentTool === 'roof') finishRoof();
                 nearFirstPoint = false;
                 document.getElementById('close-indicator').style.display = 'none';
                 return;
@@ -2219,17 +3835,33 @@
                 case 'volume': handleVolumeClick(point, face); break;
                 case 'counter': handleCounterClick(point); break;
                 case 'marker': handleMarkerClick(point); break;
+                case 'window': handleWindowClick(point, face); break;
+                case 'door': handleDoorClick(point, face); break;
+                case 'wall': handleWallClick(point, face); break;
+                case 'roof': handleRoofClick(point, face); break;
+                case 'poi': handlePoiClick(point); break;
+            }
+        });
+
+        // Right-click on a vertex to delete it from the polygon
+        renderer.domElement.addEventListener('contextmenu', (e) => {
+            if (_hoveredSphere && pointSphereMap.has(_hoveredSphere)) {
+                e.preventDefault();
+                const info = pointSphereMap.get(_hoveredSphere);
+                const m = measurements[info.mIdx];
+                if (m && m.points && m.points.length > 3 && (m.type === 'area' || m.type === 'wall' || m.type === 'roof' || m.type === 'volume')) {
+                    deletePointFromMeasurement(info.mIdx, info.pIdx);
+                    _hoveredSphere = null;
+                }
             }
         });
 
         // Double-click to finish polygon
         renderer.domElement.addEventListener('dblclick', (e) => {
-            if (currentTool === 'area' && tempPoints.length >= 3) {
-                finishArea();
-            }
-            if (currentTool === 'volume' && tempPoints.length >= 3) {
-                finishVolume();
-            }
+            if (currentTool === 'area' && tempPoints.length >= 3) finishArea();
+            if (currentTool === 'volume' && tempPoints.length >= 3) finishVolume();
+            if (currentTool === 'wall' && tempPoints.length >= 3) finishWall();
+            if (currentTool === 'roof' && tempPoints.length >= 3) finishRoof();
         });
 
         // Mouse move for coordinate display + close-polygon indicator + point hover/drag
@@ -2245,22 +3877,41 @@
             if (isDraggingPoint && dragTarget) {
                 const hit = getIntersection(e);
                 if (hit) {
-                    const p = hit.point;
+                    const p = snapToWallPlane(hit.point, dragTarget.mIdx);
                     dragTarget.sphere.position.copy(p);
                     measurements[dragTarget.mIdx].points[dragTarget.pIdx].copy(p);
                     recalcMeasurement(dragTarget.mIdx);
+                    // Keep green edge-midpoint handles in sync while dragging
+                    const mmDrag = measurements[dragTarget.mIdx];
+                    if (mmDrag._edgeHandles) {
+                        _clearEdgeHandles(mmDrag);
+                        _buildEdgeHandles(mmDrag, dragTarget.mIdx);
+                    }
                     el.textContent = `X: ${(p.x * M_TO_FT).toFixed(1)}ft  Y: ${(p.y * M_TO_FT).toFixed(1)}ft  Z: ${(p.z * M_TO_FT).toFixed(1)}ft`;
                 }
                 return;
             }
 
-            // Check hover over measurement spheres
+            // Check hover over measurement spheres — use SCREEN-SPACE distance instead of
+            // raycasting, because sphere scale is blown up by _updateHandleSizes for visibility
+            // and would otherwise capture hover far from the cursor.
             const rect = renderer.domElement.getBoundingClientRect();
-            const mx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            const my = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-            _sphereRaycaster.setFromCamera(new THREE.Vector2(mx, my), camera);
             const spheres = getMeasurementSpheres();
-            const sphereHits = spheres.length > 0 ? _sphereRaycaster.intersectObjects(spheres, false) : [];
+            const mxPx = e.clientX - rect.left;
+            const myPx = e.clientY - rect.top;
+            const HOVER_RADIUS_PX = 14; // tight hit box around each vertex center
+            let closestSphere = null, closestSphereDist = Infinity;
+            for (const s of spheres) {
+                if (!s.visible) continue;
+                const p = s.position.clone().project(camera);
+                if (p.z > 1 || p.z < -1) continue;
+                const sx = (p.x + 1) / 2 * rect.width;
+                const sy = (-p.y + 1) / 2 * rect.height;
+                const dpx = Math.hypot(sx - mxPx, sy - myPx);
+                if (dpx < closestSphereDist) { closestSphereDist = dpx; closestSphere = s; }
+            }
+            const sphereHits = (closestSphere && closestSphereDist < HOVER_RADIUS_PX)
+                ? [{ object: closestSphere }] : [];
 
             if (sphereHits.length > 0) {
                 const sphere = sphereHits[0].object;
@@ -2271,9 +3922,30 @@
                     sphere.scale.setScalar(2);
                 }
                 renderer.domElement.style.cursor = 'grab';
+                // Hide midpoint marker when hovering a vertex
+                if (_midpointMarker) _midpointMarker.visible = false;
+                _midpointInfo = null;
             } else {
                 if (_hoveredSphere) { _hoveredSphere.scale.setScalar(1); _hoveredSphere = null; }
                 renderer.domElement.style.cursor = '';
+
+                // Show midpoint + marker on nearest polygon edge (only in select mode or no active tool)
+                if (currentTool === 'select' || currentTool === 'camera' || !currentTool) {
+                    const edgeInfo = findNearestEdge(e.clientX, e.clientY);
+                    if (edgeInfo && edgeInfo.screenDist < 0.05) {
+                        if (!_midpointMarker) _midpointMarker = createMidpointMarker();
+                        _midpointMarker.position.copy(edgeInfo.position);
+                        _midpointMarker.visible = true;
+                        _midpointInfo = edgeInfo;
+                        renderer.domElement.style.cursor = 'copy';
+                    } else {
+                        if (_midpointMarker) _midpointMarker.visible = false;
+                        _midpointInfo = null;
+                    }
+                } else {
+                    if (_midpointMarker) _midpointMarker.visible = false;
+                    _midpointInfo = null;
+                }
             }
 
             const hit = getIntersection(e);
@@ -2282,7 +3954,7 @@
                 el.textContent = `X: ${(p.x * M_TO_FT).toFixed(1)}ft  Y: ${(p.y * M_TO_FT).toFixed(1)}ft  Z: ${(p.z * M_TO_FT).toFixed(1)}ft`;
 
                 // Show close-polygon indicator when hovering near first point
-                if ((currentTool === 'area' || currentTool === 'volume') && tempPoints.length >= 3) {
+                if ((currentTool === 'area' || currentTool === 'volume' || currentTool === 'wall' || currentTool === 'roof') && tempPoints.length >= 3) {
                     const dist = p.distanceTo(tempPoints[0]);
                     if (dist < CLOSE_THRESHOLD) {
                         nearFirstPoint = true;
@@ -2334,7 +4006,12 @@
                 case 'a': selectTool('area'); break;
                 case 'u': selectTool('volume'); break;
                 case 'c': selectTool('counter'); break;
+                case 'w': selectTool('window'); break;
+                case 'd': selectTool('door'); break;
+                case 'b': selectTool('wall'); break;
+                case 'r': selectTool('roof'); break;
                 case 'p': selectTool('camera'); break;
+                case 'f': selectTool('poi'); break;
                 case 'x': selectTool('crop'); break;
                 case 'escape':
                     if (selectedCamera !== null) {
@@ -2343,6 +4020,8 @@
                         tempPoints = [];
                         tempVisuals.forEach(v => scene.remove(v));
                         tempVisuals = [];
+                        pendingRectPoint1 = null;
+                        pendingRectType = null;
                         hideMeasureInfo();
                     }
                     closeSidePanel();
@@ -2352,11 +4031,15 @@
                 case 'enter':
                     if (currentTool === 'area' && tempPoints.length >= 3) finishArea();
                     if (currentTool === 'volume' && tempPoints.length >= 3) finishVolume();
+                    if (currentTool === 'wall' && tempPoints.length >= 3) finishWall();
+                    if (currentTool === 'roof' && tempPoints.length >= 3) finishRoof();
                     break;
                 case 'delete':
                 case 'backspace':
                     if (e.metaKey || e.ctrlKey) {
                         clearAllMeasurements();
+                    } else if (selectedMeasurementIdx >= 0) {
+                        deleteMeasurementByIndex(selectedMeasurementIdx);
                     }
                     break;
             }
@@ -2366,7 +4049,23 @@
 
         // Model picker
         document.getElementById('model-picker').addEventListener('change', (e) => {
-            loadModel(e.target.value);
+            const modelId = e.target.value;
+            // Clear existing measurements before loading new model
+            for (const m of measurements) {
+                if (m.spheres) m.spheres.forEach(s => { pointSphereMap.delete(s); scene.remove(s); });
+                if (m.lines) m.lines.forEach(l => { scene.remove(l); });
+                if (m.label) scene.remove(m.label);
+                if (m.fillMesh) scene.remove(m.fillMesh);
+            }
+            measurements.length = 0;
+            pointSphereMap.clear();
+            selectedMeasurementIdx = -1;
+            tempPoints = [];
+            tempVisuals.forEach(v => { scene.remove(v); });
+            tempVisuals = [];
+            document.getElementById('measure-info').classList.remove('show');
+
+            loadModel(modelId).then(() => loadCameras(modelId));
         });
 
         // Close submenu when clicking elsewhere
@@ -2387,9 +4086,43 @@
         // Make functions global for inline handlers
         window.closeSidePanel = closeSidePanel;
         window.measurements = measurements;
+        // Reload measurements from Supabase without page refresh
+        window._reloadMeasurements = async function() {
+            const modelId = document.getElementById('model-picker').value;
+            // Clear existing visuals
+            for (const m of measurements) {
+                if (m.spheres) m.spheres.forEach(s => { pointSphereMap.delete(s); scene.remove(s); });
+                if (m.lines) m.lines.forEach(l => { scene.remove(l); });
+                if (m.label) scene.remove(m.label);
+                if (m.fillMesh) scene.remove(m.fillMesh);
+            }
+            measurements.length = 0;
+            pointSphereMap.clear();
+            selectedMeasurementIdx = -1;
+            // Reload from DB
+            await restoreSavedMeasurements(modelId);
+            console.log(`Reloaded ${measurements.length} measurements from DB`);
+        };
+
         window._undoLast = undoLastMeasurement;
         window._undoPoint = undoLastPoint;
         window._clearAll = clearAllMeasurements;
+
+        // Scoped: delete last point from selected polygon
+        window._deleteLastPointFromSelected = function() {
+            if (selectedMeasurementIdx < 0) return;
+            const m = measurements[selectedMeasurementIdx];
+            if (!m || !m.points || m.points.length <= 3) return;
+            deletePointFromMeasurement(selectedMeasurementIdx, m.points.length - 1);
+        };
+
+        // Scoped: delete the selected measurement entirely
+        window._deleteSelectedMeasurement = function() {
+            if (selectedMeasurementIdx < 0) return;
+            removeMeasurement(selectedMeasurementIdx);
+            deselectMeasurement();
+        };
+        window._deleteSelected = function() { if (selectedMeasurementIdx >= 0) deleteMeasurementByIndex(selectedMeasurementIdx); };
         window._returnFromCamera = returnFromCamera;
         window._flyToCamera = flyToCamera;
         window._setThermal = function(thermal, camIndex) {
@@ -2405,6 +4138,31 @@
             if (camerasVisible) {
                 cameraFrustums.forEach(cf => { cf.mesh.visible = true; cf.label.visible = true; });
             }
+            // If snapped to a camera, update view position + overlay in real-time
+            if (selectedCamera !== null && cameraFrustums[selectedCamera]) {
+                const cf = cameraFrustums[selectedCamera];
+                const cam = cf.data;
+                cf.mesh.material.color.setHex(0xff4444);
+                cf.mesh.material.opacity = 1;
+                // Move Three.js camera to new frustum position
+                const newPos = cf.mesh.position.clone();
+                camera.position.copy(newPos);
+                // Update look direction
+                let lookDir;
+                if (cam.forward_threejs) {
+                    lookDir = new THREE.Vector3(...cam.forward_threejs).normalize();
+                } else {
+                    const yawRad = (cam.gimbal_yaw || 0) * Math.PI / 180;
+                    const pitchRad = (cam.gimbal_pitch || -45) * Math.PI / 180;
+                    lookDir = new THREE.Vector3(
+                        Math.sin(yawRad) * Math.cos(pitchRad),
+                        Math.sin(pitchRad),
+                        -Math.cos(yawRad) * Math.cos(pitchRad)
+                    );
+                }
+                controls.target.copy(newPos.clone().add(lookDir.multiplyScalar(10)));
+                controls.update();
+            }
         }
         window._adjustCameras = function(dx = 0, dy = 0, dz = 0) {
             cameraOffset.x += dx;
@@ -2414,9 +4172,9 @@
             document.getElementById('cam-offset-x').value = cameraOffset.x;
             document.getElementById('cam-offset-y').value = cameraOffset.y;
             document.getElementById('cam-offset-z').value = cameraOffset.z;
-            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
-            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
-            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(2) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(2) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(2) + 'm';
             rebuildCamerasWithOffset();
         };
         window._setCameraOffset = function(x, y, z) {
@@ -2424,18 +4182,18 @@
             document.getElementById('cam-offset-x').value = cameraOffset.x;
             document.getElementById('cam-offset-y').value = cameraOffset.y;
             document.getElementById('cam-offset-z').value = cameraOffset.z;
-            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
-            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
-            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(2) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(2) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(2) + 'm';
             rebuildCamerasWithOffset();
         };
         window._setCamSliders = function() {
             cameraOffset.x = parseFloat(document.getElementById('cam-offset-x').value);
             cameraOffset.y = parseFloat(document.getElementById('cam-offset-y').value);
             cameraOffset.z = parseFloat(document.getElementById('cam-offset-z').value);
-            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(1) + 'm';
-            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(1) + 'm';
-            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(1) + 'm';
+            document.getElementById('cam-offset-x-val').textContent = cameraOffset.x.toFixed(2) + 'm';
+            document.getElementById('cam-offset-y-val').textContent = cameraOffset.y.toFixed(2) + 'm';
+            document.getElementById('cam-offset-z-val').textContent = cameraOffset.z.toFixed(2) + 'm';
             rebuildCamerasWithOffset();
         };
         window.updateMarkerTitle = function(index, title) {
@@ -2495,32 +4253,83 @@
             for (const row of rows) {
                 const pts = row.points.map(p => new THREE.Vector3(p.x, p.y, p.z));
                 let m;
+                const mc = getNextMeasurementColor();
                 if (row.type === 'height' && pts.length >= 2) {
-                    const s1 = createPointMarker(pts[0]);
-                    const s2 = createPointMarker(pts[1]);
-                    m = buildHeightVisuals(pts[0], pts[1]);
+                    const s1 = createPointMarker(pts[0], mc.line);
+                    const s2 = createPointMarker(pts[1], mc.line);
+                    m = buildHeightVisuals(pts[0], pts[1], mc);
                     m.spheres = [s1, s2];
+                    m.color = mc;
                 } else if (row.type === 'length' && pts.length >= 2) {
-                    const s1 = createPointMarker(pts[0]);
-                    const s2 = createPointMarker(pts[1]);
-                    m = buildLengthVisuals(pts[0], pts[1]);
+                    const s1 = createPointMarker(pts[0], mc.line);
+                    const s2 = createPointMarker(pts[1], mc.line);
+                    m = buildLengthVisuals(pts[0], pts[1], mc);
                     m.spheres = [s1, s2];
+                    m.color = mc;
                 } else if (row.type === 'area' && pts.length >= 3) {
-                    const spheres = pts.map(p => createPointMarker(p, 0xa855f7));
+                    const spheres = pts.map(p => createPointMarker(p, mc.line));
                     const lines = [];
                     for (let i = 0; i < pts.length; i++) {
-                        lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], 0xa855f7));
+                        lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
                     }
                     const surfArea = triangulatedSurfaceArea(pts);
                     const projArea = shoelaceArea(pts.map(p => [p.x, p.z]));
-                    const fillMesh = createPolygonFill(pts, 0x8b5cf6, 0.3);
+                    const fillMesh = createPolygonFill(pts, mc.fill, 0.3);
                     const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
                     const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
                     const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
                     const label = createLabel(formatSqFt(surfArea), new THREE.Vector3(cx, cy + 0.5, cz), {
-                        bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7', clickable: true
+                        bg: mc.bg, border: mc.border, clickable: true
                     });
-                    m = { type: 'area', title: row.title || 'Untitled Area', points: pts, projArea, surfArea, fillMesh, label, spheres, lines };
+                    m = { type: 'area', title: row.title || 'Untitled Area', points: pts, projArea, surfArea, fillMesh, label, spheres, lines, color: mc };
+                } else if ((row.type === 'window' || row.type === 'door') && pts.length === 4) {
+                    const isWindow = row.type === 'window';
+                    const spheres = pts.map(p => createPointMarker(p, mc.line));
+                    const lines = [];
+                    for (let i = 0; i < 4; i++) {
+                        lines.push(createLine([pts[i], pts[(i + 1) % 4]], mc.line));
+                    }
+                    const v1 = new THREE.Vector3().subVectors(pts[1], pts[0]);
+                    const v2 = new THREE.Vector3().subVectors(pts[3], pts[0]);
+                    const absW = v1.length();
+                    const absH = v2.length();
+                    const area = absW * absH;
+                    const fillMesh = createPolygonFill(pts, mc.fill, 0.3);
+                    const cx = pts.reduce((s, p) => s + p.x, 0) / 4;
+                    const cy = pts.reduce((s, p) => s + p.y, 0) / 4;
+                    const cz = pts.reduce((s, p) => s + p.z, 0) / 4;
+                    const labelText = `${isWindow ? '🪟' : '🚪'} ${formatFeet(absW)} × ${formatFeet(absH)}`;
+                    const label = createLabel(labelText, new THREE.Vector3(cx, cy, cz), {
+                        bg: mc.bg, border: mc.border, clickable: true
+                    });
+                    m = { type: row.type, title: row.title || (isWindow ? 'Window' : 'Door'), points: pts, width: absW, height: absH, surfArea: area, fillMesh, label, spheres, lines, color: mc };
+                } else if ((row.type === 'wall' || row.type === 'roof') && pts.length >= 3) {
+                    const spheres = pts.map(p => createPointMarker(p, mc.line));
+                    const lines = [];
+                    for (let i = 0; i < pts.length; i++) {
+                        lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
+                    }
+                    const fillMesh = createPolygonFill(pts, mc.fill, 0.3);
+                    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                    const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+                    const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                    let labelText;
+                    let surfArea;
+                    if (row.type === 'roof') {
+                        const pitchInfo = calculateRoofPitch(pts);
+                        surfArea = pitchInfo.trueArea;
+                        const slopeInfo = pitchInfo.avgSlopeFactor > 1 ? ` · ${pitchInfo.avgSlopeFactor.toFixed(2)}x slope` : '';
+                        labelText = `⛺ ${pitchInfo.pitchStr} pitch · ${formatSqFt(surfArea)}${slopeInfo}`;
+                        m = { type: 'roof', title: row.title || 'Roof Face', points: pts, pitch: pitchInfo.pitchStr, slopeDeg: pitchInfo.slopeDeg, surfArea, fillMesh, label: null, spheres, lines, color: mc };
+                    } else {
+                        surfArea = triangulatedSurfaceArea(pts);
+                        labelText = `Wall ${formatSqFt(surfArea)}`;
+                        m = { type: 'wall', title: row.title || 'Wall', points: pts, surfArea, fillMesh, label: null, spheres, lines, color: mc };
+                    }
+                    const label = createLabel(labelText, new THREE.Vector3(cx, cy + 0.3, cz), {
+                        bg: mc.bg, border: mc.border, clickable: true
+                    });
+                    m.label = label;
                 } else if (row.type === 'marker' && pts.length >= 1) {
                     const marker = createPointMarker(pts[0], 0xf59e0b);
                     marker.scale.setScalar(1.8);
@@ -2533,6 +4342,9 @@
                 }
                 if (row.title && m) m.title = row.title;
                 m.dbId = row.id;
+                // Carry existing DB metadata onto the in-memory object so later
+                // updates don't wipe fields like stoop_roof_sqft, notes, etc.
+                if (row.metadata) m.metadata = row.metadata;
                 measurements.push(m);
                 const mIdx = measurements.length - 1;
                 if (m.spheres) {
@@ -2543,9 +4355,41 @@
         }
 
         // ========== Animation Loop ==========
+        // Keep measurement spheres (and green edge handles) at a constant screen
+        // size regardless of camera distance, so vertices never "disappear" when
+        // zoomed out.
+        const _PX_RADIUS = 9; // on-screen radius in CSS pixels
+        function _updateHandleSizes() {
+            if (!measurements || !measurements.length) return;
+            const h = renderer.domElement.clientHeight;
+            if (!h) return;
+            const fovRad = camera.fov * Math.PI / 180;
+            // world-size-per-pixel at distance d:  (2 * d * tan(fov/2)) / h
+            const tanHalf = Math.tan(fovRad / 2);
+            const camPos = camera.position;
+            const _tmp = new THREE.Vector3();
+            for (const m of measurements) {
+                const all = [];
+                if (m.spheres) all.push(...m.spheres.map(s => ({ s, selected: selectedMeasurementIdx >= 0 && measurements[selectedMeasurementIdx] === m })));
+                if (m._edgeHandles) all.push(...m._edgeHandles.map(s => ({ s, edge: true })));
+                for (const item of all) {
+                    const s = item.s;
+                    _tmp.copy(s.position).sub(camPos);
+                    const dist = _tmp.length();
+                    // base geometry radius is 0.08 (spheres) or 0.1 (handles). Normalize to 1.
+                    const geoR = s.geometry && s.geometry.parameters && s.geometry.parameters.radius ? s.geometry.parameters.radius : 0.08;
+                    const worldPerPx = (2 * dist * tanHalf) / h;
+                    const desiredWorld = worldPerPx * _PX_RADIUS * (item.selected ? 1.5 : 1);
+                    const scale = desiredWorld / geoR;
+                    s.scale.setScalar(scale);
+                }
+            }
+        }
+
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
+            _updateHandleSizes();
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
         }
@@ -2556,14 +4400,133 @@
         window._meshes = meshes;
         window._camera = camera;
         window._renderer = renderer;
+        window._select = selectMeasurement;
+        window._deselect = deselectMeasurement;
+        window._insertPointOnEdge = insertPointOnEdge;
+        window._deletePointFromMeasurement = deletePointFromMeasurement;
+        window._buildEdgeHandles = _buildEdgeHandles;
+        window._getTool = () => currentTool;
+        window._getSelectedIdx = () => selectedMeasurementIdx;
+
+        // Show/hide every measurement except the currently-selected one.
+        function _setMeasurementVisible(m, visible) {
+            if (m.fillMesh) m.fillMesh.visible = visible;
+            if (m.lines) m.lines.forEach(l => l.visible = visible);
+            if (m.spheres) m.spheres.forEach(s => s.visible = visible);
+            if (m.label) m.label.visible = visible;
+            if (m.marker) m.marker.visible = visible;
+            if (m._edgeHandles) m._edgeHandles.forEach(h => h.visible = visible);
+            m._hidden = !visible;
+        }
+        window._hideOthers = function() {
+            if (selectedMeasurementIdx < 0) return;
+            measurements.forEach((mm, i) => {
+                if (i !== selectedMeasurementIdx) _setMeasurementVisible(mm, false);
+            });
+            // Refresh the info bar so the Show All state updates
+            const sel = measurements[selectedMeasurementIdx];
+            if (sel) updateMeasureInfo(`${sel.type} selected — only this shape is visible · other shapes hidden`);
+        };
+        window._showAll = function() {
+            measurements.forEach(mm => _setMeasurementVisible(mm, true));
+            const sel = selectedMeasurementIdx >= 0 ? measurements[selectedMeasurementIdx] : null;
+            if (sel) updateMeasureInfo(`${sel.type} selected — hover an edge for a + marker and click to add a vertex, drag corners to reshape, Delete to remove`);
+        };
+        window._anyOthersHidden = function() {
+            return measurements.some(mm => mm._hidden);
+        };
+
+        // Toggle the building model (mesh) on/off, leaving all measurement shapes visible.
+        window._toggleModel = function() {
+            if (!currentModel) return;
+            currentModel.visible = !currentModel.visible;
+            const btn = document.getElementById('toggle-model-btn');
+            if (btn) btn.classList.toggle('active', !currentModel.visible);
+        };
 
         // ========== Initial Load ==========
-        // Load Three Rivers by default, then load cameras + restore saved state
-        loadModel('three-rivers').then(async () => {
-            loadCameras();
-            await restoreSavedView('three-rivers');
-            await restoreSavedMeasurements('three-rivers');
+        // Load model from ?model=<slug> URL param (default: three-rivers).
+        // View + measurements are restored automatically after BVH completes in loadModel.
+        document.getElementById('model-picker').value = initialModelId;
+        loadModel(initialModelId).then(() => {
+            loadCameras(initialModelId);
         });
+
+        // ========== View-Only Mode ==========
+        if (VIEW_ONLY) {
+            // Hide toolbar, model picker, coordinate display, measure info
+            document.getElementById('toolbar').style.display = 'none';
+            document.getElementById('model-picker').style.display = 'none';
+            document.getElementById('coord-display').style.display = 'none';
+            const saveBtn = document.getElementById('save-view-btn');
+            if (saveBtn) saveBtn.style.display = 'none';
+
+            // Override currentTool so no measurements can be placed
+            currentTool = 'view';
+
+            // Override selectTool to be a no-op
+            window._origSelectTool = selectTool;
+            selectTool = function() {};
+
+            // In view mode, clicking a measurement sphere opens read-only sidebar
+            renderer.domElement.addEventListener('mouseup', (e) => {
+                const dx = e.clientX - _mdownX, dy = e.clientY - _mdownY;
+                if (dx * dx + dy * dy > 100 || Date.now() - _mdownTime > 500) return;
+
+                if (_hoveredSphere && pointSphereMap.has(_hoveredSphere)) {
+                    const info = pointSphereMap.get(_hoveredSphere);
+                    const m = measurements[info.mIdx];
+                    if (m) showViewOnlyPanel(m);
+                }
+            }, true); // capture phase so it runs before the main handler
+        }
+
+        function showViewOnlyPanel(m) {
+            const panel = document.getElementById('side-panel');
+            document.getElementById('panel-title').textContent = m.title || m.type;
+            let html = '';
+
+            if (m.type === 'height') {
+                html = `
+                    <div class="panel-field"><div class="panel-label">Height</div><div class="panel-value">${formatFeet(m.dist3D || 0)}</div></div>
+                    <div class="panel-field"><div class="panel-label">From Elev</div><div class="panel-value">${formatFeet((m.points?.[0]?.y || 0) * M_TO_FT)}</div></div>
+                    <div class="panel-field"><div class="panel-label">To Elev</div><div class="panel-value">${formatFeet((m.points?.[1]?.y || 0) * M_TO_FT)}</div></div>
+                `;
+            } else if (m.type === 'length') {
+                html = `
+                    <div class="panel-field"><div class="panel-label">Length</div><div class="panel-value">${formatFeet(m.dist3D || 0)}</div></div>
+                    <div class="panel-field"><div class="panel-label">Slope</div><div class="panel-value">${(m.slopeAngle || 0).toFixed(1)}°</div></div>
+                `;
+            } else if (m.type === 'area' || m.type === 'wall') {
+                html = `
+                    <div class="panel-field"><div class="panel-label">Area</div><div class="panel-value">${formatSqFt(m.surfArea || 0)}</div></div>
+                    <div class="panel-field"><div class="panel-label">Perimeter</div><div class="panel-value">${formatFeet(polygonPerimeter(m.points || []))}</div></div>
+                    <div class="panel-field"><div class="panel-label">Points</div><div class="panel-value">${(m.points || []).length}</div></div>
+                `;
+            } else if (m.type === 'window' || m.type === 'door') {
+                html = `
+                    <div class="panel-field"><div class="panel-label">Type</div><div class="panel-value">${m.type === 'window' ? 'Window' : 'Door'}</div></div>
+                    <div class="panel-field"><div class="panel-label">Width</div><div class="panel-value">${formatFeet(m.width || 0)}</div></div>
+                    <div class="panel-field"><div class="panel-label">Height</div><div class="panel-value">${formatFeet(m.height || 0)}</div></div>
+                    <div class="panel-field"><div class="panel-label">Area</div><div class="panel-value">${formatSqFt(m.surfArea || 0)}</div></div>
+                `;
+            } else if (m.type === 'roof') {
+                html = `
+                    <div class="panel-field"><div class="panel-label">Pitch</div><div class="panel-value">${m.pitch || '—'}</div></div>
+                    <div class="panel-field"><div class="panel-label">Slope</div><div class="panel-value">${(m.slopeDeg || 0).toFixed(1)}°</div></div>
+                    <div class="panel-field"><div class="panel-label">Area</div><div class="panel-value">${formatSqFt(m.surfArea || 0)}</div></div>
+                `;
+            } else if (m.type === 'marker') {
+                html = `<div class="panel-field"><div class="panel-label">Note</div><div class="panel-value">${m.title || 'Marker'}</div></div>`;
+            }
+
+            if (m.date) {
+                html += `<div class="panel-field"><div class="panel-label">Date</div><div class="panel-value">${m.date}</div></div>`;
+            }
+
+            document.getElementById('panel-content').innerHTML = html;
+            panel.classList.add('open');
+        }
 
     </script>
 </body>

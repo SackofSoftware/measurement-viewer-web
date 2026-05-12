@@ -1,0 +1,4538 @@
+{
+  "source": "bundle_adjusted",
+  "shots_file": "shots.geojson",
+  "crs": "EPSG:32619",
+  "crs_name": "WGS 84 / UTM zone 19N",
+  "camera_count": 78,
+  "model_origin": {
+    "easting": 325411.0,
+    "northing": 4694031.0
+  },
+  "has_thermal": false,
+  "cameras": [
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508120920_0001_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508120920_0001_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120920_0001_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120920_0001_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/mr9egg8anrrrpch8uc7qm/f07074CreateAreaRoute11_DJI_20260508120920_0001_V.JPG?raw=1",
+      "lat": 42.37876326532001,
+      "lon": -71.1210175448006,
+      "altitude": 16.714101796204446,
+      "relative_altitude": 37.909,
+      "translation": [
+        325384.19153161487,
+        4694010.272927434,
+        16.714101796204446
+      ],
+      "rotation": [
+        -2.0262398600428724,
+        2.3977944393251573,
+        0.012041671704297595
+      ],
+      "forward": [
+        -0.006701864466032789,
+        0.004380430764980526,
+        -0.9999679479058277
+      ],
+      "up": [
+        0.9859671000535744,
+        -0.16677836296749662,
+        -0.007338614162554591
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:09:20",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": 95.5,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 95.3,
+      "easting": 325384.19153161487,
+      "northing": 4694010.272927434,
+      "model_x": -26.808468385133892,
+      "model_y_obj": -20.727072565816343,
+      "model_z": 20.727072565816343,
+      "model_y": 16.714101796204446,
+      "forward_threejs": [
+        -0.006701864466032789,
+        -0.9999679479058277,
+        -0.004380430764980526
+      ],
+      "up_threejs": [
+        0.9859671000535744,
+        -0.007338614162554591,
+        0.16677836296749662
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508120930_0014_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508120930_0014_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120930_0014_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120930_0014_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/r4hdf74yc5w28x3wjfegx/f07074CreateAreaRoute11_DJI_20260508120930_0014_V.JPG?raw=1",
+      "lat": 42.378737890921606,
+      "lon": -71.12064084811522,
+      "altitude": 16.726470608330068,
+      "relative_altitude": 37.932,
+      "translation": [
+        325415.13461786264,
+        4694006.681146745,
+        16.726470608330068
+      ],
+      "rotation": [
+        -2.0513196986797197,
+        2.3754003942735427,
+        0.028578584241587806
+      ],
+      "forward": [
+        -0.014112847764841042,
+        0.011872670079898326,
+        -0.9998299191528228
+      ],
+      "up": [
+        0.9892269691718153,
+        -0.14554648800015432,
+        -0.015691503878383768
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:09:30",
+      "gimbal_pitch": -90.0,
+      "gimbal_yaw": -85.3,
+      "gimbal_roll": 180.0,
+      "flight_yaw": 95.0,
+      "easting": 325415.13461786264,
+      "northing": 4694006.681146745,
+      "model_x": 4.13461786264088,
+      "model_y_obj": -24.31885325536132,
+      "model_z": 24.31885325536132,
+      "model_y": 16.726470608330068,
+      "forward_threejs": [
+        -0.014112847764841042,
+        -0.9998299191528228,
+        -0.011872670079898326
+      ],
+      "up_threejs": [
+        0.9892269691718153,
+        -0.015691503878383768,
+        0.14554648800015432
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508120940_0027_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508120940_0027_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120940_0027_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508120940_0027_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/ovt85rlqdzyiggk383ir0/f07074CreateAreaRoute11_DJI_20260508120940_0027_V.JPG?raw=1",
+      "lat": 42.37875505010746,
+      "lon": -71.1204611087023,
+      "altitude": 16.688092397162375,
+      "relative_altitude": 37.9,
+      "translation": [
+        325429.9801092973,
+        4694008.2172373,
+        16.688092397162375
+      ],
+      "rotation": [
+        -2.3141598077219063,
+        -2.109274999080702,
+        0.00449984662844447
+      ],
+      "forward": [
+        0.004878313519294717,
+        -0.009618768830940238,
+        -0.9999418389803401
+      ],
+      "up": [
+        -0.9957044475065638,
+        0.09241011965534218,
+        -0.00574656427213502
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:09:40",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": -88.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -84.9,
+      "easting": 325429.9801092973,
+      "northing": 4694008.2172373,
+      "model_x": 18.980109297321178,
+      "model_y_obj": -22.782762699760497,
+      "model_z": 22.782762699760497,
+      "model_y": 16.688092397162375,
+      "forward_threejs": [
+        0.004878313519294717,
+        -0.9999418389803401,
+        0.009618768830940238
+      ],
+      "up_threejs": [
+        -0.9957044475065638,
+        -0.00574656427213502,
+        -0.09241011965534218
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121023_0083_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121023_0083_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121023_0083_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121023_0083_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/tfdwjsucqj0lch4b2wa8w/f07074CreateAreaRoute11_DJI_20260508121023_0083_V.JPG?raw=1",
+      "lat": 42.37883514060128,
+      "lon": -71.12079711769282,
+      "altitude": 16.72218696842871,
+      "relative_altitude": 37.919,
+      "translation": [
+        325402.5384969288,
+        4694017.801193533,
+        16.72218696842871
+      ],
+      "rotation": [
+        -2.274539304541883,
+        -2.1346242325521048,
+        0.006402632387816813
+      ],
+      "forward": [
+        0.012243753002863922,
+        -0.019044345323992486,
+        -0.9997436688589658
+      ],
+      "up": [
+        -0.9979058793829189,
+        0.06327387505620852,
+        -0.01342656428036992
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:10:23",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": -88.6,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -85.0,
+      "easting": 325402.5384969288,
+      "northing": 4694017.801193533,
+      "model_x": -8.461503071186598,
+      "model_y_obj": -13.198806466534734,
+      "model_z": 13.198806466534734,
+      "model_y": 16.72218696842871,
+      "forward_threejs": [
+        0.012243753002863922,
+        -0.9997436688589658,
+        0.019044345323992486
+      ],
+      "up_threejs": [
+        -0.9979058793829189,
+        -0.01342656428036992,
+        -0.06327387505620852
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121037_0102_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121037_0102_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121037_0102_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121037_0102_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/6sa6dztr5x25i6zhc5enr/f07074CreateAreaRoute11_DJI_20260508121037_0102_V.JPG?raw=1",
+      "lat": 42.37885805987463,
+      "lon": -71.12069860827029,
+      "altitude": 16.727647210840626,
+      "relative_altitude": 37.915,
+      "translation": [
+        325410.71228396305,
+        4694020.143792698,
+        16.727647210840626
+      ],
+      "rotation": [
+        -2.0300317921251936,
+        2.364525271207286,
+        -0.01044598776905993
+      ],
+      "forward": [
+        -0.014725663109390063,
+        -0.021476614425536396,
+        -0.9996608974441311
+      ],
+      "up": [
+        0.9883963806827786,
+        -0.15147534946412713,
+        -0.011305448151424
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:10:37",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": 96.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 95.0,
+      "easting": 325410.71228396305,
+      "northing": 4694020.143792698,
+      "model_x": -0.2877160369534977,
+      "model_y_obj": -10.856207301840186,
+      "model_z": 10.856207301840186,
+      "model_y": 16.727647210840626,
+      "forward_threejs": [
+        -0.014725663109390063,
+        -0.9996608974441311,
+        0.021476614425536396
+      ],
+      "up_threejs": [
+        0.9883963806827786,
+        -0.011305448151424,
+        0.15147534946412713
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121103_0136_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121103_0136_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121103_0136_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121103_0136_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/kwmeynicqkk7jqry0hq0j/f07074CreateAreaRoute11_DJI_20260508121103_0136_V.JPG?raw=1",
+      "lat": 42.378916285986534,
+      "lon": -71.12101641343982,
+      "altitude": 16.66601217207757,
+      "relative_altitude": 37.871,
+      "translation": [
+        325384.70884890313,
+        4694027.262520903,
+        16.66601217207757
+      ],
+      "rotation": [
+        -2.4361510725508175,
+        -1.9535764791782835,
+        -0.005392604884894156
+      ],
+      "forward": [
+        0.014506098086996197,
+        -0.01256916754664083,
+        -0.9998157776037919
+      ],
+      "up": [
+        -0.9759957031711024,
+        0.21713384992280388,
+        -0.016890192694184267
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:11:03",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": -79.4,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -62.3,
+      "easting": 325384.70884890313,
+      "northing": 4694027.262520903,
+      "model_x": -26.291151096869726,
+      "model_y_obj": -3.737479097209871,
+      "model_z": 3.737479097209871,
+      "model_y": 16.66601217207757,
+      "forward_threejs": [
+        0.014506098086996197,
+        -0.9998157776037919,
+        0.01256916754664083
+      ],
+      "up_threejs": [
+        -0.9759957031711024,
+        -0.016890192694184267,
+        -0.21713384992280388
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121113_0149_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121113_0149_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121113_0149_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121113_0149_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/p1j8mroefgqhy6hxh6cz1/f07074CreateAreaRoute11_DJI_20260508121113_0149_V.JPG?raw=1",
+      "lat": 42.37891321128895,
+      "lon": -71.12066119241788,
+      "altitude": 16.720008008686545,
+      "relative_altitude": 37.918,
+      "translation": [
+        325413.94557768374,
+        4694026.191101843,
+        16.720008008686545
+      ],
+      "rotation": [
+        -2.0366509752060797,
+        2.354404628762231,
+        -0.008804983082202716
+      ],
+      "forward": [
+        -0.01786358721043581,
+        -0.022930696473435923,
+        -0.999577448430695
+      ],
+      "up": [
+        0.989453074373193,
+        -0.1441386228651823,
+        -0.01437605689908194
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:11:13",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": 95.8,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 95.0,
+      "easting": 325413.94557768374,
+      "northing": 4694026.191101843,
+      "model_x": 2.945577683742158,
+      "model_y_obj": -4.808898157440126,
+      "model_z": 4.808898157440126,
+      "model_y": 16.720008008686545,
+      "forward_threejs": [
+        -0.01786358721043581,
+        -0.999577448430695,
+        0.022930696473435923
+      ],
+      "up_threejs": [
+        0.989453074373193,
+        -0.01437605689908194,
+        0.1441386228651823
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121138_0182_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121138_0182_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121138_0182_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121138_0182_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/9dnw2pm09a7aiy7hjf3o3/f07074CreateAreaRoute11_DJI_20260508121138_0182_V.JPG?raw=1",
+      "lat": 42.37897173700807,
+      "lon": -71.12101628316896,
+      "altitude": 16.73690605585416,
+      "relative_altitude": 37.916,
+      "translation": [
+        325384.8732842897,
+        4694033.419717279,
+        16.73690605585416
+      ],
+      "rotation": [
+        -2.316134929691887,
+        -2.0985005636575216,
+        -0.014822190434412958
+      ],
+      "forward": [
+        0.017869945573600766,
+        -0.005598008199573979,
+        -0.9998246483005878
+      ],
+      "up": [
+        -0.9949872970717407,
+        0.09830639165649548,
+        -0.01833390371283264
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:11:38",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": -86.5,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -71.4,
+      "easting": 325384.8732842897,
+      "northing": 4694033.419717279,
+      "model_x": -26.126715710328426,
+      "model_y_obj": 2.4197172792628407,
+      "model_z": -2.4197172792628407,
+      "model_y": 16.73690605585416,
+      "forward_threejs": [
+        0.017869945573600766,
+        -0.9998246483005878,
+        0.005598008199573979
+      ],
+      "up_threejs": [
+        -0.9949872970717407,
+        -0.01833390371283264,
+        -0.09830639165649548
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121207_0219_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121207_0219_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121207_0219_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121207_0219_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/hta6yhij76et60dcbs2cu/f07074CreateAreaRoute11_DJI_20260508121207_0219_V.JPG?raw=1",
+      "lat": 42.37900366614182,
+      "lon": -71.12072482288224,
+      "altitude": 16.682388812655578,
+      "relative_altitude": 37.905,
+      "translation": [
+        325408.95760501333,
+        4694036.366260897,
+        16.682388812655578
+      ],
+      "rotation": [
+        -2.3002220134304845,
+        -2.1023762896125726,
+        0.003535121312324914
+      ],
+      "forward": [
+        0.015420503396796811,
+        -0.02023409417113401,
+        -0.9996763423769031
+      ],
+      "up": [
+        -0.9958367888315109,
+        0.08952189254787957,
+        -0.017173257244644108
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:12:07",
+      "gimbal_pitch": -90.0,
+      "gimbal_yaw": 92.7,
+      "gimbal_roll": 180.0,
+      "flight_yaw": -85.0,
+      "easting": 325408.95760501333,
+      "northing": 4694036.366260897,
+      "model_x": -2.0423949866672046,
+      "model_y_obj": 5.366260897368193,
+      "model_z": -5.366260897368193,
+      "model_y": 16.682388812655578,
+      "forward_threejs": [
+        0.015420503396796811,
+        -0.9996763423769031,
+        0.02023409417113401
+      ],
+      "up_threejs": [
+        -0.9958367888315109,
+        -0.017173257244644108,
+        -0.08952189254787957
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121228_0247_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121228_0247_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121228_0247_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121228_0247_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/6mmgkzr8wc4n9drptsxo7/f07074CreateAreaRoute11_DJI_20260508121228_0247_V.JPG?raw=1",
+      "lat": 42.37901648335433,
+      "lon": -71.12048968900206,
+      "altitude": 16.7395947431348,
+      "relative_altitude": 37.936,
+      "translation": [
+        325428.3516069826,
+        4694037.3063687775,
+        16.7395947431348
+      ],
+      "rotation": [
+        -2.0701045819749604,
+        2.340525518813575,
+        0.008430393209130171
+      ],
+      "forward": [
+        -0.01626183596991321,
+        -0.007179689640921846,
+        -0.9998419898901765
+      ],
+      "up": [
+        0.992385922073416,
+        -0.12221793761301158,
+        -0.01526294192212334
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:12:28",
+      "gimbal_pitch": -90.0,
+      "gimbal_yaw": -85.4,
+      "gimbal_roll": 180.0,
+      "flight_yaw": 95.0,
+      "easting": 325428.3516069826,
+      "northing": 4694037.3063687775,
+      "model_x": 17.35160698258551,
+      "model_y_obj": 6.306368777528405,
+      "model_z": -6.306368777528405,
+      "model_y": 16.7395947431348,
+      "forward_threejs": [
+        -0.01626183596991321,
+        -0.9998419898901765,
+        0.007179689640921846
+      ],
+      "up_threejs": [
+        0.992385922073416,
+        -0.01526294192212334,
+        0.12221793761301158
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121256_0284_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121256_0284_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121256_0284_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121256_0284_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/9dopi5de0ogjr3ob2mcm4/f07074CreateAreaRoute11_DJI_20260508121256_0284_V.JPG?raw=1",
+      "lat": 42.379094266161296,
+      "lon": -71.1208025074616,
+      "altitude": 16.713492721799888,
+      "relative_altitude": 37.895,
+      "translation": [
+        325402.81298197765,
+        4694046.58642511,
+        16.713492721799888
+      ],
+      "rotation": [
+        -2.0469803104524447,
+        2.349765778249164,
+        -0.016500292971345892
+      ],
+      "forward": [
+        -0.012056919671329335,
+        -0.0245448686294553,
+        -0.9996260201255277
+      ],
+      "up": [
+        0.9905080469905125,
+        -0.13718680332781644,
+        -0.008578452059418089
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:12:56",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": 95.6,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 95.2,
+      "easting": 325402.81298197765,
+      "northing": 4694046.58642511,
+      "model_x": -8.187018022348639,
+      "model_y_obj": 15.586425109766424,
+      "model_z": -15.586425109766424,
+      "model_y": 16.713492721799888,
+      "forward_threejs": [
+        -0.012056919671329335,
+        -0.9996260201255277,
+        0.0245448686294553
+      ],
+      "up_threejs": [
+        0.9905080469905125,
+        -0.008578452059418089,
+        0.13718680332781644
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121325_0322_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121325_0322_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121325_0322_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121325_0322_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/5g5ail45juuspkukdc5hb/f07074CreateAreaRoute11_DJI_20260508121325_0322_V.JPG?raw=1",
+      "lat": 42.37913737610625,
+      "lon": -71.12099765575704,
+      "altitude": 16.687940723976222,
+      "relative_altitude": 37.897,
+      "translation": [
+        325386.8660212205,
+        4694051.7745455345,
+        16.687940723976222
+      ],
+      "rotation": [
+        -2.3302590308431785,
+        -2.0866482447186376,
+        -0.0189472746244095
+      ],
+      "forward": [
+        0.018072023624303053,
+        -0.002022899698451503,
+        -0.9998346412477079
+      ],
+      "up": [
+        -0.993770157338186,
+        0.10995537622298279,
+        -0.018184873485937877
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:13:25",
+      "gimbal_pitch": -90.0,
+      "gimbal_yaw": 94.7,
+      "gimbal_roll": 180.0,
+      "flight_yaw": -84.9,
+      "easting": 325386.8660212205,
+      "northing": 4694051.7745455345,
+      "model_x": -24.133978779485915,
+      "model_y_obj": 20.77454553451389,
+      "model_z": -20.77454553451389,
+      "model_y": 16.687940723976222,
+      "forward_threejs": [
+        0.018072023624303053,
+        -0.9998346412477079,
+        0.002022899698451503
+      ],
+      "up_threejs": [
+        -0.993770157338186,
+        -0.018184873485937877,
+        -0.10995537622298279
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121337_0338_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121337_0338_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121337_0338_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121337_0338_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/n0y5h620jjzksaapxftm1/f07074CreateAreaRoute11_DJI_20260508121337_0338_V.JPG?raw=1",
+      "lat": 42.379139995129066,
+      "lon": -71.12060829041668,
+      "altitude": 16.722780188494028,
+      "relative_altitude": 37.921,
+      "translation": [
+        325418.92950997385,
+        4694051.265220849,
+        16.722780188494028
+      ],
+      "rotation": [
+        -2.080051318610295,
+        2.328308171061889,
+        0.001648527122817907
+      ],
+      "forward": [
+        -0.015224004265783072,
+        -0.01218479997709607,
+        -0.9998098620956055
+      ],
+      "up": [
+        0.9935725398827446,
+        -0.11235781385723831,
+        -0.013759711340504941
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:13:37",
+      "gimbal_pitch": -90.0,
+      "gimbal_yaw": -85.3,
+      "gimbal_roll": 180.0,
+      "flight_yaw": 95.1,
+      "easting": 325418.92950997385,
+      "northing": 4694051.265220849,
+      "model_x": 7.929509973851964,
+      "model_y_obj": 20.265220848843455,
+      "model_z": -20.265220848843455,
+      "model_y": 16.722780188494028,
+      "forward_threejs": [
+        -0.015224004265783072,
+        -0.9998098620956055,
+        0.01218479997709607
+      ],
+      "up_threejs": [
+        0.9935725398827446,
+        -0.013759711340504941,
+        0.11235781385723831
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121353_0359_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121353_0359_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121353_0359_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121353_0359_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/b34tqkbbwk1pvklffncuw/f07074CreateAreaRoute11_DJI_20260508121353_0359_V.JPG?raw=1",
+      "lat": 42.3791708825325,
+      "lon": -71.12064833604428,
+      "altitude": 16.743607265997667,
+      "relative_altitude": 37.952,
+      "translation": [
+        325415.7181814311,
+        4694054.777347292,
+        16.743607265997667
+      ],
+      "rotation": [
+        -2.2672511691396955,
+        -2.1396794025961596,
+        0.003328568189998462
+      ],
+      "forward": [
+        0.014996912694967997,
+        -0.019001878876679486,
+        -0.9997069676704147
+      ],
+      "up": [
+        -0.9982049059946627,
+        0.05769478546981201,
+        -0.016071010477843182
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:13:53",
+      "gimbal_pitch": -89.9,
+      "gimbal_yaw": -88.1,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -85.0,
+      "easting": 325415.7181814311,
+      "northing": 4694054.777347292,
+      "model_x": 4.718181431118865,
+      "model_y_obj": 23.77734729181975,
+      "model_z": -23.77734729181975,
+      "model_y": 16.743607265997667,
+      "forward_threejs": [
+        0.014996912694967997,
+        -0.9997069676704147,
+        0.019001878876679486
+      ],
+      "up_threejs": [
+        -0.9982049059946627,
+        -0.016071010477843182,
+        -0.05769478546981201
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121427_0383_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121427_0383_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121427_0383_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121427_0383_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/c3l92i4k3jde17x0b64b9/f07074CreateAreaRoute11_DJI_20260508121427_0383_V.JPG?raw=1",
+      "lat": 42.37915591805972,
+      "lon": -71.12042045801691,
+      "altitude": 16.748119350755545,
+      "relative_altitude": 37.923,
+      "translation": [
+        325434.43777135893,
+        4694052.647410666,
+        16.748119350755545
+      ],
+      "rotation": [
+        1.868817155779401,
+        1.6118607687714714,
+        -0.6605437253521936
+      ],
+      "forward": [
+        -0.6959691022315168,
+        0.10607707773615471,
+        -0.7101933978276724
+      ],
+      "up": [
+        -0.702663436544501,
+        0.10318037151070492,
+        0.7040013536055062
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:14:27",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325434.43777135893,
+      "northing": 4694052.647410666,
+      "model_x": 23.437771358934697,
+      "model_y_obj": 21.647410665638745,
+      "model_z": -21.647410665638745,
+      "model_y": 16.748119350755545,
+      "forward_threejs": [
+        -0.6959691022315168,
+        -0.7101933978276724,
+        -0.10607707773615471
+      ],
+      "up_threejs": [
+        -0.702663436544501,
+        0.7040013536055062,
+        -0.10318037151070492
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121444_0406_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121444_0406_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121444_0406_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121444_0406_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/mbvylimzkdughm58xt9pd/f07074CreateAreaRoute11_DJI_20260508121444_0406_V.JPG?raw=1",
+      "lat": 42.379099862269904,
+      "lon": -71.11999346767804,
+      "altitude": 16.69018504732883,
+      "relative_altitude": 37.896,
+      "translation": [
+        325469.43632279296,
+        4694045.545568751,
+        16.69018504732883
+      ],
+      "rotation": [
+        1.8741820493463666,
+        1.6150309399936902,
+        -0.6431024864611113
+      ],
+      "forward": [
+        -0.6872487327977319,
+        0.11362846722244768,
+        -0.7174801395889567
+      ],
+      "up": [
+        -0.7103260000833466,
+        0.10164917634959726,
+        0.6964943779766224
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:14:44",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325469.43632279296,
+      "northing": 4694045.545568751,
+      "model_x": 58.43632279295707,
+      "model_y_obj": 14.545568751171231,
+      "model_z": -14.545568751171231,
+      "model_y": 16.69018504732883,
+      "forward_threejs": [
+        -0.6872487327977319,
+        -0.7174801395889567,
+        -0.11362846722244768
+      ],
+      "up_threejs": [
+        -0.7103260000833466,
+        0.6964943779766224,
+        -0.10164917634959726
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121502_0429_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121502_0429_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121502_0429_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121502_0429_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/il0cp4r5xsi6z3dux7l0w/f07074CreateAreaRoute11_DJI_20260508121502_0429_V.JPG?raw=1",
+      "lat": 42.37910362854557,
+      "lon": -71.1204901579348,
+      "altitude": 16.696478977188907,
+      "relative_altitude": 37.891,
+      "translation": [
+        325428.5545069523,
+        4694046.984221291,
+        16.696478977188907
+      ],
+      "rotation": [
+        1.8735977658502347,
+        1.6061962152720322,
+        -0.65550967789857
+      ],
+      "forward": [
+        -0.6941051749573708,
+        0.11128978566671967,
+        -0.7112190869933493
+      ],
+      "up": [
+        -0.7031247070946566,
+        0.1070687142612612,
+        0.7029594132661529
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:15:02",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325428.5545069523,
+      "northing": 4694046.984221291,
+      "model_x": 17.554506952292286,
+      "model_y_obj": 15.984221290796995,
+      "model_z": -15.984221290796995,
+      "model_y": 16.696478977188907,
+      "forward_threejs": [
+        -0.6941051749573708,
+        -0.7112190869933493,
+        -0.11128978566671967
+      ],
+      "up_threejs": [
+        -0.7031247070946566,
+        0.7029594132661529,
+        -0.1070687142612612
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121520_0453_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121520_0453_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121520_0453_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121520_0453_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/fwgtcpupjtdqjh64ypvez/f07074CreateAreaRoute11_DJI_20260508121520_0453_V.JPG?raw=1",
+      "lat": 42.37904114488968,
+      "lon": -71.1199652027022,
+      "altitude": 16.765970302519822,
+      "relative_altitude": 37.98,
+      "translation": [
+        325471.60067945934,
+        4694038.967335481,
+        16.765970302519822
+      ],
+      "rotation": [
+        1.879717839482673,
+        1.6135197844375722,
+        -0.6470803284485278
+      ],
+      "forward": [
+        -0.6866218985949989,
+        0.11070468943663556,
+        -0.7185365962193834
+      ],
+      "up": [
+        -0.7105864957209196,
+        0.10672704019311971,
+        0.695468310558202
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:15:20",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.1,
+      "easting": 325471.60067945934,
+      "northing": 4694038.967335481,
+      "model_x": 60.600679459341336,
+      "model_y_obj": 7.967335481196642,
+      "model_z": -7.967335481196642,
+      "model_y": 16.765970302519822,
+      "forward_threejs": [
+        -0.6866218985949989,
+        -0.7185365962193834,
+        -0.11070468943663556
+      ],
+      "up_threejs": [
+        -0.7105864957209196,
+        0.695468310558202,
+        -0.10672704019311971
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121538_0476_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121538_0476_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121538_0476_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121538_0476_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/n1mwxtsfmxqz830bgm7s3/f07074CreateAreaRoute11_DJI_20260508121538_0476_V.JPG?raw=1",
+      "lat": 42.37904860868466,
+      "lon": -71.1205135660782,
+      "altitude": 16.711552528158393,
+      "relative_altitude": 37.893,
+      "translation": [
+        325426.47484738275,
+        4694040.9227318615,
+        16.711552528158393
+      ],
+      "rotation": [
+        1.8685790739165,
+        1.6078963362232574,
+        -0.6626512920954089
+      ],
+      "forward": [
+        -0.6979325906733703,
+        0.1071366640591725,
+        -0.708104394909557
+      ],
+      "up": [
+        -0.7003023391535569,
+        0.10484230828218678,
+        0.7061053208765103
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:15:38",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325426.47484738275,
+      "northing": 4694040.9227318615,
+      "model_x": 15.47484738274943,
+      "model_y_obj": 9.92273186147213,
+      "model_z": -9.92273186147213,
+      "model_y": 16.711552528158393,
+      "forward_threejs": [
+        -0.6979325906733703,
+        -0.708104394909557,
+        -0.1071366640591725
+      ],
+      "up_threejs": [
+        -0.7003023391535569,
+        0.7061053208765103,
+        -0.10484230828218678
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121555_0499_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121555_0499_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121555_0499_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121555_0499_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/1c2c7exaxfqlbgtyi4qn7/f07074CreateAreaRoute11_DJI_20260508121555_0499_V.JPG?raw=1",
+      "lat": 42.37898170767521,
+      "lon": -71.119921222937,
+      "altitude": 16.737699267440913,
+      "relative_altitude": 37.956,
+      "translation": [
+        325475.0568392148,
+        4694032.276889594,
+        16.737699267440913
+      ],
+      "rotation": [
+        1.88045788870323,
+        1.6127400652218444,
+        -0.6610090537843293
+      ],
+      "forward": [
+        -0.6909328126245613,
+        0.10245177991618144,
+        -0.7156224432134023
+      ],
+      "up": [
+        -0.7070241115486713,
+        0.11067359703498639,
+        0.6984756693029109
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:15:55",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.1,
+      "easting": 325475.0568392148,
+      "northing": 4694032.276889594,
+      "model_x": 64.0568392148125,
+      "model_y_obj": 1.276889594271779,
+      "model_z": -1.276889594271779,
+      "model_y": 16.737699267440913,
+      "forward_threejs": [
+        -0.6909328126245613,
+        -0.7156224432134023,
+        -0.10245177991618144
+      ],
+      "up_threejs": [
+        -0.7070241115486713,
+        0.6984756693029109,
+        -0.11067359703498639
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121614_0523_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121614_0523_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121614_0523_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121614_0523_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/ttm90caqdc85fgkuo035g/f07074CreateAreaRoute11_DJI_20260508121614_0523_V.JPG?raw=1",
+      "lat": 42.3789900595789,
+      "lon": -71.1205191519668,
+      "altitude": 16.739607095546436,
+      "relative_altitude": 37.919,
+      "translation": [
+        325425.8527033971,
+        4694034.432723891,
+        16.739607095546436
+      ],
+      "rotation": [
+        1.8675975035540966,
+        1.6086471484814957,
+        -0.6595014636469202
+      ],
+      "forward": [
+        -0.6971378319666874,
+        0.10887018020166461,
+        -0.7086226972823011
+      ],
+      "up": [
+        -0.7010809412757885,
+        0.10320284418321424,
+        0.7055740122285896
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:16:14",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -82.5,
+      "easting": 325425.8527033971,
+      "northing": 4694034.432723891,
+      "model_x": 14.852703397104051,
+      "model_y_obj": 3.432723890990019,
+      "model_z": -3.432723890990019,
+      "model_y": 16.739607095546436,
+      "forward_threejs": [
+        -0.6971378319666874,
+        -0.7086226972823011,
+        -0.10887018020166461
+      ],
+      "up_threejs": [
+        -0.7010809412757885,
+        0.7055740122285896,
+        -0.10320284418321424
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121631_0546_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121631_0546_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121631_0546_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121631_0546_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/2x2sfpext6342a81y85td/f07074CreateAreaRoute11_DJI_20260508121631_0546_V.JPG?raw=1",
+      "lat": 42.37892402683472,
+      "lon": -71.1199320882822,
+      "altitude": 16.675612999776195,
+      "relative_altitude": 37.922,
+      "translation": [
+        325474.00248977845,
+        4694025.894138592,
+        16.675612999776195
+      ],
+      "rotation": [
+        1.8744031866737334,
+        1.6109135823564356,
+        -0.65151097282157
+      ],
+      "forward": [
+        -0.6910745707226654,
+        0.11081109085099358,
+        -0.7142386434833224
+      ],
+      "up": [
+        -0.706486354168104,
+        0.10509924575944551,
+        0.6998794038368726
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:16:31",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.1,
+      "easting": 325474.00248977845,
+      "northing": 4694025.894138592,
+      "model_x": 63.002489778446034,
+      "model_y_obj": -5.105861407704651,
+      "model_z": 5.105861407704651,
+      "model_y": 16.675612999776195,
+      "forward_threejs": [
+        -0.6910745707226654,
+        -0.7142386434833224,
+        -0.11081109085099358
+      ],
+      "up_threejs": [
+        -0.706486354168104,
+        0.6998794038368726,
+        -0.10509924575944551
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121649_0569_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121649_0569_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121649_0569_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121649_0569_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/pni5f4uhhk1sckqldql4a/f07074CreateAreaRoute11_DJI_20260508121649_0569_V.JPG?raw=1",
+      "lat": 42.378934825417836,
+      "lon": -71.1205352405837,
+      "altitude": 16.738960648249883,
+      "relative_altitude": 37.908,
+      "translation": [
+        325424.3750591303,
+        4694028.332398787,
+        16.738960648249883
+      ],
+      "rotation": [
+        1.8755537851031072,
+        1.605936900146165,
+        -0.6606425748980109
+      ],
+      "forward": [
+        -0.6949686022695672,
+        0.10781911920673608,
+        -0.7109104580697683
+      ],
+      "up": [
+        -0.7024047139598516,
+        0.10964266477297471,
+        0.7032823784714501
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:16:49",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -82.7,
+      "easting": 325424.3750591303,
+      "northing": 4694028.332398787,
+      "model_x": 13.375059130310547,
+      "model_y_obj": -2.6676012128591537,
+      "model_z": 2.6676012128591537,
+      "model_y": 16.738960648249883,
+      "forward_threejs": [
+        -0.6949686022695672,
+        -0.7109104580697683,
+        -0.10781911920673608
+      ],
+      "up_threejs": [
+        -0.7024047139598516,
+        0.7032823784714501,
+        -0.10964266477297471
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121706_0592_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121706_0592_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121706_0592_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121706_0592_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/obt3gugpj6qcd94g1g982/f07074CreateAreaRoute11_DJI_20260508121706_0592_V.JPG?raw=1",
+      "lat": 42.37886665570959,
+      "lon": -71.11992782546662,
+      "altitude": 16.69026881436323,
+      "relative_altitude": 37.93,
+      "translation": [
+        325474.1944952648,
+        4694019.514703804,
+        16.69026881436323
+      ],
+      "rotation": [
+        1.8742164987226737,
+        1.6109138883762175,
+        -0.6568572789836132
+      ],
+      "forward": [
+        -0.692833425469398,
+        0.10758202333133132,
+        -0.7130273156115949
+      ],
+      "up": [
+        -0.7050762148482641,
+        0.10621028934043908,
+        0.701132587813079
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:17:06",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.1,
+      "easting": 325474.1944952648,
+      "northing": 4694019.514703804,
+      "model_x": 63.19449526479002,
+      "model_y_obj": -11.485296196304262,
+      "model_z": 11.485296196304262,
+      "model_y": 16.69026881436323,
+      "forward_threejs": [
+        -0.692833425469398,
+        -0.7130273156115949,
+        -0.10758202333133132
+      ],
+      "up_threejs": [
+        -0.7050762148482641,
+        0.701132587813079,
+        -0.10621028934043908
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121725_0616_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121725_0616_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121725_0616_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121725_0616_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/w7p9j19eyfp24cjqql3dl/f07074CreateAreaRoute11_DJI_20260508121725_0616_V.JPG?raw=1",
+      "lat": 42.378876091196105,
+      "lon": -71.12051537780711,
+      "altitude": 16.744060692032644,
+      "relative_altitude": 37.92,
+      "translation": [
+        325425.8475829856,
+        4694021.76954472,
+        16.744060692032644
+      ],
+      "rotation": [
+        1.8746396083190562,
+        1.601512911578645,
+        -0.6600431374173065
+      ],
+      "forward": [
+        -0.696500234368311,
+        0.11097237113031552,
+        -0.7089235194085489
+      ],
+      "up": [
+        -0.7002781858291323,
+        0.11037984846566154,
+        0.7052848725901874
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:17:25",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.2,
+      "easting": 325425.8475829856,
+      "northing": 4694021.76954472,
+      "model_x": 14.847582985588815,
+      "model_y_obj": -9.230455280281603,
+      "model_z": 9.230455280281603,
+      "model_y": 16.744060692032644,
+      "forward_threejs": [
+        -0.696500234368311,
+        -0.7089235194085489,
+        -0.11097237113031552
+      ],
+      "up_threejs": [
+        -0.7002781858291323,
+        0.7052848725901874,
+        -0.11037984846566154
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121742_0639_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121742_0639_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121742_0639_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121742_0639_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/r2iweyvbfsoint30wzuzk/f07074CreateAreaRoute11_DJI_20260508121742_0639_V.JPG?raw=1",
+      "lat": 42.37881037020854,
+      "lon": -71.11995804549412,
+      "altitude": 16.656419804598155,
+      "relative_altitude": 37.884,
+      "translation": [
+        325471.5505416112,
+        4694013.3266540235,
+        16.656419804598155
+      ],
+      "rotation": [
+        1.877889386825202,
+        1.6061211535722184,
+        -0.6560564302707038
+      ],
+      "forward": [
+        -0.6924883958891844,
+        0.10994872843981618,
+        -0.7130014717188821
+      ],
+      "up": [
+        -0.7044566149243535,
+        0.11006138605581596,
+        0.7011614428851559
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:17:42",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -82.4,
+      "easting": 325471.5505416112,
+      "northing": 4694013.3266540235,
+      "model_x": 60.5505416112137,
+      "model_y_obj": -17.673345976509154,
+      "model_z": 17.673345976509154,
+      "model_y": 16.656419804598155,
+      "forward_threejs": [
+        -0.6924883958891844,
+        -0.7130014717188821,
+        -0.10994872843981618
+      ],
+      "up_threejs": [
+        -0.7044566149243535,
+        0.7011614428851559,
+        -0.11006138605581596
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121800_0662_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121800_0662_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121800_0662_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121800_0662_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/putfi25v6cf05qnak2cgt/f07074CreateAreaRoute11_DJI_20260508121800_0662_V.JPG?raw=1",
+      "lat": 42.37881698020462,
+      "lon": -71.12049990907242,
+      "altitude": 16.711701162632572,
+      "relative_altitude": 37.908,
+      "translation": [
+        325426.95730509015,
+        4694015.173881843,
+        16.711701162632572
+      ],
+      "rotation": [
+        1.8716669859080393,
+        1.602790187516711,
+        -0.6535121854155664
+      ],
+      "forward": [
+        -0.6953141138476501,
+        0.11495455022434277,
+        -0.709453123516259
+      ],
+      "up": [
+        -0.7014508269988117,
+        0.10646205470941862,
+        0.7047216246219014
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:18:00",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325426.95730509015,
+      "northing": 4694015.173881843,
+      "model_x": 15.957305090152659,
+      "model_y_obj": -15.826118157245219,
+      "model_z": 15.826118157245219,
+      "model_y": 16.711701162632572,
+      "forward_threejs": [
+        -0.6953141138476501,
+        -0.709453123516259,
+        -0.11495455022434277
+      ],
+      "up_threejs": [
+        -0.7014508269988117,
+        0.7047216246219014,
+        -0.10646205470941862
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121818_0686_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121818_0686_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121818_0686_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121818_0686_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/dpdioxw6x25aha7t1e11d/f07074CreateAreaRoute11_DJI_20260508121818_0686_V.JPG?raw=1",
+      "lat": 42.378756480606725,
+      "lon": -71.12001871326055,
+      "altitude": 16.668795078622516,
+      "relative_altitude": 37.924,
+      "translation": [
+        325466.4064615266,
+        4694007.467200394,
+        16.668795078622516
+      ],
+      "rotation": [
+        1.877692027883701,
+        1.6063136821313557,
+        -0.65549451614879
+      ],
+      "forward": [
+        -0.6923364772731699,
+        0.1102296160874226,
+        -0.7131056260991053
+      ],
+      "up": [
+        -0.7046136624117278,
+        0.10973646994082986,
+        0.7010545584386831
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:18:18",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -82.8,
+      "easting": 325466.4064615266,
+      "northing": 4694007.467200394,
+      "model_x": 55.40646152658155,
+      "model_y_obj": -23.532799606211483,
+      "model_z": 23.532799606211483,
+      "model_y": 16.668795078622516,
+      "forward_threejs": [
+        -0.6923364772731699,
+        -0.7131056260991053,
+        -0.1102296160874226
+      ],
+      "up_threejs": [
+        -0.7046136624117278,
+        0.7010545584386831,
+        -0.10973646994082986
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121836_0709_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121836_0709_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121836_0709_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121836_0709_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/wg9v7ujuwdqn1rq62zy54/f07074CreateAreaRoute11_DJI_20260508121836_0709_V.JPG?raw=1",
+      "lat": 42.37875457429095,
+      "lon": -71.1204378075393,
+      "altitude": 16.718459758217023,
+      "relative_altitude": 37.914,
+      "translation": [
+        325431.8971740012,
+        4694008.116525001,
+        16.718459758217023
+      ],
+      "rotation": [
+        1.870693889984265,
+        1.6080597228446842,
+        -0.6565802991920229
+      ],
+      "forward": [
+        -0.695101122123269,
+        0.11025844180400261,
+        -0.7104065779776576
+      ],
+      "up": [
+        -0.7026538281214011,
+        0.10476978121231097,
+        0.7037761652479182
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:18:36",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325431.8971740012,
+      "northing": 4694008.116525001,
+      "model_x": 20.897174001205713,
+      "model_y_obj": -22.88347499910742,
+      "model_z": 22.88347499910742,
+      "model_y": 16.718459758217023,
+      "forward_threejs": [
+        -0.695101122123269,
+        -0.7104065779776576,
+        -0.11025844180400261
+      ],
+      "up_threejs": [
+        -0.7026538281214011,
+        0.7037761652479182,
+        -0.10476978121231097
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121853_0732_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121853_0732_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121853_0732_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121853_0732_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/bgfwoeaqqkq8qserns68p/f07074CreateAreaRoute11_DJI_20260508121853_0732_V.JPG?raw=1",
+      "lat": 42.37870109866677,
+      "lon": -71.12006381900527,
+      "altitude": 16.64678496273899,
+      "relative_altitude": 37.897,
+      "translation": [
+        325462.5394594612,
+        4694001.410067189,
+        16.64678496273899
+      ],
+      "rotation": [
+        1.8750254922501823,
+        1.6078146965883078,
+        -0.6495449437524946
+      ],
+      "forward": [
+        -0.69112998555718,
+        0.11365522024852118,
+        -0.7137379308779886
+      ],
+      "up": [
+        -0.7058419047883656,
+        0.106097081427416,
+        0.7003789079900365
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:18:53",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -83.3,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -83.0,
+      "easting": 325462.5394594612,
+      "northing": 4694001.410067189,
+      "model_x": 51.539459461171646,
+      "model_y_obj": -29.589932811446488,
+      "model_z": 29.589932811446488,
+      "model_y": 16.64678496273899,
+      "forward_threejs": [
+        -0.69112998555718,
+        -0.7137379308779886,
+        -0.11365522024852118
+      ],
+      "up_threejs": [
+        -0.7058419047883656,
+        0.7003789079900365,
+        -0.106097081427416
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121922_0756_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121922_0756_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121922_0756_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121922_0756_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/ll8snly6tw0ko07qd27x5/f07074CreateAreaRoute11_DJI_20260508121922_0756_V.JPG?raw=1",
+      "lat": 42.37878437460277,
+      "lon": -71.12039197568816,
+      "altitude": 16.917261035913967,
+      "relative_altitude": 37.986,
+      "translation": [
+        325435.7530893192,
+        4694011.331482053,
+        16.917261035913967
+      ],
+      "rotation": [
+        2.3567199812429727,
+        -0.1892077283049971,
+        0.0715356199024908
+      ],
+      "forward": [
+        0.10767274003270073,
+        0.6938666383457274,
+        -0.7120081946471193
+      ],
+      "up": [
+        0.11537982890136314,
+        0.7026112569203812,
+        0.7021573304690725
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:19:22",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.9,
+      "easting": 325435.7530893192,
+      "northing": 4694011.331482053,
+      "model_x": 24.753089319216087,
+      "model_y_obj": -19.66851794719696,
+      "model_z": 19.66851794719696,
+      "model_y": 16.917261035913967,
+      "forward_threejs": [
+        0.10767274003270073,
+        -0.7120081946471193,
+        -0.6938666383457274
+      ],
+      "up_threejs": [
+        0.11537982890136314,
+        0.7021573304690725,
+        -0.7026112569203812
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121940_0779_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121940_0779_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121940_0779_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121940_0779_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/fv2d0568a21md30mxbqbd/f07074CreateAreaRoute11_DJI_20260508121940_0779_V.JPG?raw=1",
+      "lat": 42.37844948226098,
+      "lon": -71.12047150878898,
+      "altitude": 16.850646817068988,
+      "relative_altitude": 37.919,
+      "translation": [
+        325428.2770601519,
+        4693974.307348673,
+        16.850646817068988
+      ],
+      "rotation": [
+        2.3620124507407336,
+        -0.1807245112345292,
+        0.06274720963822693
+      ],
+      "forward": [
+        0.09849564759693726,
+        0.6917161031395332,
+        -0.7154211627160036
+      ],
+      "up": [
+        0.11202037885985244,
+        0.7066406811387438,
+        0.6986489694258967
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:19:40",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325428.2770601519,
+      "northing": 4693974.307348673,
+      "model_x": 17.277060151915066,
+      "model_y_obj": -56.6926513267681,
+      "model_z": 56.6926513267681,
+      "model_y": 16.850646817068988,
+      "forward_threejs": [
+        0.09849564759693726,
+        -0.7154211627160036,
+        -0.6917161031395332
+      ],
+      "up_threejs": [
+        0.11202037885985244,
+        0.6986489694258967,
+        -0.7066406811387438
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508121957_0802_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508121957_0802_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121957_0802_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508121957_0802_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/ok0dw7ovknoxud891vde8/f07074CreateAreaRoute11_DJI_20260508121957_0802_V.JPG?raw=1",
+      "lat": 42.37871812411305,
+      "lon": -71.1204795534739,
+      "altitude": 16.796616914906263,
+      "relative_altitude": 37.908,
+      "translation": [
+        325428.35921988497,
+        4694004.154751679,
+        16.796616914906263
+      ],
+      "rotation": [
+        2.3589260716608678,
+        -0.18014950758670858,
+        0.07395537964909107
+      ],
+      "forward": [
+        0.10662946605296342,
+        0.6930112950915371,
+        -0.7129975468715236
+      ],
+      "up": [
+        0.10820721201364485,
+        0.7047387642189311,
+        0.7011665090942436
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:19:57",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325428.35921988497,
+      "northing": 4694004.154751679,
+      "model_x": 17.35921988496557,
+      "model_y_obj": -26.845248321071267,
+      "model_z": 26.845248321071267,
+      "model_y": 16.796616914906263,
+      "forward_threejs": [
+        0.10662946605296342,
+        -0.7129975468715236,
+        -0.6930112950915371
+      ],
+      "up_threejs": [
+        0.10820721201364485,
+        0.7011665090942436,
+        -0.7047387642189311
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122023_0835_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122023_0835_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122023_0835_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122023_0835_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/1jnk6lukzf9dc1ejpvvtw/f07074CreateAreaRoute11_DJI_20260508122023_0835_V.JPG?raw=1",
+      "lat": 42.37875483001328,
+      "lon": -71.1205146532994,
+      "altitude": 16.76842485961082,
+      "relative_altitude": 37.902,
+      "translation": [
+        325425.5711759822,
+        4694008.302815491,
+        16.76842485961082
+      ],
+      "rotation": [
+        2.3583507113637845,
+        -0.18152336831312688,
+        0.07289094856015271
+      ],
+      "forward": [
+        0.10630451776142248,
+        0.6933731543591286,
+        -0.7126941969158888
+      ],
+      "up": [
+        0.1094947924734556,
+        0.7042336452569192,
+        0.7014740646020683
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:20:23",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325425.5711759822,
+      "northing": 4694008.302815491,
+      "model_x": 14.571175982186105,
+      "model_y_obj": -22.697184508666396,
+      "model_z": 22.697184508666396,
+      "model_y": 16.76842485961082,
+      "forward_threejs": [
+        0.10630451776142248,
+        -0.7126941969158888,
+        -0.6933731543591286
+      ],
+      "up_threejs": [
+        0.1094947924734556,
+        0.7014740646020683,
+        -0.7042336452569192
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122038_0855_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122038_0855_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122038_0855_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122038_0855_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/8biuwlyuftfnhuh17xp6v/f07074CreateAreaRoute11_DJI_20260508122038_0855_V.JPG?raw=1",
+      "lat": 42.378492649694465,
+      "lon": -71.12058405504224,
+      "altitude": 16.852656032005452,
+      "relative_altitude": 37.968,
+      "translation": [
+        325419.13072369667,
+        4693979.332055334,
+        16.852656032005452
+      ],
+      "rotation": [
+        2.358454216304273,
+        -0.18932665867742193,
+        0.07027323220984373
+      ],
+      "forward": [
+        0.10665909730326158,
+        0.6927429885654146,
+        -0.7132538038846419
+      ],
+      "up": [
+        0.11588959794416984,
+        0.703795276821167,
+        0.7008864454478738
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:20:38",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.7,
+      "easting": 325419.13072369667,
+      "northing": 4693979.332055334,
+      "model_x": 8.130723696667701,
+      "model_y_obj": -51.66794466599822,
+      "model_z": 51.66794466599822,
+      "model_y": 16.852656032005452,
+      "forward_threejs": [
+        0.10665909730326158,
+        -0.7132538038846419,
+        -0.6927429885654146
+      ],
+      "up_threejs": [
+        0.11588959794416984,
+        0.7008864454478738,
+        -0.703795276821167
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122055_0877_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122055_0877_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122055_0877_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122055_0877_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/xbfj2l6dodr462ujei7kl/f07074CreateAreaRoute11_DJI_20260508122055_0877_V.JPG?raw=1",
+      "lat": 42.37873665736159,
+      "lon": -71.12059543529999,
+      "altitude": 16.785729746912622,
+      "relative_altitude": 37.918,
+      "translation": [
+        325418.8700344394,
+        4694006.450852665,
+        16.785729746912622
+      ],
+      "rotation": [
+        2.360577210754192,
+        -0.18148019500544005,
+        0.074020272848738
+      ],
+      "forward": [
+        0.10693061180553796,
+        0.6917066742465727,
+        -0.7142182587008254
+      ],
+      "up": [
+        0.10919546837565816,
+        0.7058215596250249,
+        0.6999230498095618
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:20:55",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325418.8700344394,
+      "northing": 4694006.450852665,
+      "model_x": 7.87003443937283,
+      "model_y_obj": -24.549147334881127,
+      "model_z": 24.549147334881127,
+      "model_y": 16.785729746912622,
+      "forward_threejs": [
+        0.10693061180553796,
+        -0.7142182587008254,
+        -0.6917066742465727
+      ],
+      "up_threejs": [
+        0.10919546837565816,
+        0.6999230498095618,
+        -0.7058215596250249
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122112_0900_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122112_0900_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122112_0900_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122112_0900_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/pgo397soxjkfbmc9cuxsd/f07074CreateAreaRoute11_DJI_20260508122112_0900_V.JPG?raw=1",
+      "lat": 42.3784520345785,
+      "lon": -71.12066670661984,
+      "altitude": 16.84565621187819,
+      "relative_altitude": 37.948,
+      "translation": [
+        325412.21343050926,
+        4693974.9918546835,
+        16.84565621187819
+      ],
+      "rotation": [
+        2.357048501602445,
+        -0.19358236638348278,
+        0.0698825226199147
+      ],
+      "forward": [
+        0.10771614082660144,
+        0.6933315502802722,
+        -0.7125226974569852
+      ],
+      "up": [
+        0.1190267557916287,
+        0.7025440511400071,
+        0.7016156266885075
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:21:12",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.8,
+      "easting": 325412.21343050926,
+      "northing": 4693974.9918546835,
+      "model_x": 1.2134305092622526,
+      "model_y_obj": -56.00814531650394,
+      "model_z": 56.00814531650394,
+      "model_y": 16.84565621187819,
+      "forward_threejs": [
+        0.10771614082660144,
+        -0.7125226974569852,
+        -0.6933315502802722
+      ],
+      "up_threejs": [
+        0.1190267557916287,
+        0.7016156266885075,
+        -0.7025440511400071
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122130_0923_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122130_0923_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122130_0923_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122130_0923_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/693394tde4c5zssizj1tc/f07074CreateAreaRoute11_DJI_20260508122130_0923_V.JPG?raw=1",
+      "lat": 42.378817168648496,
+      "lon": -71.12066303284111,
+      "altitude": 16.759756419172685,
+      "relative_altitude": 37.867,
+      "translation": [
+        325413.5278707411,
+        4694015.529992826,
+        16.759756419172685
+      ],
+      "rotation": [
+        2.360887514145076,
+        -0.18965109730495716,
+        0.07682480413299178
+      ],
+      "forward": [
+        0.11126181971555792,
+        0.6904065674865627,
+        -0.7148143668428925
+      ],
+      "up": [
+        0.11425735240555228,
+        0.7056238212520557,
+        0.6993141499375803
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:21:30",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.5,
+      "easting": 325413.5278707411,
+      "northing": 4694015.529992826,
+      "model_x": 2.5278707410907373,
+      "model_y_obj": -15.470007173717022,
+      "model_z": 15.470007173717022,
+      "model_y": 16.759756419172685,
+      "forward_threejs": [
+        0.11126181971555792,
+        -0.7148143668428925,
+        -0.6904065674865627
+      ],
+      "up_threejs": [
+        0.11425735240555228,
+        0.6993141499375803,
+        -0.7056238212520557
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122147_0946_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122147_0946_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122147_0946_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122147_0946_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/1ks87slocczpyiekqawga/f07074CreateAreaRoute11_DJI_20260508122147_0946_V.JPG?raw=1",
+      "lat": 42.37839958487387,
+      "lon": -71.1207667693609,
+      "altitude": 16.783819444353167,
+      "relative_altitude": 37.931,
+      "translation": [
+        325403.829859458,
+        4693969.373288324,
+        16.783819444353167
+      ],
+      "rotation": [
+        2.361780320318648,
+        -0.18846654531004678,
+        0.06954872395888193
+      ],
+      "forward": [
+        0.10562272642544193,
+        0.6905427106287347,
+        -0.7155379825417906
+      ],
+      "up": [
+        0.11557837650450559,
+        0.7061611327776153,
+        0.6985542881113951
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:21:47",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 9.7,
+      "easting": 325403.829859458,
+      "northing": 4693969.373288324,
+      "model_x": -7.170140541973524,
+      "model_y_obj": -61.62671167589724,
+      "model_z": 61.62671167589724,
+      "model_y": 16.783819444353167,
+      "forward_threejs": [
+        0.10562272642544193,
+        -0.7155379825417906,
+        -0.6905427106287347
+      ],
+      "up_threejs": [
+        0.11557837650450559,
+        0.6985542881113951,
+        -0.7061611327776153
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122213_0980_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122213_0980_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122213_0980_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122213_0980_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/5t12wv0iuujjd3pbsjhhm/f07074CreateAreaRoute11_DJI_20260508122213_0980_V.JPG?raw=1",
+      "lat": 42.37859222873996,
+      "lon": -71.12080868832432,
+      "altitude": 16.851558657935737,
+      "relative_altitude": 37.957,
+      "translation": [
+        325400.9126060727,
+        4693990.851239208,
+        16.851558657935737
+      ],
+      "rotation": [
+        2.3597007257351104,
+        -0.18609862894433069,
+        0.06784457330040225
+      ],
+      "forward": [
+        0.10388599903444336,
+        0.6923988857419436,
+        -0.71399683628706
+      ],
+      "up": [
+        0.11432095692993097,
+        0.7048102117875564,
+        0.7001237634637212
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:22:13",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.8,
+      "easting": 325400.9126060727,
+      "northing": 4693990.851239208,
+      "model_x": -10.087393927271478,
+      "model_y_obj": -40.14876079186797,
+      "model_z": 40.14876079186797,
+      "model_y": 16.851558657935737,
+      "forward_threejs": [
+        0.10388599903444336,
+        -0.71399683628706,
+        -0.6923988857419436
+      ],
+      "up_threejs": [
+        0.11432095692993097,
+        0.7001237634637212,
+        -0.7048102117875564
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122231_1003_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122231_1003_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122231_1003_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122231_1003_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/y1r6ylbng7sn3rfyx6i2z/f07074CreateAreaRoute11_DJI_20260508122231_1003_V.JPG?raw=1",
+      "lat": 42.3787053735608,
+      "lon": -71.1208335774346,
+      "altitude": 16.779717647890017,
+      "relative_altitude": 37.91,
+      "translation": [
+        325399.17709041754,
+        4694003.466359878,
+        16.779717647890017
+      ],
+      "rotation": [
+        2.3584290930109453,
+        -0.18692408913703043,
+        0.07440425735189972
+      ],
+      "forward": [
+        0.10893963058828719,
+        0.6926410692594622,
+        -0.7130080687218038
+      ],
+      "up": [
+        0.11293594936269102,
+        0.7040087479235592,
+        0.7011541586474763
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:22:31",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.7,
+      "easting": 325399.17709041754,
+      "northing": 4694003.466359878,
+      "model_x": -11.82290958246449,
+      "model_y_obj": -27.533640122041106,
+      "model_z": 27.533640122041106,
+      "model_y": 16.779717647890017,
+      "forward_threejs": [
+        0.10893963058828719,
+        -0.7130080687218038,
+        -0.6926410692594622
+      ],
+      "up_threejs": [
+        0.11293594936269102,
+        0.7011541586474763,
+        -0.7040087479235592
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122248_1026_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122248_1026_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122248_1026_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122248_1026_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/sn24wdm251qld869d92hl/f07074CreateAreaRoute11_DJI_20260508122248_1026_V.JPG?raw=1",
+      "lat": 42.37851368590178,
+      "lon": -71.12089491897146,
+      "altitude": 16.833745563078985,
+      "relative_altitude": 37.947,
+      "translation": [
+        325393.5955170912,
+        4693982.306792883,
+        16.833745563078985
+      ],
+      "rotation": [
+        2.3631866133635886,
+        -0.17346089074637758,
+        0.06582370090063083
+      ],
+      "forward": [
+        0.09853534715704045,
+        0.6913220508752482,
+        -0.7157964845780415
+      ],
+      "up": [
+        0.10591360540918926,
+        0.7079257868265171,
+        0.6983003569634512
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:22:48",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 6.7,
+      "easting": 325393.5955170912,
+      "northing": 4693982.306792883,
+      "model_x": -17.404482908779755,
+      "model_y_obj": -48.693207116797566,
+      "model_z": 48.693207116797566,
+      "model_y": 16.833745563078985,
+      "forward_threejs": [
+        0.09853534715704045,
+        -0.7157964845780415,
+        -0.6913220508752482
+      ],
+      "up_threejs": [
+        0.10591360540918926,
+        0.6983003569634512,
+        -0.7079257868265171
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122306_1049_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122306_1049_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122306_1049_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122306_1049_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/cjc47hpnbpjoju0hi683x/f07074CreateAreaRoute11_DJI_20260508122306_1049_V.JPG?raw=1",
+      "lat": 42.37879466027031,
+      "lon": -71.1209007370625,
+      "altitude": 16.771961011100828,
+      "relative_altitude": 37.905,
+      "translation": [
+        325393.89532624336,
+        4694013.519067577,
+        16.771961011100828
+      ],
+      "rotation": [
+        2.363728292323297,
+        -0.18109957652355238,
+        0.06745895645142078
+      ],
+      "forward": [
+        0.1018592572271422,
+        0.690072550167719,
+        -0.7165365079478896
+      ],
+      "up": [
+        0.11094617533780092,
+        0.7079091395317483,
+        0.6975353728273097
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:23:06",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325393.89532624336,
+      "northing": 4694013.519067577,
+      "model_x": -17.104673756635748,
+      "model_y_obj": -17.48093242291361,
+      "model_z": 17.48093242291361,
+      "model_y": 16.771961011100828,
+      "forward_threejs": [
+        0.1018592572271422,
+        -0.7165365079478896,
+        -0.690072550167719
+      ],
+      "up_threejs": [
+        0.11094617533780092,
+        0.6975353728273097,
+        -0.7079091395317483
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122324_1073_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122324_1073_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122324_1073_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122324_1073_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/07r7am5teakydz8dft82c/f07074CreateAreaRoute11_DJI_20260508122324_1073_V.JPG?raw=1",
+      "lat": 42.37842251398728,
+      "lon": -71.12099244407278,
+      "altitude": 16.837658324030176,
+      "relative_altitude": 37.962,
+      "translation": [
+        325385.3135271579,
+        4693972.38319183,
+        16.837658324030176
+      ],
+      "rotation": [
+        2.3605627243541614,
+        -0.18369130374782044,
+        0.06467076020087932
+      ],
+      "forward": [
+        0.10084411986827357,
+        0.6922959547146739,
+        -0.7145325566926194
+      ],
+      "up": [
+        0.11355038306113265,
+        0.7054919012062743,
+        0.6995623545038903
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:23:24",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.4,
+      "easting": 325385.3135271579,
+      "northing": 4693972.38319183,
+      "model_x": -25.686472842120565,
+      "model_y_obj": -58.616808170452714,
+      "model_z": 58.616808170452714,
+      "model_y": 16.837658324030176,
+      "forward_threejs": [
+        0.10084411986827357,
+        -0.7145325566926194,
+        -0.6922959547146739
+      ],
+      "up_threejs": [
+        0.11355038306113265,
+        0.6995623545038903,
+        -0.7054919012062743
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122342_1096_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122342_1096_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122342_1096_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122342_1096_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/e2iizj1im1y8j3jrkmbkj/f07074CreateAreaRoute11_DJI_20260508122342_1096_V.JPG?raw=1",
+      "lat": 42.378860595520734,
+      "lon": -71.12100431264194,
+      "altitude": 16.772484870869096,
+      "relative_altitude": 37.912,
+      "translation": [
+        325385.5507313971,
+        4694021.053598494,
+        16.772484870869096
+      ],
+      "rotation": [
+        2.3589708727572503,
+        -0.1739275101885624,
+        0.06570336687849625
+      ],
+      "forward": [
+        0.0988971061352778,
+        0.6942724296975572,
+        -0.7128850929567248
+      ],
+      "up": [
+        0.10617391338281751,
+        0.7049455498522127,
+        0.7012694716444883
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:23:42",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.9,
+      "easting": 325385.5507313971,
+      "northing": 4694021.053598494,
+      "model_x": -25.449268602882512,
+      "model_y_obj": -9.946401505731046,
+      "model_z": 9.946401505731046,
+      "model_y": 16.772484870869096,
+      "forward_threejs": [
+        0.0988971061352778,
+        -0.7128850929567248,
+        -0.6942724296975572
+      ],
+      "up_threejs": [
+        0.10617391338281751,
+        0.7012694716444883,
+        -0.7049455498522127
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122359_1119_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122359_1119_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122359_1119_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122359_1119_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/demako2eeumojd52y1gmc/f07074CreateAreaRoute11_DJI_20260508122359_1119_V.JPG?raw=1",
+      "lat": 42.37870912950305,
+      "lon": -71.12106464776183,
+      "altitude": 16.791803389639355,
+      "relative_altitude": 37.945,
+      "translation": [
+        325380.1634808122,
+        4694004.358315955,
+        16.791803389639355
+      ],
+      "rotation": [
+        2.359502585407863,
+        -0.1770364682145132,
+        0.06232909813088721
+      ],
+      "forward": [
+        0.0973262648625423,
+        0.6938770133495784,
+        -0.7134860114346848
+      ],
+      "up": [
+        0.10942648855182993,
+        0.7050826206670703,
+        0.7006313878470422
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:23:59",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 6.9,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 7.2,
+      "easting": 325380.1634808122,
+      "northing": 4694004.358315955,
+      "model_x": -30.83651918778196,
+      "model_y_obj": -26.64168404508382,
+      "model_z": 26.64168404508382,
+      "model_y": 16.791803389639355,
+      "forward_threejs": [
+        0.0973262648625423,
+        -0.7134860114346848,
+        -0.6938770133495784
+      ],
+      "up_threejs": [
+        0.10942648855182993,
+        0.7006313878470422,
+        -0.7050826206670703
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122429_1143_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122429_1143_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122429_1143_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122429_1143_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/xye7d17ty0bjljgyjfybx/f07074CreateAreaRoute11_DJI_20260508122429_1143_V.JPG?raw=1",
+      "lat": 42.37877139285563,
+      "lon": -71.12114194327665,
+      "altitude": 16.73938079119617,
+      "relative_altitude": 37.918,
+      "translation": [
+        325373.9723445487,
+        4694011.431108927,
+        16.73938079119617
+      ],
+      "rotation": [
+        1.6552265931384653,
+        -1.891211805964813,
+        0.7733804753001392
+      ],
+      "forward": [
+        0.6989034990179391,
+        -0.08751752223657007,
+        -0.7098412374341555
+      ],
+      "up": [
+        0.7032831785322342,
+        -0.09644505189578612,
+        0.7043373643066344
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:24:29",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.7,
+      "easting": 325373.9723445487,
+      "northing": 4694011.431108927,
+      "model_x": -37.0276554513257,
+      "model_y_obj": -19.568891072645783,
+      "model_z": 19.568891072645783,
+      "model_y": 16.73938079119617,
+      "forward_threejs": [
+        0.6989034990179391,
+        -0.7098412374341555,
+        0.08751752223657007
+      ],
+      "up_threejs": [
+        0.7032831785322342,
+        0.7043373643066344,
+        0.09644505189578612
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122447_1166_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122447_1166_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122447_1166_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122447_1166_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/mmcnx8a6v05es415yh65w/f07074CreateAreaRoute11_DJI_20260508122447_1166_V.JPG?raw=1",
+      "lat": 42.37879948502877,
+      "lon": -71.12114751779231,
+      "altitude": 16.67781741555349,
+      "relative_altitude": 37.902,
+      "translation": [
+        325373.59127120493,
+        4694014.56201385,
+        16.67781741555349
+      ],
+      "rotation": [
+        1.6537958102150643,
+        -1.8934415066441637,
+        0.7747108396726899
+      ],
+      "forward": [
+        0.6985907627913311,
+        -0.08944477325215762,
+        -0.7099088523750751
+      ],
+      "up": [
+        0.7031792143197999,
+        -0.09766260989505283,
+        0.7042733895136716
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:24:47",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.7,
+      "easting": 325373.59127120493,
+      "northing": 4694014.56201385,
+      "model_x": -37.40872879506787,
+      "model_y_obj": -16.43798615038395,
+      "model_z": 16.43798615038395,
+      "model_y": 16.67781741555349,
+      "forward_threejs": [
+        0.6985907627913311,
+        -0.7099088523750751,
+        0.08944477325215762
+      ],
+      "up_threejs": [
+        0.7031792143197999,
+        0.7042733895136716,
+        0.09766260989505283
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122504_1189_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122504_1189_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122504_1189_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122504_1189_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/2q2iohu2szgkmoqod3bgw/f07074CreateAreaRoute11_DJI_20260508122504_1189_V.JPG?raw=1",
+      "lat": 42.37883081604433,
+      "lon": -71.12118325330337,
+      "altitude": 16.755074123440373,
+      "relative_altitude": 37.919,
+      "translation": [
+        325370.736026951,
+        4694018.114562311,
+        16.755074123440373
+      ],
+      "rotation": [
+        1.6494391251724545,
+        -1.8987328921184818,
+        0.775160918370245
+      ],
+      "forward": [
+        0.6977283487269343,
+        -0.09215747593888474,
+        -0.7104098472088907
+      ],
+      "up": [
+        0.7030904881081577,
+        -0.1019104627277895,
+        0.7037599186643414
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:25:04",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 97.0,
+      "easting": 325370.736026951,
+      "northing": 4694018.114562311,
+      "model_x": -40.26397304900456,
+      "model_y_obj": -12.885437688790262,
+      "model_z": 12.885437688790262,
+      "model_y": 16.755074123440373,
+      "forward_threejs": [
+        0.6977283487269343,
+        -0.7104098472088907,
+        0.09215747593888474
+      ],
+      "up_threejs": [
+        0.7030904881081577,
+        0.7037599186643414,
+        0.1019104627277895
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122523_1213_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122523_1213_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122523_1213_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122523_1213_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/o75nuzwwsuaqlyk1njzxa/f07074CreateAreaRoute11_DJI_20260508122523_1213_V.JPG?raw=1",
+      "lat": 42.37885354943082,
+      "lon": -71.121084054752,
+      "altitude": 16.676096213697026,
+      "relative_altitude": 37.894,
+      "translation": [
+        325378.9660468564,
+        4694020.435066796,
+        16.676096213697026
+      ],
+      "rotation": [
+        1.6597104726017333,
+        -1.898052198622944,
+        0.772841550508418
+      ],
+      "forward": [
+        0.6937741093443012,
+        -0.09139485083601774,
+        -0.7143699786834435
+      ],
+      "up": [
+        0.7078819872810428,
+        -0.09608019972468242,
+        0.6997654516364086
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:25:23",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.6,
+      "easting": 325378.9660468564,
+      "northing": 4694020.435066796,
+      "model_x": -32.03395314357476,
+      "model_y_obj": -10.564933204092085,
+      "model_z": 10.564933204092085,
+      "model_y": 16.676096213697026,
+      "forward_threejs": [
+        0.6937741093443012,
+        -0.7143699786834435,
+        0.09139485083601774
+      ],
+      "up_threejs": [
+        0.7078819872810428,
+        0.6997654516364086,
+        0.09608019972468242
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122540_1236_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122540_1236_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122540_1236_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122540_1236_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/gwxa50ffseyrytbsd9kf2/f07074CreateAreaRoute11_DJI_20260508122540_1236_V.JPG?raw=1",
+      "lat": 42.378890847451366,
+      "lon": -71.12122790947913,
+      "altitude": 16.74796307633366,
+      "relative_altitude": 37.903,
+      "translation": [
+        325367.22591443977,
+        4694024.872433747,
+        16.74796307633366
+      ],
+      "rotation": [
+        1.6477195026045233,
+        -1.8985121767661661,
+        0.7736182072431063
+      ],
+      "forward": [
+        0.6982218396240895,
+        -0.09085288570957185,
+        -0.7100929628085296
+      ],
+      "up": [
+        0.7025834338045872,
+        -0.10333304290782032,
+        0.7040588049209853
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:25:40",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325367.22591443977,
+      "northing": 4694024.872433747,
+      "model_x": -43.77408556023147,
+      "model_y_obj": -6.127566252835095,
+      "model_z": 6.127566252835095,
+      "model_y": 16.74796307633366,
+      "forward_threejs": [
+        0.6982218396240895,
+        -0.7100929628085296,
+        0.09085288570957185
+      ],
+      "up_threejs": [
+        0.7025834338045872,
+        0.7040588049209853,
+        0.10333304290782032
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122558_1259_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122558_1259_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122558_1259_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122558_1259_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/s836b1ntzzfhwh283fxbm/f07074CreateAreaRoute11_DJI_20260508122558_1259_V.JPG?raw=1",
+      "lat": 42.378909615243096,
+      "lon": -71.12107153819466,
+      "altitude": 16.713092371893357,
+      "relative_altitude": 37.92,
+      "translation": [
+        325380.15195095824,
+        4694026.635074296,
+        16.713092371893357
+      ],
+      "rotation": [
+        1.6529041701651588,
+        -1.9056823026238883,
+        0.7726991508827691
+      ],
+      "forward": [
+        0.6925789021019682,
+        -0.09471033880030161,
+        -0.7150974871215565
+      ],
+      "up": [
+        0.7076887781511134,
+        -0.10275281298071681,
+        0.6990124839396892
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:25:58",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325380.15195095824,
+      "northing": 4694026.635074296,
+      "model_x": -30.848049041756894,
+      "model_y_obj": -4.3649257039651275,
+      "model_z": 4.3649257039651275,
+      "model_y": 16.713092371893357,
+      "forward_threejs": [
+        0.6925789021019682,
+        -0.7150974871215565,
+        0.09471033880030161
+      ],
+      "up_threejs": [
+        0.7076887781511134,
+        0.6990124839396892,
+        0.10275281298071681
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122615_1282_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122615_1282_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122615_1282_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122615_1282_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/7dg0dwh6a2ndxosfk2izh/f07074CreateAreaRoute11_DJI_20260508122615_1282_V.JPG?raw=1",
+      "lat": 42.37894937499538,
+      "lon": -71.12123068154035,
+      "altitude": 16.700102199942954,
+      "relative_altitude": 37.872,
+      "translation": [
+        325367.15994597663,
+        4694031.377222864,
+        16.700102199942954
+      ],
+      "rotation": [
+        1.649524361570768,
+        -1.903488065306599,
+        0.7704226860528293
+      ],
+      "forward": [
+        0.6945509411565804,
+        -0.09167450324540757,
+        -0.7135788502984208
+      ],
+      "up": [
+        0.7058940094052821,
+        -0.10475267218011598,
+        0.700528746845453
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:26:15",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325367.15994597663,
+      "northing": 4694031.377222864,
+      "model_x": -43.84005402337061,
+      "model_y_obj": 0.3772228639572859,
+      "model_z": -0.3772228639572859,
+      "model_y": 16.700102199942954,
+      "forward_threejs": [
+        0.6945509411565804,
+        -0.7135788502984208,
+        0.09167450324540757
+      ],
+      "up_threejs": [
+        0.7058940094052821,
+        0.700528746845453,
+        0.10475267218011598
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122634_1306_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122634_1306_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122634_1306_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122634_1306_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/bwleyj7bq534o5n7q1xad/f07074CreateAreaRoute11_DJI_20260508122634_1306_V.JPG?raw=1",
+      "lat": 42.37896599296415,
+      "lon": -71.12104386083477,
+      "altitude": 16.73075391654128,
+      "relative_altitude": 37.91,
+      "translation": [
+        325382.5869018123,
+        4694032.838558135,
+        16.73075391654128
+      ],
+      "rotation": [
+        1.6485180955242442,
+        -1.904017819301056,
+        0.7751226929261781
+      ],
+      "forward": [
+        0.6954711744379776,
+        -0.09491156692707398,
+        -0.7122581273592516
+      ],
+      "up": [
+        0.7046179538808355,
+        -0.10419404938575294,
+        0.7018953904545777
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:26:34",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.4,
+      "easting": 325382.5869018123,
+      "northing": 4694032.838558135,
+      "model_x": -28.413098187709693,
+      "model_y_obj": 1.8385581346228719,
+      "model_z": -1.8385581346228719,
+      "model_y": 16.73075391654128,
+      "forward_threejs": [
+        0.6954711744379776,
+        -0.7122581273592516,
+        0.09491156692707398
+      ],
+      "up_threejs": [
+        0.7046179538808355,
+        0.7018953904545777,
+        0.10419404938575294
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122651_1329_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122651_1329_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122651_1329_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122651_1329_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/nhcg4e6dj7u2up2a264fq/f07074CreateAreaRoute11_DJI_20260508122651_1329_V.JPG?raw=1",
+      "lat": 42.37900714526828,
+      "lon": -71.12124273690921,
+      "altitude": 16.772690601901385,
+      "relative_altitude": 37.94,
+      "translation": [
+        325366.3275876348,
+        4694037.817003367,
+        16.772690601901385
+      ],
+      "rotation": [
+        1.6473510733895,
+        -1.9006100888965787,
+        0.7755543465499436
+      ],
+      "forward": [
+        0.6976612324510484,
+        -0.09321577582071482,
+        -0.7103376829881874
+      ],
+      "up": [
+        0.7027636172589476,
+        -0.10367979000289648,
+        0.7038279615091139
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:26:51",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.4,
+      "easting": 325366.3275876348,
+      "northing": 4694037.817003367,
+      "model_x": -44.67241236520931,
+      "model_y_obj": 6.817003366537392,
+      "model_z": -6.817003366537392,
+      "model_y": 16.772690601901385,
+      "forward_threejs": [
+        0.6976612324510484,
+        -0.7103376829881874,
+        0.09321577582071482
+      ],
+      "up_threejs": [
+        0.7027636172589476,
+        0.7038279615091139,
+        0.10367979000289648
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122709_1352_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122709_1352_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122709_1352_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122709_1352_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/bjx9uanis97kj9y4ezvwj/f07074CreateAreaRoute11_DJI_20260508122709_1352_V.JPG?raw=1",
+      "lat": 42.37902459471716,
+      "lon": -71.12106268542485,
+      "altitude": 16.702019091262194,
+      "relative_altitude": 37.909,
+      "translation": [
+        325381.199527389,
+        4694039.384579184,
+        16.702019091262194
+      ],
+      "rotation": [
+        1.6555760598964604,
+        -1.9009992392001334,
+        0.7757911660391714
+      ],
+      "forward": [
+        0.6944042098910819,
+        -0.09446043911812785,
+        -0.7133582681424202
+      ],
+      "up": [
+        0.7064966638406522,
+        -0.09872072187520853,
+        0.7007971768311186
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:27:09",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.7,
+      "easting": 325381.199527389,
+      "northing": 4694039.384579184,
+      "model_x": -29.80047261097934,
+      "model_y_obj": 8.38457918446511,
+      "model_z": -8.38457918446511,
+      "model_y": 16.702019091262194,
+      "forward_threejs": [
+        0.6944042098910819,
+        -0.7133582681424202,
+        0.09446043911812785
+      ],
+      "up_threejs": [
+        0.7064966638406522,
+        0.7007971768311186,
+        0.09872072187520853
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122727_1376_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122727_1376_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122727_1376_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122727_1376_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/qy1wk0om2c2uj02h0it0k/f07074CreateAreaRoute11_DJI_20260508122727_1376_V.JPG?raw=1",
+      "lat": 42.37906499720344,
+      "lon": -71.12123899952546,
+      "altitude": 16.76499816858523,
+      "relative_altitude": 37.924,
+      "translation": [
+        325366.7956676855,
+        4694044.233391066,
+        16.76499816858523
+      ],
+      "rotation": [
+        1.6482031488312319,
+        -1.902627176313894,
+        0.7766920857503268
+      ],
+      "forward": [
+        0.6965405854840683,
+        -0.0951425155982949,
+        -0.7111814919548594
+      ],
+      "up": [
+        0.703630772972872,
+        -0.10348543132198552,
+        0.7029896875699538
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:27:27",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325366.7956676855,
+      "northing": 4694044.233391066,
+      "model_x": -44.204332314489875,
+      "model_y_obj": 13.233391066081822,
+      "model_z": -13.233391066081822,
+      "model_y": 16.76499816858523,
+      "forward_threejs": [
+        0.6965405854840683,
+        -0.7111814919548594,
+        0.0951425155982949
+      ],
+      "up_threejs": [
+        0.703630772972872,
+        0.7029896875699538,
+        0.10348543132198552
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122745_1399_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122745_1399_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122745_1399_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122745_1399_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/nwxa7m8juoupb3eckvckq/f07074CreateAreaRoute11_DJI_20260508122745_1399_V.JPG?raw=1",
+      "lat": 42.37908223382307,
+      "lon": -71.12107375006065,
+      "altitude": 16.696413722649417,
+      "relative_altitude": 37.904,
+      "translation": [
+        325380.44836074155,
+        4694045.8077562945,
+        16.696413722649417
+      ],
+      "rotation": [
+        1.654368706552817,
+        -1.9001533029286863,
+        0.7769423268260038
+      ],
+      "forward": [
+        0.6954733467087719,
+        -0.09461623542575838,
+        -0.7122952983219514
+      ],
+      "up": [
+        0.7054054351782788,
+        -0.0988523625407409,
+        0.7018770422524568
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:27:45",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325380.44836074155,
+      "northing": 4694045.8077562945,
+      "model_x": -30.551639258454088,
+      "model_y_obj": 14.807756294496357,
+      "model_z": -14.807756294496357,
+      "model_y": 16.696413722649417,
+      "forward_threejs": [
+        0.6954733467087719,
+        -0.7122952983219514,
+        0.09461623542575838
+      ],
+      "up_threejs": [
+        0.7054054351782788,
+        0.7018770422524568,
+        0.0988523625407409
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122802_1422_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122802_1422_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122802_1422_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122802_1422_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/z3i62numo757en50qo8nm/f07074CreateAreaRoute11_DJI_20260508122802_1422_V.JPG?raw=1",
+      "lat": 42.37911886433112,
+      "lon": -71.12118878437714,
+      "altitude": 16.799054481835242,
+      "relative_altitude": 37.95,
+      "translation": [
+        325371.07918980374,
+        4694050.111761965,
+        16.799054481835242
+      ],
+      "rotation": [
+        1.6525380441199184,
+        -1.8935857502890767,
+        0.7698494691874628
+      ],
+      "forward": [
+        0.6981548905632816,
+        -0.08622846932480062,
+        -0.7107351123030817
+      ],
+      "up": [
+        0.7037415063038299,
+        -0.09987019353440565,
+        0.7034016183864072
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:28:02",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.2,
+      "easting": 325371.07918980374,
+      "northing": 4694050.111761965,
+      "model_x": -39.92081019625766,
+      "model_y_obj": 19.11176196485758,
+      "model_z": -19.11176196485758,
+      "model_y": 16.799054481835242,
+      "forward_threejs": [
+        0.6981548905632816,
+        -0.7107351123030817,
+        0.08622846932480062
+      ],
+      "up_threejs": [
+        0.7037415063038299,
+        0.7034016183864072,
+        0.09987019353440565
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122821_1446_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122821_1446_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122821_1446_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122821_1446_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/tjd6rytj7xu7el9aweqtv/f07074CreateAreaRoute11_DJI_20260508122821_1446_V.JPG?raw=1",
+      "lat": 42.379141956287135,
+      "lon": -71.1210941259351,
+      "altitude": 16.710903355155793,
+      "relative_altitude": 37.904,
+      "translation": [
+        325378.9363822016,
+        4694052.481413823,
+        16.710903355155793
+      ],
+      "rotation": [
+        1.6566334055822265,
+        -1.897452282845147,
+        0.7727905069616599
+      ],
+      "forward": [
+        0.695227461059666,
+        -0.09069422577380054,
+        -0.7130451141406282
+      ],
+      "up": [
+        0.706320097960403,
+        -0.09777838766063152,
+        0.7011072001653484
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:28:21",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.6,
+      "easting": 325378.9363822016,
+      "northing": 4694052.481413823,
+      "model_x": -32.06361779838335,
+      "model_y_obj": 21.481413822621107,
+      "model_z": -21.481413822621107,
+      "model_y": 16.710903355155793,
+      "forward_threejs": [
+        0.695227461059666,
+        -0.7130451141406282,
+        0.09069422577380054
+      ],
+      "up_threejs": [
+        0.706320097960403,
+        0.7011072001653484,
+        0.09777838766063152
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122838_1469_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122838_1469_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122838_1469_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122838_1469_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/6265ve4m0v5aak9bnjxr3/f07074CreateAreaRoute11_DJI_20260508122838_1469_V.JPG?raw=1",
+      "lat": 42.37917535740403,
+      "lon": -71.1211518349161,
+      "altitude": 16.7542360343799,
+      "relative_altitude": 37.91,
+      "translation": [
+        325374.27782859886,
+        4694056.30899447,
+        16.7542360343799
+      ],
+      "rotation": [
+        1.6531450657473368,
+        -1.9009778115402987,
+        0.7723046700957074
+      ],
+      "forward": [
+        0.6947377533058215,
+        -0.09191995827185771,
+        -0.7133653870232838
+      ],
+      "up": [
+        0.706172404088712,
+        -0.10119173540197135,
+        0.7007715522122073
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:28:38",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.7,
+      "easting": 325374.27782859886,
+      "northing": 4694056.30899447,
+      "model_x": -36.72217140113935,
+      "model_y_obj": 25.30899447016418,
+      "model_z": -25.30899447016418,
+      "model_y": 16.7542360343799,
+      "forward_threejs": [
+        0.6947377533058215,
+        -0.7133653870232838,
+        0.09191995827185771
+      ],
+      "up_threejs": [
+        0.706172404088712,
+        0.7007715522122073,
+        0.10119173540197135
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122856_1492_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122856_1492_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122856_1492_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122856_1492_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/uzppbl5a0erzrfyfuz79j/f07074CreateAreaRoute11_DJI_20260508122856_1492_V.JPG?raw=1",
+      "lat": 42.37920370459821,
+      "lon": -71.12115690150037,
+      "altitude": 16.743636715126378,
+      "relative_altitude": 37.948,
+      "translation": [
+        325373.93928380415,
+        4694059.467174051,
+        16.743636715126378
+      ],
+      "rotation": [
+        1.655601903367199,
+        -1.906297022941656,
+        0.7793663436089369
+      ],
+      "forward": [
+        0.6923851557512156,
+        -0.09966761484652727,
+        -0.7146111968379515
+      ],
+      "up": [
+        0.707665107009007,
+        -0.09940903188317918,
+        0.6995197929308219
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:28:56",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": 96.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": 96.5,
+      "easting": 325373.93928380415,
+      "northing": 4694059.467174051,
+      "model_x": -37.06071619584691,
+      "model_y_obj": 28.467174051329494,
+      "model_z": -28.467174051329494,
+      "model_y": 16.743636715126378,
+      "forward_threejs": [
+        0.6923851557512156,
+        -0.7146111968379515,
+        0.09966761484652727
+      ],
+      "up_threejs": [
+        0.707665107009007,
+        0.6995197929308219,
+        0.09940903188317918
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122927_1516_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122927_1516_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122927_1516_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122927_1516_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/fcrdliiakisyyd2ut3wzi/f07074CreateAreaRoute11_DJI_20260508122927_1516_V.JPG?raw=1",
+      "lat": 42.379540532406516,
+      "lon": -71.12093966605734,
+      "altitude": 16.77931321030875,
+      "relative_altitude": 37.912,
+      "translation": [
+        325392.7577980291,
+        4694096.423173029,
+        16.77931321030875
+      ],
+      "rotation": [
+        0.18521500976355038,
+        2.857868515788763,
+        -1.168357115330633
+      ],
+      "forward": [
+        -0.09007444945319865,
+        -0.6947240751304152,
+        -0.7136140784695133
+      ],
+      "up": [
+        -0.09225230097058959,
+        -0.707626094106773,
+        0.7005389524536264
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:29:27",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -174.4,
+      "easting": 325392.7577980291,
+      "northing": 4694096.423173029,
+      "model_x": -18.242201970890164,
+      "model_y_obj": 65.42317302897573,
+      "model_z": -65.42317302897573,
+      "model_y": 16.77931321030875,
+      "forward_threejs": [
+        -0.09007444945319865,
+        -0.7136140784695133,
+        0.6947240751304152
+      ],
+      "up_threejs": [
+        -0.09225230097058959,
+        0.7005389524536264,
+        0.707626094106773
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508122944_1539_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508122944_1539_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122944_1539_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508122944_1539_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/ece54h8wqvq2uo7nn1p6y/f07074CreateAreaRoute11_DJI_20260508122944_1539_V.JPG?raw=1",
+      "lat": 42.379166896473144,
+      "lon": -71.12093577574828,
+      "altitude": 16.762400505986136,
+      "relative_altitude": 37.896,
+      "translation": [
+        325392.042395373,
+        4694054.925410558,
+        16.762400505986136
+      ],
+      "rotation": [
+        0.19116228314340397,
+        2.8508158144307574,
+        -1.170262327975281
+      ],
+      "forward": [
+        -0.09673641563382882,
+        -0.6960597463285496,
+        -0.7114372041377609
+      ],
+      "up": [
+        -0.09378874257859188,
+        -0.7052341500662952,
+        0.7027435274307383
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:29:44",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.5,
+      "easting": 325392.042395373,
+      "northing": 4694054.925410558,
+      "model_x": -18.95760462700855,
+      "model_y_obj": 23.92541055753827,
+      "model_z": -23.92541055753827,
+      "model_y": 16.762400505986136,
+      "forward_threejs": [
+        -0.09673641563382882,
+        -0.7114372041377609,
+        0.6960597463285496
+      ],
+      "up_threejs": [
+        -0.09378874257859188,
+        0.7027435274307383,
+        0.7052341500662952
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123002_1562_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123002_1562_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123002_1562_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123002_1562_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/djskijkg63mx0tljfjq0r/f07074CreateAreaRoute11_DJI_20260508123002_1562_V.JPG?raw=1",
+      "lat": 42.37942552267082,
+      "lon": -71.12086618171169,
+      "altitude": 16.811437998246145,
+      "relative_altitude": 37.947,
+      "translation": [
+        325398.4888965918,
+        4694083.501093784,
+        16.811437998246145
+      ],
+      "rotation": [
+        0.1891316425493605,
+        2.8523945097980565,
+        -1.160072391813555
+      ],
+      "forward": [
+        -0.09829452250879452,
+        -0.6913151828411468,
+        -0.7158362276513254
+      ],
+      "up": [
+        -0.09203216335849099,
+        -0.7099221855438675,
+        0.6982410553527877
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:30:02",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.8,
+      "easting": 325398.4888965918,
+      "northing": 4694083.501093784,
+      "model_x": -12.511103408178315,
+      "model_y_obj": 52.50109378434718,
+      "model_z": -52.50109378434718,
+      "model_y": 16.811437998246145,
+      "forward_threejs": [
+        -0.09829452250879452,
+        -0.7158362276513254,
+        0.6913151828411468
+      ],
+      "up_threejs": [
+        -0.09203216335849099,
+        0.6982410553527877,
+        0.7099221855438675
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123020_1586_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123020_1586_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123020_1586_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123020_1586_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/2t3td45bijdr3vuypbbke/f07074CreateAreaRoute11_DJI_20260508123020_1586_V.JPG?raw=1",
+      "lat": 42.37927159425543,
+      "lon": -71.1208451625522,
+      "altitude": 16.774204784540743,
+      "relative_altitude": 37.899,
+      "translation": [
+        325399.7927258836,
+        4694066.365178869,
+        16.774204784540743
+      ],
+      "rotation": [
+        0.19360762498236112,
+        2.852911890357875,
+        -1.1655414280850482
+      ],
+      "forward": [
+        -0.09688834655691143,
+        -0.693596044926322,
+        -0.7138187268235764
+      ],
+      "up": [
+        -0.09551212192371936,
+        -0.7074036076621848,
+        0.7003267597572966
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:30:20",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.5,
+      "easting": 325399.7927258836,
+      "northing": 4694066.365178869,
+      "model_x": -11.207274116401095,
+      "model_y_obj": 35.365178869105875,
+      "model_z": -35.365178869105875,
+      "model_y": 16.774204784540743,
+      "forward_threejs": [
+        -0.09688834655691143,
+        -0.7138187268235764,
+        0.693596044926322
+      ],
+      "up_threejs": [
+        -0.09551212192371936,
+        0.7003267597572966,
+        0.7074036076621848
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123038_1609_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123038_1609_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123038_1609_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123038_1609_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/k91b0fc5g2ktsv7sl4ur2/f07074CreateAreaRoute11_DJI_20260508123038_1609_V.JPG?raw=1",
+      "lat": 42.37931255115661,
+      "lon": -71.12080114197767,
+      "altitude": 16.789315899547486,
+      "relative_altitude": 37.917,
+      "translation": [
+        325403.53042913874,
+        4694070.822704671,
+        16.789315899547486
+      ],
+      "rotation": [
+        0.18917441677103738,
+        2.8533693853905318,
+        -1.1642807788309273
+      ],
+      "forward": [
+        -0.09608030929325342,
+        -0.6931521704780692,
+        -0.7143589033025728
+      ],
+      "up": [
+        -0.09279873075560542,
+        -0.7083155812752324,
+        0.6997695569920704
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:30:38",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.9,
+      "easting": 325403.53042913874,
+      "northing": 4694070.822704671,
+      "model_x": -7.469570861256216,
+      "model_y_obj": 39.82270467095077,
+      "model_z": -39.82270467095077,
+      "model_y": 16.789315899547486,
+      "forward_threejs": [
+        -0.09608030929325342,
+        -0.7143589033025728,
+        0.6931521704780692
+      ],
+      "up_threejs": [
+        -0.09279873075560542,
+        0.6997695569920704,
+        0.7083155812752324
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123052_1628_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123052_1628_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123052_1628_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123052_1628_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/h67vxsuc9c36ot3wgkk2d/f07074CreateAreaRoute11_DJI_20260508123052_1628_V.JPG?raw=1",
+      "lat": 42.379251034446746,
+      "lon": -71.12077029481577,
+      "altitude": 16.767970032530563,
+      "relative_altitude": 37.889,
+      "translation": [
+        325405.89954598877,
+        4694063.928295556,
+        16.767970032530563
+      ],
+      "rotation": [
+        0.19222006972410735,
+        2.850857379019151,
+        -1.1708574499561037
+      ],
+      "forward": [
+        -0.09670175499027212,
+        -0.6962847873920773,
+        -0.7112216710900835
+      ],
+      "up": [
+        -0.09451568689220184,
+        -0.7049174458243282,
+        0.7029638536253487
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:30:52",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.9,
+      "easting": 325405.89954598877,
+      "northing": 4694063.928295556,
+      "model_x": -5.1004540112335235,
+      "model_y_obj": 32.92829555645585,
+      "model_z": -32.92829555645585,
+      "model_y": 16.767970032530563,
+      "forward_threejs": [
+        -0.09670175499027212,
+        -0.7112216710900835,
+        0.6962847873920773
+      ],
+      "up_threejs": [
+        -0.09451568689220184,
+        0.7029638536253487,
+        0.7049174458243282
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123109_1650_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123109_1650_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123109_1650_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123109_1650_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/6zuh8z4hw5qer046tv8ga/f07074CreateAreaRoute11_DJI_20260508123109_1650_V.JPG?raw=1",
+      "lat": 42.37933959071992,
+      "lon": -71.12071814482631,
+      "altitude": 16.770272064887063,
+      "relative_altitude": 37.909,
+      "translation": [
+        325410.4384627122,
+        4694073.654710409,
+        16.770272064887063
+      ],
+      "rotation": [
+        0.1924422839584284,
+        2.8537553426922138,
+        -1.163538949113349
+      ],
+      "forward": [
+        -0.09658465085558572,
+        -0.6926425187125688,
+        -0.7147851051124481
+      ],
+      "up": [
+        -0.09486895908948917,
+        -0.7084666595647184,
+        0.6993388827217363
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:31:09",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.7,
+      "easting": 325410.4384627122,
+      "northing": 4694073.654710409,
+      "model_x": -0.5615372877800837,
+      "model_y_obj": 42.654710409231484,
+      "model_z": -42.654710409231484,
+      "model_y": 16.770272064887063,
+      "forward_threejs": [
+        -0.09658465085558572,
+        -0.7147851051124481,
+        0.6926425187125688
+      ],
+      "up_threejs": [
+        -0.09486895908948917,
+        0.6993388827217363,
+        0.7084666595647184
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123124_1670_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123124_1670_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123124_1670_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123124_1670_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/qqlrkl244nm0vplmx2wg2/f07074CreateAreaRoute11_DJI_20260508123124_1670_V.JPG?raw=1",
+      "lat": 42.37923675142163,
+      "lon": -71.1206924517423,
+      "altitude": 16.7923020523056,
+      "relative_altitude": 37.903,
+      "translation": [
+        325412.2687242659,
+        4694062.182298417,
+        16.7923020523056
+      ],
+      "rotation": [
+        0.19145549888736996,
+        2.8501634327278884,
+        -1.1692321154844834
+      ],
+      "forward": [
+        -0.09769829986491906,
+        -0.6956402641991243,
+        -0.7117160002616753
+      ],
+      "up": [
+        -0.09364993709788452,
+        -0.7055378563738712,
+        0.7024571321475247
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:31:24",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.8,
+      "easting": 325412.2687242659,
+      "northing": 4694062.182298417,
+      "model_x": 1.2687242659158073,
+      "model_y_obj": 31.18229841720313,
+      "model_z": -31.18229841720313,
+      "model_y": 16.7923020523056,
+      "forward_threejs": [
+        -0.09769829986491906,
+        -0.7117160002616753,
+        0.6956402641991243
+      ],
+      "up_threejs": [
+        -0.09364993709788452,
+        0.7024571321475247,
+        0.7055378563738712
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123200_1716_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123200_1716_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123200_1716_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123200_1716_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/o0tniiws3u1tbojutzqmt/f07074CreateAreaRoute11_DJI_20260508123200_1716_V.JPG?raw=1",
+      "lat": 42.3793100617208,
+      "lon": -71.1206054631434,
+      "altitude": 16.775400453639847,
+      "relative_altitude": 37.904,
+      "translation": [
+        325419.63361349556,
+        4694070.1441662675,
+        16.775400453639847
+      ],
+      "rotation": [
+        0.1955926552802305,
+        2.8475578316975443,
+        -1.1692550208991652
+      ],
+      "forward": [
+        -0.10073660993379092,
+        -0.6957299380815282,
+        -0.7112046039474998
+      ],
+      "up": [
+        -0.09534762594450415,
+        -0.7047996607723214,
+        0.7029696070257717
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:32:00",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.5,
+      "easting": 325419.63361349556,
+      "northing": 4694070.1441662675,
+      "model_x": 8.633613495563623,
+      "model_y_obj": 39.144166267476976,
+      "model_z": -39.144166267476976,
+      "model_y": 16.775400453639847,
+      "forward_threejs": [
+        -0.10073660993379092,
+        -0.7112046039474998,
+        0.6957299380815282
+      ],
+      "up_threejs": [
+        -0.09534762594450415,
+        0.7029696070257717,
+        0.7047996607723214
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123211_1731_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123211_1731_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123211_1731_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123211_1731_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/xn1fnlzw25bg55d9t5j0e/f07074CreateAreaRoute11_DJI_20260508123211_1731_V.JPG?raw=1",
+      "lat": 42.37942062569514,
+      "lon": -71.12055297952396,
+      "altitude": 16.834376569209308,
+      "relative_altitude": 37.953,
+      "translation": [
+        325424.26096733764,
+        4694082.31371164,
+        16.834376569209308
+      ],
+      "rotation": [
+        0.19578690868550502,
+        2.8506847026401485,
+        -1.1641733582551155
+      ],
+      "forward": [
+        -0.09968504537529965,
+        -0.6930919919360712,
+        -0.7139232328777467
+      ],
+      "up": [
+        -0.09599072471870992,
+        -0.7074518351100588,
+        0.7002125975497636
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:32:11",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.9,
+      "easting": 325424.26096733764,
+      "northing": 4694082.31371164,
+      "model_x": 13.260967337642796,
+      "model_y_obj": 51.313711640425026,
+      "model_z": -51.313711640425026,
+      "model_y": 16.834376569209308,
+      "forward_threejs": [
+        -0.09968504537529965,
+        -0.7139232328777467,
+        0.6930919919360712
+      ],
+      "up_threejs": [
+        -0.09599072471870992,
+        0.7002125975497636,
+        0.7074518351100588
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123240_1769_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123240_1769_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123240_1769_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123240_1769_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/a4pkqb2ofx5b7w041hmr6/f07074CreateAreaRoute11_DJI_20260508123240_1769_V.JPG?raw=1",
+      "lat": 42.37950758882988,
+      "lon": -71.12047369106072,
+      "altitude": 16.798458540187056,
+      "relative_altitude": 37.93,
+      "translation": [
+        325431.02971505106,
+        4694091.8074686155,
+        16.798458540187056
+      ],
+      "rotation": [
+        0.19645448058664616,
+        2.846221621193101,
+        -1.163196038669462
+      ],
+      "forward": [
+        -0.10403743337088779,
+        -0.6930351647263892,
+        -0.7133571846629604
+      ],
+      "up": [
+        -0.09484032190694858,
+        -0.7070679993047221,
+        0.7007568463452956
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:32:40",
+      "gimbal_pitch": -44.9,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -175.8,
+      "easting": 325431.02971505106,
+      "northing": 4694091.8074686155,
+      "model_x": 20.02971505105961,
+      "model_y_obj": 60.80746861547232,
+      "model_z": -60.80746861547232,
+      "model_y": 16.798458540187056,
+      "forward_threejs": [
+        -0.10403743337088779,
+        -0.7133571846629604,
+        0.6930351647263892
+      ],
+      "up_threejs": [
+        -0.09484032190694858,
+        0.7007568463452956,
+        0.7070679993047221
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123258_1792_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123258_1792_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123258_1792_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123258_1792_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/aaxo1jvfr2l7zyatu67gh/f07074CreateAreaRoute11_DJI_20260508123258_1792_V.JPG?raw=1",
+      "lat": 42.37908598137426,
+      "lon": -71.12047669470064,
+      "altitude": 16.806303237206404,
+      "relative_altitude": 37.932,
+      "translation": [
+        325429.6140224056,
+        4694044.996958367,
+        16.806303237206404
+      ],
+      "rotation": [
+        0.19646968739547013,
+        2.842218867431028,
+        -1.1702012283511551
+      ],
+      "forward": [
+        -0.10526173832670822,
+        -0.69662955505488,
+        -0.7096669849080479
+      ],
+      "up": [
+        -0.0942191963614677,
+        -0.7034349168145567,
+        0.704487090614936
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:32:58",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -172.7,
+      "easting": 325429.6140224056,
+      "northing": 4694044.996958367,
+      "model_x": 18.614022405585274,
+      "model_y_obj": 13.996958366595209,
+      "model_z": -13.996958366595209,
+      "model_y": 16.806303237206404,
+      "forward_threejs": [
+        -0.10526173832670822,
+        -0.7096669849080479,
+        0.69662955505488
+      ],
+      "up_threejs": [
+        -0.0942191963614677,
+        0.704487090614936,
+        0.7034349168145567
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123315_1815_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123315_1815_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123315_1815_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123315_1815_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/dhn4mxw8wsjrc90qtssuf/f07074CreateAreaRoute11_DJI_20260508123315_1815_V.JPG?raw=1",
+      "lat": 42.3794362202926,
+      "lon": -71.12039443658315,
+      "altitude": 16.76609521997695,
+      "relative_altitude": 37.912,
+      "translation": [
+        325437.35687570495,
+        4694083.719630213,
+        16.76609521997695
+      ],
+      "rotation": [
+        0.19540396017885636,
+        2.8500556370632353,
+        -1.1663454574054268
+      ],
+      "forward": [
+        -0.09946095378389855,
+        -0.6941655863559237,
+        -0.7129106938400726
+      ],
+      "up": [
+        -0.09576326239559461,
+        -0.7064597766683142,
+        0.7012445946494763
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:33:15",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.7,
+      "easting": 325437.35687570495,
+      "northing": 4694083.719630213,
+      "model_x": 26.356875704950653,
+      "model_y_obj": 52.719630213454366,
+      "model_z": -52.719630213454366,
+      "model_y": 16.76609521997695,
+      "forward_threejs": [
+        -0.09946095378389855,
+        -0.7129106938400726,
+        0.6941655863559237
+      ],
+      "up_threejs": [
+        -0.09576326239559461,
+        0.7012445946494763,
+        0.7064597766683142
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123334_1839_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123334_1839_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123334_1839_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123334_1839_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/b8dew4nokhc647y0al6sq/f07074CreateAreaRoute11_DJI_20260508123334_1839_V.JPG?raw=1",
+      "lat": 42.37917679006334,
+      "lon": -71.12038451027733,
+      "altitude": 16.782457541365247,
+      "relative_altitude": 37.909,
+      "translation": [
+        325437.4551678498,
+        4694054.8912477,
+        16.782457541365247
+      ],
+      "rotation": [
+        0.19278430491388224,
+        2.8521983108825757,
+        -1.1740049923742901
+      ],
+      "forward": [
+        -0.09460425500941434,
+        -0.6975671198964414,
+        -0.710246540416423
+      ],
+      "up": [
+        -0.09562820017179045,
+        -0.7037793770237797,
+        0.7039530068178732
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:33:34",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -173.4,
+      "easting": 325437.4551678498,
+      "northing": 4694054.8912477,
+      "model_x": 26.45516784978099,
+      "model_y_obj": 23.891247699968517,
+      "model_z": -23.891247699968517,
+      "model_y": 16.782457541365247,
+      "forward_threejs": [
+        -0.09460425500941434,
+        -0.710246540416423,
+        0.6975671198964414
+      ],
+      "up_threejs": [
+        -0.09562820017179045,
+        0.7039530068178732,
+        0.7037793770237797
+      ]
+    },
+    {
+      "file": "f07074CreateAreaRoute11_DJI_20260508123350_1861_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f07074CreateAreaRoute11_DJI_20260508123350_1861_V.JPG",
+      "thumbnail": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123350_1861_V_thumb.jpg",
+      "full_image": "thumbnails/f07074CreateAreaRoute11_DJI_20260508123350_1861_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/hvno81gss3j4tgt67dwzl/f07074CreateAreaRoute11_DJI_20260508123350_1861_V.JPG?raw=1",
+      "lat": 42.37936249531541,
+      "lon": -71.12032466675394,
+      "altitude": 16.763873039295035,
+      "relative_altitude": 37.927,
+      "translation": [
+        325442.8966584899,
+        4694075.389617825,
+        16.763873039295035
+      ],
+      "rotation": [
+        0.18840602369207526,
+        2.8490721741586773,
+        -1.1684544862927537
+      ],
+      "forward": [
+        -0.09834120898652944,
+        -0.6955153300276008,
+        -0.7117495572964309
+      ],
+      "up": [
+        -0.09132809819474194,
+        -0.7058904997113019,
+        0.7024085569648622
+      ],
+      "focal_normalized": 0.7196482558465731,
+      "fov_h": 69.58189919764742,
+      "fov_v": 55.04694960062285,
+      "width": 4000,
+      "height": 3000,
+      "camera_model": "v2 dji m3t 4000 3000 brown 0.6666",
+      "datetime": "2026-05-08T08:33:50",
+      "gimbal_pitch": -45.0,
+      "gimbal_yaw": -174.0,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -174.3,
+      "easting": 325442.8966584899,
+      "northing": 4694075.389617825,
+      "model_x": 31.89665848988807,
+      "model_y_obj": 44.38961782492697,
+      "model_z": -44.38961782492697,
+      "model_y": 16.763873039295035,
+      "forward_threejs": [
+        -0.09834120898652944,
+        -0.7117495572964309,
+        0.6955153300276008
+      ],
+      "up_threejs": [
+        -0.09132809819474194,
+        0.7024085569648622,
+        0.7058904997113019
+      ]
+    },
+    {
+      "file": "f35075_DJI_20260508124245_0353_V.JPG",
+      "path": "/Inspections/Projects/1572 Mass Ave/_full_dji_v4/f35075_DJI_20260508124245_0353_V.JPG",
+      "thumbnail": "thumbnails/f35075_DJI_20260508124245_0353_V_thumb.jpg",
+      "full_image": "thumbnails/f35075_DJI_20260508124245_0353_V_full.jpg",
+      "fullResUrl": "https://www.dropbox.com/scl/fi/0ctxtvgpvs1lredr2hhii/f35075_DJI_20260508124245_0353_V.JPG?raw=1",
+      "lat": 42.378909110992865,
+      "lon": -71.12030377728743,
+      "altitude": -2.9986613508889164,
+      "relative_altitude": 18.214,
+      "translation": [
+        325443.36010707024,
+        4694025.001411508,
+        -2.9986613508889164
+      ],
+      "rotation": [
+        1.7033518897897428,
+        1.419077009478305,
+        -0.7995587401684353
+      ],
+      "forward": [
+        -0.8441863515984076,
+        0.1619441397687,
+        -0.511002445561218
+      ],
+      "up": [
+        -0.5033329997684096,
+        0.08846497594152061,
+        0.8595521155670555
+      ],
+      "focal_normalized": 0.7187842475806905,
+      "fov_h": 69.64641873287107,
+      "fov_v": 55.10338400739332,
+      "width": 8000,
+      "height": 6000,
+      "camera_model": "v2 dji m3t 8000 6000 brown 0.6666",
+      "datetime": "2026-05-08T08:42:45",
+      "gimbal_pitch": -29.8,
+      "gimbal_yaw": -77.2,
+      "gimbal_roll": 0.0,
+      "flight_yaw": -77.5,
+      "easting": 325443.36010707024,
+      "northing": 4694025.001411508,
+      "model_x": 32.36010707024252,
+      "model_y_obj": -5.998588492162526,
+      "model_z": 5.998588492162526,
+      "model_y": -2.9986613508889164,
+      "forward_threejs": [
+        -0.8441863515984076,
+        -0.511002445561218,
+        -0.1619441397687
+      ],
+      "up_threejs": [
+        -0.5033329997684096,
+        0.8595521155670555,
+        -0.08846497594152061
+      ]
+    }
+  ]
+}
