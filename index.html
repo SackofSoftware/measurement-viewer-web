@@ -1155,9 +1155,11 @@
         }
 
         function loadGLB(config) {
-            // Prefer the mobile-optimized GLB on iOS when one exists. If the file
-            // isn't published yet, fall back to the desktop path automatically.
-            const primaryPath = (window._isIOS && config.mobilePath) ? config.mobilePath : config.path;
+            // Always prefer the optimized variant when available — the 4K-texture
+            // originals decode to enough GPU memory to crash on Mac Safari too,
+            // not just iOS. Fall back to the original path if the mobile file
+            // isn't published yet.
+            const primaryPath = config.mobilePath || config.path;
             const fallbackPath = (primaryPath !== config.path) ? config.path : null;
 
             const onProgress = (progress) => {
