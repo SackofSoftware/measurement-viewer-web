@@ -1123,11 +1123,14 @@
                 // Fit camera immediately
                 fitCameraToModel();
 
-                // Hide loading overlay right away
-                setLoading('Ready', 100);
-                const loadEl = document.getElementById('loading');
-                loadEl.style.opacity = '0';
-                setTimeout(() => { loadEl.style.display = 'none'; }, 600);
+                // Show a phase label before the synchronous BVH loop so the user
+                // sees feedback instead of "Processing model..." frozen forever.
+                setLoadingIndeterminate(`Building geometry... (${meshes.length} parts)`);
+
+                // Yield to the event loop so the label actually paints before
+                // we start the synchronous BVH computation. setTimeout 0 is more
+                // reliable than rAF since rAF is throttled in background tabs.
+                await new Promise(r => setTimeout(r, 0));
 
                 // Compute BVH for all meshes, then restore measurements
                 const bvhMeshes = [...meshes]; // snapshot to avoid race conditions
@@ -1139,6 +1142,13 @@
                     }
                 }
                 console.log('BVH complete for', bvhMeshes.length, 'meshes');
+
+                // Done — hide the overlay
+                setLoading('Ready', 100);
+                const loadEl = document.getElementById('loading');
+                loadEl.style.opacity = '0';
+                setTimeout(() => { loadEl.style.display = 'none'; }, 600);
+
                 restoreSavedView(modelId);
                 restoreSavedMeasurements(modelId);
             }
@@ -1154,12 +1164,17 @@
                 if (progress.total > 0) {
                     // Clamp: Content-Encoding (gzip/br) makes loaded > total possible.
                     const ratio = Math.min(progress.loaded / progress.total, 1);
-                    setLoading(`Loading model... ${(ratio * 100).toFixed(0)}%`, ratio * 85);
+                    if (ratio >= 1) {
+                        // Download finished — parse phase has no callback, so flag it.
+                        setLoadingIndeterminate('Processing model...');
+                    } else {
+                        setLoading(`Downloading model... ${(ratio * 100).toFixed(0)}%`, ratio * 100);
+                    }
                 } else if (progress.loaded > 0) {
                     // GH Pages serves these gzip-compressed; the compressed Content-Length
                     // is hidden from JS, so progress.total is 0. Show bytes + pulse bar.
                     const mb = (progress.loaded / 1048576).toFixed(1);
-                    setLoadingIndeterminate(`Loading model... ${mb} MB`);
+                    setLoadingIndeterminate(`Downloading model... ${mb} MB`);
                 }
             };
             const onLoaded = (resolve) => (gltf) => {
