@@ -583,8 +583,10 @@
             },
             'hadley': {
                 type: 'glb',
-                path: 'models/hadley/odm_textured_model_geo.glb',
-                mobilePath: 'models/hadley/odm_textured_model_geo.mobile.glb',
+                path: 'models/hadley/odm_textured_model_geo.glb',                  // 95 MB, 4K textures (original)
+                highPath: 'models/hadley/odm_textured_model_geo.high.glb',         // 49 MB, 3072px (75%)
+                desktopPath: 'models/hadley/odm_textured_model_geo.desktop.glb',   // 39 MB, 2048px (50%)
+                mobilePath: 'models/hadley/odm_textured_model_geo.mobile.glb',     // 24 MB, 1024px (25%)
                 name: 'Hadley School',
                 crs: 'EPSG:32619',
                 camerasPath: 'models/hadley/cameras/',
@@ -593,6 +595,8 @@
             '1572-mass-ave': {
                 type: 'glb',
                 path: 'models/1572-mass-ave/odm_textured_model_geo.glb',
+                highPath: 'models/1572-mass-ave/odm_textured_model_geo.high.glb',
+                desktopPath: 'models/1572-mass-ave/odm_textured_model_geo.desktop.glb',
                 mobilePath: 'models/1572-mass-ave/odm_textured_model_geo.mobile.glb',
                 name: '1572 Mass Ave',
                 crs: 'EPSG:32619',
@@ -1155,11 +1159,19 @@
         }
 
         function loadGLB(config) {
-            // Always prefer the optimized variant when available — the 4K-texture
-            // originals decode to enough GPU memory to crash on Mac Safari too,
-            // not just iOS. Fall back to the original path if the mobile file
-            // isn't published yet.
-            const primaryPath = config.mobilePath || config.path;
+            // Quality tier:
+            //   ?q=mobile   → 1024px textures (24 MB) — iPad/iPhone-safe
+            //   ?q=desktop  → 2048px textures (39 MB) — Mac/Windows default
+            //   ?q=high     → 3072px textures (49 MB) — sharper but heavier
+            //   ?q=original → 4096px textures (95 MB) — full res, may crash
+            //   ?q=auto (default) → mobile on iOS, desktop everywhere else
+            const qParam = (new URLSearchParams(window.location.search).get('q') || 'auto').toLowerCase();
+            const tier = ({ mobile: config.mobilePath, desktop: config.desktopPath,
+                            high: config.highPath, original: config.path }[qParam])
+                || (qParam === 'auto'
+                    ? (window._isIOS ? config.mobilePath : config.desktopPath)
+                    : null);
+            const primaryPath = tier || config.mobilePath || config.path;
             const fallbackPath = (primaryPath !== config.path) ? config.path : null;
 
             const onProgress = (progress) => {
