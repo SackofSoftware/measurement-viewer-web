@@ -54,6 +54,24 @@
         #loading-bar-outer { width: 240px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
         #loading-bar-inner { height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
 
+        /* Mobile / unsupported-device notice */
+        #mobile-notice {
+            position: absolute; inset: 0; z-index: 300;
+            background: #0a0a0a; display: none; flex-direction: column;
+            align-items: center; justify-content: center; gap: 16px;
+            padding: 24px; text-align: center;
+        }
+        #mobile-notice.show { display: flex; }
+        #mobile-notice img { height: 56px; opacity: 0.85; margin-bottom: 8px; }
+        #mobile-notice h2 { font-size: 18px; font-weight: 600; color: var(--text); }
+        #mobile-notice p { font-size: 14px; color: var(--text-dim); max-width: 360px; line-height: 1.5; }
+        #mobile-notice button {
+            margin-top: 8px; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2); color: var(--text);
+            padding: 10px 18px; border-radius: 8px; font-size: 13px; cursor: pointer;
+        }
+        #mobile-notice button:hover { background: rgba(255,255,255,0.15); }
+
         /* Bottom toolbar */
         #toolbar {
             position: absolute; bottom: 16px; left: 50%; z-index: 10;
@@ -271,12 +289,17 @@
         <!-- Logo -->
         <img id="logo" src="logo.svg" alt="AR Drone Ops">
 
-        <!-- Model Picker (hidden in prod — each model has its own ?model=<slug> URL) -->
-        <select id="model-picker" style="display:none;">
-            <option value="three-rivers" data-path="models/three-rivers/" data-type="obj">Three Rivers Drive</option>
+        <!-- Model Picker -->
+        <select id="model-picker">
+            <option value="three-rivers" data-path="../models/three_rivers/" data-type="obj">Three Rivers Drive</option>
             <option value="hadley" data-path="models/hadley/odm_textured_model_geo.glb" data-type="glb">Hadley School</option>
             <option value="1572-mass-ave" data-path="models/1572-mass-ave/odm_textured_model_geo.glb" data-type="glb">1572 Mass Ave</option>
-            <option value="cordage" data-path="models/cordage/odm_textured_model_geo.glb" data-type="glb">Cordage Park Marketplace</option>
+            <option value="colonial-village-a" data-path="models/colonial-village-a/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building A</option>
+            <option value="colonial-village-e" data-path="models/colonial-village-e/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building E</option>
+            <option value="colonial-village-f" data-path="models/colonial-village-f/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building F</option>
+            <option value="colonial-village-h" data-path="models/colonial-village-h/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building H</option>
+            <option value="medfield" data-path="../3D_Model/Medfield-State-textured_model.glb" data-type="glb">Medfield State Hospital</option>
+            <option value="cordage" data-path="../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb" data-type="glb">Cordage Park Marketplace</option>
         </select>
 
         <!-- Loading overlay -->
@@ -286,122 +309,19 @@
             <div id="loading-bar-outer"><div id="loading-bar-inner"></div></div>
         </div>
 
-        <!-- Right Toolbar -->
+        <!-- Bottom Toolbar (camera-only viewer) -->
         <div id="toolbar">
-            <!-- Select -->
-            <button class="tool-btn active" data-tool="select" title="Select (V)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
-            </button>
-            <!-- Marker -->
-            <button class="tool-btn" data-tool="marker" title="Marker (M)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            </button>
-            <div class="tool-divider"></div>
-            <!-- Height -->
-            <button class="tool-btn" data-tool="height" title="Height (H)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M8 6l4-4 4 4M8 18l4 4 4-4"/></svg>
-            </button>
-            <!-- Length -->
-            <button class="tool-btn" data-tool="length" title="Length (L)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M4 8v8M20 8v8M8 10v4M12 10v4M16 10v4"/></svg>
-            </button>
-            <!-- Area -->
-            <button class="tool-btn" data-tool="area" title="Area (A)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9-4 9 4v12l-9 4-9-4V6z"/></svg>
-                <div class="tool-submenu" id="area-submenu">
-                    <div class="submenu-item active" data-area="polygon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polygon points="12,2 22,8 18,20 6,20 2,8"/></svg>
-                        Polygon
-                    </div>
-                    <div class="submenu-item" data-area="rectangle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><rect x="3" y="5" width="18" height="14" rx="1"/></svg>
-                        Rectangle
-                    </div>
-                    <div class="submenu-item" data-area="radius">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><circle cx="12" cy="12" r="9"/><line x1="12" y1="12" x2="19" y2="12"/></svg>
-                        Radius
-                    </div>
-                </div>
-            </button>
-            <!-- Volume -->
-            <button class="tool-btn" data-tool="volume" title="Volume (U)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </button>
-            <div class="tool-divider"></div>
-            <!-- Counter -->
-            <button class="tool-btn" data-tool="counter" title="Counter (C)">
-                <span style="font-weight:700;font-size:15px;">123</span>
-            </button>
-            <!-- Window -->
-            <button class="tool-btn" data-tool="window" title="Window (W)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
-            </button>
-            <!-- Door -->
-            <button class="tool-btn" data-tool="door" title="Door (D)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="1"/><circle cx="15" cy="13" r="1.5"/></svg>
-            </button>
-            <!-- Wall -->
-            <button class="tool-btn" data-tool="wall" title="Wall (B)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="1"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg>
-            </button>
-            <!-- Roof -->
-            <button class="tool-btn" data-tool="roof" title="Roof (R)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20L12 4l9 16"/><line x1="6" y1="15" x2="18" y2="15"/></svg>
-            </button>
-            <div class="tool-divider"></div>
-            <!-- Crop -->
-            <button class="tool-btn" data-tool="crop" title="Crop Model (X)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v4H2v2h4v12h12v4h2v-4h4v-2H8V6h12v2H8"/></svg>
-            </button>
-            <div class="tool-divider"></div>
-            <!-- Camera toggle (not a tool — visibility toggle) -->
             <button class="tool-btn toggle-btn" data-tool="camera" title="Toggle Cameras (P)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            </button>
-            <!-- POI Photo Lookup -->
-            <button class="tool-btn" data-tool="poi" title="Photo Lookup (F)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M2 17l5-5 4 4 3-3 8 8"/></svg>
-            </button>
-            <div class="tool-divider"></div>
-            <!-- Save View -->
-            <button class="tool-btn" id="save-view-btn" title="Save Current View" onclick="window._saveView()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            </button>
-            <!-- Toggle Model Visibility -->
-            <button class="tool-btn toggle-btn" id="toggle-model-btn" title="Hide/Show Building Model (shapes stay visible)" onclick="window._toggleModel()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </button>
         </div>
 
-        <!-- Crop controls panel -->
-        <div id="crop-panel" style="display:none; position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:10; background:var(--toolbar-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px 16px; font-size:12px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-                <strong>Crop Model</strong>
-                <button onclick="resetCrop()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text); padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Reset</button>
-                <button onclick="applyCrop()" style="background:var(--toolbar-active); border:none; color:#fff; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Apply</button>
-            </div>
-            <div style="display:grid; grid-template-columns:auto 1fr auto; gap:4px 8px; align-items:center;">
-                <label>X</label><input type="range" id="crop-x-min" style="width:120px"><span id="crop-x-min-val"></span>
-                <label></label><input type="range" id="crop-x-max" style="width:120px"><span id="crop-x-max-val"></span>
-                <label>Y</label><input type="range" id="crop-y-min" style="width:120px"><span id="crop-y-min-val"></span>
-                <label></label><input type="range" id="crop-y-max" style="width:120px"><span id="crop-y-max-val"></span>
-                <label>Z</label><input type="range" id="crop-z-min" style="width:120px"><span id="crop-z-min-val"></span>
-                <label></label><input type="range" id="crop-z-max" style="width:120px"><span id="crop-z-max-val"></span>
-            </div>
-        </div>
-
-        <!-- Camera alignment panel -->
-        <div id="cam-align-panel" style="display:none; position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:10; background:var(--toolbar-bg); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px 16px; font-size:12px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-                <strong>Align Cameras</strong>
-                <span style="font-size:10px; color:var(--text-dim);">Use arrow keys (hold Shift for Z)</span>
-                <button onclick="window._setCameraOffset(0,0,0)" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text); padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Reset</button>
-            </div>
-            <div style="display:grid; grid-template-columns:auto 1fr auto; gap:4px 8px; align-items:center;">
-                <label>E/W</label><input type="range" id="cam-offset-x" min="-30" max="30" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-x-val">0.00m</span>
-                <label>Elev</label><input type="range" id="cam-offset-y" min="-20" max="20" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-y-val">0.00m</span>
-                <label>N/S</label><input type="range" id="cam-offset-z" min="-30" max="30" value="0" step="0.05" style="width:140px" oninput="window._setCamSliders()"><span id="cam-offset-z-val">0.00m</span>
-            </div>
+        <!-- Mobile / unsupported-device notice -->
+        <div id="mobile-notice">
+            <img src="logo.svg" alt="AR Drone Ops">
+            <h2>Best viewed on desktop</h2>
+            <p>These 3D models are too large for iPhone or iPad memory and may not load reliably on Safari. For the full experience, please open this link on a Mac, Windows, or Linux computer.</p>
+            <button id="mobile-notice-continue">Try anyway</button>
         </div>
 
         <!-- Side Panel -->
@@ -641,6 +561,7 @@
             'hadley': {
                 type: 'glb',
                 path: 'models/hadley/odm_textured_model_geo.glb',
+                mobilePath: 'models/hadley/odm_textured_model_geo.mobile.glb',
                 name: 'Hadley School',
                 crs: 'EPSG:32619',
                 camerasPath: 'models/hadley/cameras/',
@@ -649,10 +570,48 @@
             '1572-mass-ave': {
                 type: 'glb',
                 path: 'models/1572-mass-ave/odm_textured_model_geo.glb',
+                mobilePath: 'models/1572-mass-ave/odm_textured_model_geo.mobile.glb',
                 name: '1572 Mass Ave',
                 crs: 'EPSG:32619',
                 camerasPath: 'models/1572-mass-ave/cameras/',
                 hasThermal: false
+            },
+            'colonial-village-a': {
+                type: 'glb',
+                path: 'models/colonial-village-a/odm_textured_model_geo.glb',
+                name: 'Colonial Village — Building A',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/colonial-village-a/cameras/',
+                hasThermal: false
+            },
+            'colonial-village-e': {
+                type: 'glb',
+                path: 'models/colonial-village-e/odm_textured_model_geo.glb',
+                name: 'Colonial Village — Building E',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/colonial-village-e/cameras/',
+                hasThermal: false
+            },
+            'colonial-village-f': {
+                type: 'glb',
+                path: 'models/colonial-village-f/odm_textured_model_geo.glb',
+                name: 'Colonial Village — Building F',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/colonial-village-f/cameras/',
+                hasThermal: false
+            },
+            'colonial-village-h': {
+                type: 'glb',
+                path: 'models/colonial-village-h/odm_textured_model_geo.glb',
+                name: 'Colonial Village — Building H',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/colonial-village-h/cameras/',
+                hasThermal: false
+            },
+            'medfield': {
+                type: 'glb',
+                path: '../3D_Model/Medfield-State-textured_model.glb',
+                name: 'Medfield State Hospital'
             },
             'cordage': {
                 type: 'glb',
@@ -669,11 +628,14 @@
         const VIEW_ONLY = urlParams.get('mode') === 'view';
 
         // ========== Per-model URL routing ==========
-        // ?model=<slug> selects which model loads on initial page load.
+        // Accepts both /?model=<slug> and clean paths like /hadley (via Vercel rewrites).
         // Falls back to three-rivers if missing or unknown.
         const initialModelId = (() => {
             const requested = urlParams.get('model');
-            return (requested && MODELS[requested]) ? requested : 'three-rivers';
+            if (requested && MODELS[requested]) return requested;
+            const pathSlug = location.pathname.replace(/^\/+|\/+$/g, '');
+            if (pathSlug && MODELS[pathSlug]) return pathSlug;
+            return 'three-rivers';
         })();
 
         // ========== State ==========
@@ -1150,30 +1112,40 @@
         }
 
         function loadGLB(config) {
+            // Prefer the mobile-optimized GLB on iOS when one exists. If the file
+            // isn't published yet, fall back to the desktop path automatically.
+            const primaryPath = (window._isIOS && config.mobilePath) ? config.mobilePath : config.path;
+            const fallbackPath = (primaryPath !== config.path) ? config.path : null;
+
+            const onProgress = (progress) => {
+                if (progress.total > 0) {
+                    // Clamp: Content-Encoding (gzip/br) makes loaded > total possible.
+                    const ratio = Math.min(progress.loaded / progress.total, 1);
+                    setLoading(`Loading model... ${(ratio * 100).toFixed(0)}%`, ratio * 85);
+                }
+            };
+            const onLoaded = (resolve) => (gltf) => {
+                currentModel = gltf.scene;
+                currentModel.rotation.x = -Math.PI / 2;
+                currentModel.traverse(child => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                scene.add(currentModel);
+                resolve();
+            };
+
             return new Promise((resolve, reject) => {
-                gltfLoader.load(config.path,
-                    (gltf) => {
-                        currentModel = gltf.scene;
-                        // ODM exports use Z-up convention (same as OBJ)
-                        // Rotate -90° around X to convert to Three.js Y-up
-                        currentModel.rotation.x = -Math.PI / 2;
-                        currentModel.traverse(child => {
-                            if (child.isMesh) {
-                                child.castShadow = true;
-                                child.receiveShadow = true;
-                            }
-                        });
-                        scene.add(currentModel);
-                        resolve();
-                    },
-                    (progress) => {
-                        if (progress.total > 0) {
-                            setLoading(`Loading model... ${((progress.loaded / progress.total) * 100).toFixed(0)}%`,
-                                (progress.loaded / progress.total) * 85);
-                        }
-                    },
-                    reject
-                );
+                gltfLoader.load(primaryPath, onLoaded(resolve), onProgress, (err) => {
+                    if (fallbackPath) {
+                        console.warn(`Mobile GLB not available (${primaryPath}); falling back to desktop variant.`);
+                        gltfLoader.load(fallbackPath, onLoaded(resolve), onProgress, reject);
+                    } else {
+                        reject(err);
+                    }
+                });
             });
         }
 
@@ -1223,8 +1195,8 @@
                         },
                         (progress) => {
                             if (progress.total > 0) {
-                                setLoading(`Loading geometry... ${((progress.loaded / progress.total) * 100).toFixed(0)}%`,
-                                    30 + (progress.loaded / progress.total) * 55);
+                                const ratio = Math.min(progress.loaded / progress.total, 1);
+                                setLoading(`Loading geometry... ${(ratio * 100).toFixed(0)}%`, 30 + ratio * 55);
                             }
                         },
                         reject
@@ -2712,8 +2684,6 @@
                 const badge = btn.querySelector('.badge');
                 if (badge) badge.remove();
             }
-            // Show/hide alignment panel
-            document.getElementById('cam-align-panel').style.display = camerasVisible ? 'block' : 'none';
             console.log(`Cameras ${camerasVisible ? 'visible' : 'hidden'} (${cameraFrustums.length} frustums)`);
         }
 
@@ -2867,28 +2837,36 @@
             return path.startsWith('http') ? path : currentCamerasPath + path;
         }
 
+        let _photoOverlaySeq = 0;
         function showPhotoOverlay(cam) {
-            // Prefer local files first, then Dropbox permanent URL as fallback
-            const src = showThermal
+            // Strategy: show local preview instantly, then stream in the full-res original
+            // and swap it in once it loads. fullResUrl points at the 4000x3000 Dropbox original.
+            const previewSrc = showThermal
                 ? (resolvePhotoUrl(cam.thermal_full) || resolvePhotoUrl(cam.thermal_thumbnail))
                 : (resolvePhotoUrl(cam.full_image) || resolvePhotoUrl(cam.thumbnail));
-            const fallbackSrc = !showThermal && cam.fullResUrl ? resolvePhotoUrl(cam.fullResUrl) : null;
-            if (!src && !fallbackSrc) return;
+            const fullResSrc = !showThermal && cam.fullResUrl ? resolvePhotoUrl(cam.fullResUrl) : null;
+            if (!previewSrc && !fullResSrc) return;
+
+            const seq = ++_photoOverlaySeq;
             const img = document.getElementById('photo-overlay-img');
             img.classList.remove('visible');
-            img.onerror = () => {
-                // If local file fails, try Dropbox URL
-                if (fallbackSrc && img.src !== fallbackSrc) {
-                    img.src = fallbackSrc;
-                }
-            };
-            img.onload = () => {
-                requestAnimationFrame(() => img.classList.add('visible'));
-            };
-            img.src = src || fallbackSrc;
+            img.onerror = null;
+            img.onload = () => requestAnimationFrame(() => img.classList.add('visible'));
+            img.src = previewSrc || fullResSrc;
             document.getElementById('photo-overlay').classList.add('show');
             if (img.complete && img.naturalWidth > 0) {
                 requestAnimationFrame(() => img.classList.add('visible'));
+            }
+
+            // Stream in the full-res original; swap when ready (only if user is still on this camera)
+            if (fullResSrc && fullResSrc !== previewSrc) {
+                const upgrade = new Image();
+                upgrade.onload = () => {
+                    if (seq !== _photoOverlaySeq) return;
+                    if (!document.getElementById('photo-overlay').classList.contains('show')) return;
+                    img.src = fullResSrc;
+                };
+                upgrade.src = fullResSrc;
             }
         }
 
@@ -3988,40 +3966,10 @@
             }
         });
 
-        // Keyboard shortcuts
+        // Keyboard shortcuts (camera-only viewer — measurement shortcuts removed)
         document.addEventListener('keydown', (e) => {
-            // Arrow key camera alignment when cameras are visible
-            if (camerasVisible && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                e.preventDefault();
-                const step = e.altKey ? 0.2 : 1.0; // Alt for fine adjustment
-                if (e.shiftKey) {
-                    // Shift+arrows: elevation
-                    if (e.key === 'ArrowUp') window._adjustCameras(0, step, 0);
-                    if (e.key === 'ArrowDown') window._adjustCameras(0, -step, 0);
-                } else {
-                    // Arrows: horizontal
-                    if (e.key === 'ArrowUp') window._adjustCameras(0, 0, -step);    // North
-                    if (e.key === 'ArrowDown') window._adjustCameras(0, 0, step);   // South
-                    if (e.key === 'ArrowLeft') window._adjustCameras(-step, 0, 0);  // West
-                    if (e.key === 'ArrowRight') window._adjustCameras(step, 0, 0);  // East
-                }
-                return;
-            }
             switch (e.key.toLowerCase()) {
-                case 'v': selectTool('select'); break;
-                case 'm': selectTool('marker'); break;
-                case 'h': selectTool('height'); break;
-                case 'l': selectTool('length'); break;
-                case 'a': selectTool('area'); break;
-                case 'u': selectTool('volume'); break;
-                case 'c': selectTool('counter'); break;
-                case 'w': selectTool('window'); break;
-                case 'd': selectTool('door'); break;
-                case 'b': selectTool('wall'); break;
-                case 'r': selectTool('roof'); break;
                 case 'p': selectTool('camera'); break;
-                case 'f': selectTool('poi'); break;
-                case 'x': selectTool('crop'); break;
                 case 'escape':
                     if (selectedCamera !== null) {
                         returnFromCamera();
@@ -4457,9 +4405,36 @@
         // Load model from ?model=<slug> URL param (default: three-rivers).
         // View + measurements are restored automatically after BVH completes in loadModel.
         document.getElementById('model-picker').value = initialModelId;
-        loadModel(initialModelId).then(() => {
-            loadCameras(initialModelId);
-        });
+
+        // Customer-facing camera-only view: hide model picker, coordinate readout,
+        // and any auxiliary panels that the measurement tools used.
+        document.getElementById('model-picker').style.display = 'none';
+        const _coordEl = document.getElementById('coord-display');
+        if (_coordEl) _coordEl.style.display = 'none';
+
+        // iOS/iPadOS Safari struggles with 90+ MB GLBs (per-tab memory limit). If a
+        // mobile variant exists for this model we load it transparently; otherwise we
+        // show a clear "use desktop" notice instead of letting Safari OOM-loop.
+        window._isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+            || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const _hasMobileVariant = !!MODELS[initialModelId]?.mobilePath;
+        const _dismissedMobileNotice = sessionStorage.getItem('mobileNoticeDismissed') === '1';
+
+        function _startLoad() {
+            loadModel(initialModelId).then(() => loadCameras(initialModelId));
+        }
+
+        if (window._isIOS && !_hasMobileVariant && !_dismissedMobileNotice) {
+            const notice = document.getElementById('mobile-notice');
+            notice.classList.add('show');
+            document.getElementById('mobile-notice-continue').addEventListener('click', () => {
+                sessionStorage.setItem('mobileNoticeDismissed', '1');
+                notice.classList.remove('show');
+                _startLoad();
+            });
+        } else {
+            _startLoad();
+        }
 
         // ========== View-Only Mode ==========
         if (VIEW_ONLY) {
