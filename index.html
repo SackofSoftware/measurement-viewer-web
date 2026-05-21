@@ -194,20 +194,44 @@
             50% { box-shadow: 0 0 0 6px rgba(168,85,247,0); }
         }
 
-        /* Photo overlay — must fill exact viewport for pixel-perfect alignment with 3D camera */
+        /* Photo overlay — large centered inset, white frame, model still
+           peeking at the very edges for spatial context. Hides the
+           bottom-left panel, toolbar, compass and admin button while open
+           (see body.photo-open rules below). */
         #photo-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 8; pointer-events: none; display: none;
-            background: #000;
+            background: rgba(0,0,0,0.35);
+        }
+        #photo-overlay.show {
+            display: flex; align-items: center; justify-content: center;
         }
         #photo-overlay img {
-            width: 100%; height: 100%;
-            object-fit: cover; /* fills viewport, crops edges — no letterbox bars */
+            max-width: 94%; max-height: 94%;
+            width: auto; height: auto;
+            object-fit: contain;
+            background: #000;
+            border: 3px solid rgba(255,255,255,0.95);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.55);
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.25s ease-in-out;
         }
-        #photo-overlay.show { display: block; }
         #photo-overlay.show img.visible { opacity: 1; }
+        /* When the photo overlay is open, fade out the rest of the UI so
+           the photo + model edges dominate the screen. */
+        body.photo-open #toolbar,
+        body.photo-open #viewer-panel,
+        body.photo-open #compass,
+        body.photo-open #admin-button {
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        body:not(.photo-open) #toolbar,
+        body:not(.photo-open) #viewer-panel,
+        body:not(.photo-open) #compass,
+        body:not(.photo-open) #admin-button {
+            transition: opacity 0.25s ease;
+        }
         #photo-overlay-close {
             position: absolute; top: 16px; right: 16px;
             width: 32px; height: 32px; border-radius: 50%;
@@ -215,7 +239,7 @@
             color: #fff; font-size: 16px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             pointer-events: auto; opacity: 0;
-            transition: opacity 0.4s ease 0.6s, background 0.15s;
+            transition: opacity 0.3s ease, background 0.15s;
             backdrop-filter: blur(4px);
         }
         #photo-overlay.show #photo-overlay-close { opacity: 1; }
@@ -294,6 +318,137 @@
             color: var(--text-dim); font-family: 'SF Mono', 'Fira Code', monospace;
         }
 
+        /* Admin gating — hide the measurement toolbar + admin save-pose block
+           until the password is entered. The #toolbar uses flex; the admin
+           block in the viewer panel uses its natural flex-column. */
+        .admin-only { display: none !important; }
+        body.admin-unlocked #toolbar.admin-only { display: flex !important; }
+        body.admin-unlocked .tool-btn.admin-only,
+        body.admin-unlocked .tool-divider.admin-only { display: flex !important; }
+        body.admin-unlocked .viewer-admin-block.admin-only { display: block !important; }
+        body.admin-unlocked #admin-button { display: none; }
+
+        /* Admin button — bottom-right lock icon */
+        #admin-button {
+            position: absolute; right: 16px; z-index: 11;
+            bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+            width: 36px; height: 36px;
+            background: var(--toolbar-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+            color: var(--text-dim); cursor: pointer;
+            display: none; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        #admin-button:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+        #admin-button svg { width: 16px; height: 16px; }
+        body.admin-gate-enabled #admin-button { display: flex; }
+
+        /* Admin password modal */
+        #admin-modal {
+            position: absolute; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center;
+        }
+        #admin-modal.show { display: flex; }
+        #admin-modal-card {
+            background: var(--toolbar-bg); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px; padding: 20px 22px; min-width: 280px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        #admin-modal h3 { margin: 0; font-size: 14px; font-weight: 600; color: var(--text); }
+        #admin-modal-desc { font-size: 12px; color: var(--text-dim); margin: 0; }
+        #admin-password-input {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text); border-radius: 8px; padding: 8px 10px; font-size: 13px;
+            outline: none;
+        }
+        #admin-password-input:focus { border-color: var(--accent); }
+        #admin-modal-error { color: var(--red); font-size: 11px; min-height: 14px; }
+        #admin-modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+        .admin-btn {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+            color: var(--text); padding: 7px 14px; border-radius: 7px; cursor: pointer;
+            font-size: 12px; font-weight: 500; transition: all 0.15s;
+        }
+        .admin-btn:hover { background: rgba(255,255,255,0.15); }
+        .admin-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .admin-btn.primary:hover { filter: brightness(1.1); }
+
+        /* Compass widget — top-right. The rosette rotates so the caret at
+           the top always represents the camera's heading; N/E/S/W glyphs
+           drift around showing where world-north is from the current POV. */
+        #compass {
+            position: absolute; top: 16px; right: 16px; z-index: 11;
+            width: 72px; height: 72px; pointer-events: none;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #compass-rosette {
+            position: relative; width: 56px; height: 56px; border-radius: 50%;
+            background: var(--toolbar-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.18);
+            transform-origin: center center;
+            transition: transform 0.05s linear;
+        }
+        .compass-label {
+            position: absolute; font-size: 10px; font-weight: 700;
+            color: var(--text-dim);
+        }
+        .compass-label.compass-n { top: 2px;   left: 50%; transform: translateX(-50%); color: #ff6b6b; }
+        .compass-label.compass-s { bottom: 2px; left: 50%; transform: translateX(-50%); }
+        .compass-label.compass-e { right: 4px; top: 50%;  transform: translateY(-50%); }
+        .compass-label.compass-w { left:  4px; top: 50%;  transform: translateY(-50%); }
+        /* Caret on top of the compass — fixed, denotes "you are facing this way" */
+        #compass::before {
+            content: ''; position: absolute; top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-bottom: 7px solid var(--accent);
+        }
+
+        /* Public viewer panel — bottom-left floating tab with text labels.
+           Replaces the icon-only public toggles for client clarity. */
+        #viewer-panel {
+            position: absolute; left: 16px; z-index: 11;
+            bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+            background: var(--toolbar-bg); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
+            padding: 10px 12px; min-width: 220px;
+            display: flex; flex-direction: column; gap: 8px;
+            color: var(--text); font-size: 12px;
+        }
+        .viewer-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .viewer-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; font-weight: 600; }
+        .viewer-toggle {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+            color: var(--text); padding: 5px 12px; border-radius: 7px; cursor: pointer;
+            font-size: 12px; font-weight: 500; min-width: 70px; text-align: center;
+            transition: all 0.15s;
+        }
+        .viewer-toggle:hover { background: rgba(255,255,255,0.14); }
+        .viewer-toggle[data-state="on"], .viewer-toggle[data-state="cropped"] {
+            background: var(--accent); border-color: var(--accent); color: #fff;
+        }
+        .viewer-divider { height: 1px; background: rgba(255,255,255,0.10); margin: 2px 0; }
+        .viewer-section-title { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; font-weight: 600; margin-bottom: 2px; }
+        .viewer-views-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        }
+        .viewer-view-btn, .viewer-save-btn {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text); padding: 6px 10px; border-radius: 6px; cursor: pointer;
+            font-size: 11px; font-weight: 500; text-align: center;
+            transition: all 0.15s;
+        }
+        .viewer-view-btn:hover, .viewer-save-btn:hover { background: rgba(255,255,255,0.14); }
+        .viewer-view-btn[data-empty="1"] {
+            opacity: 0.42; cursor: not-allowed;
+        }
+        .viewer-view-btn[data-empty="1"]::after { content: ' (unset)'; font-size: 9px; color: var(--text-dim); }
+        .viewer-save-btn { background: rgba(99,102,241,0.18); border-color: rgba(99,102,241,0.35); }
+        .viewer-save-btn:hover { background: rgba(99,102,241,0.30); }
+        .viewer-admin-block { /* admin-only handled by display rule above */ }
+
         /* Responsive — also keep safe-area inset on small screens */
         @media (max-width: 768px) {
             #side-panel { width: 100%; right: 0; }
@@ -301,6 +456,8 @@
             .tool-btn { width: 44px; height: 44px; font-size: 16px; }
             .tool-btn svg { width: 24px; height: 24px; }
             #logo { height: 32px; }
+            #admin-button { bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
+            #crop-panel { top: auto; bottom: 96px; right: 12px; left: 12px; min-width: 0; }
         }
     </style>
 </head>
@@ -318,9 +475,8 @@
             <option value="colonial-village-e" data-path="models/colonial-village-e/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building E</option>
             <option value="colonial-village-f" data-path="models/colonial-village-f/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building F</option>
             <option value="colonial-village-h" data-path="models/colonial-village-h/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building H</option>
-            <option value="medfield" data-path="models/medfield/odm_textured_model_geo.glb" data-type="glb">Medfield State Hospital</option>
-            <option value="cordage" data-path="models/cordage/odm_textured_model_geo.glb" data-type="glb">Cordage Park Marketplace</option>
-            <option value="22barnstable" data-path="models/22barnstable/odm_textured_model_geo.glb" data-type="glb">22 Barnstable St — VFW Post 1787</option>
+            <option value="medfield" data-path="../3D_Model/Medfield-State-textured_model.glb" data-type="glb">Medfield State Hospital</option>
+            <option value="cordage" data-path="../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb" data-type="glb">Cordage Park Marketplace</option>
         </select>
 
         <!-- Loading overlay -->
@@ -330,11 +486,135 @@
             <div id="loading-bar-outer"><div id="loading-bar-inner"></div></div>
         </div>
 
-        <!-- Bottom Toolbar (camera-only viewer) -->
-        <div id="toolbar">
-            <button class="tool-btn toggle-btn" data-tool="camera" title="Toggle Cameras (P)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <!-- Bottom Toolbar — admin-only measurement-creation tools. Public users
+             see the bottom-left text panel instead. Whole toolbar hides until
+             admin unlock via the admin-only class on the container. -->
+        <div id="toolbar" class="admin-only">
+            <!-- Admin: Select / pointer -->
+            <button class="tool-btn admin-only active" data-tool="select" title="Select / pan (V)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7 17 3-8 8-3z"/></svg>
             </button>
+
+            <!-- Admin: Length -->
+            <button class="tool-btn admin-only" data-tool="length" title="Length (L)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+            </button>
+
+            <!-- Admin: Height -->
+            <button class="tool-btn admin-only" data-tool="height" title="Height (H)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M8 5h8"/><path d="M8 19h8"/></svg>
+            </button>
+
+            <!-- Admin: Area (polygon, with submenu) -->
+            <button class="tool-btn admin-only" data-tool="area" title="Area (A)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="4,8 12,3 20,8 16,20 8,20"/></svg>
+            </button>
+
+            <!-- Admin: Volume -->
+            <button class="tool-btn admin-only" data-tool="volume" title="Volume">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg>
+            </button>
+
+            <!-- Admin: Wall (rectangular surface) -->
+            <button class="tool-btn admin-only" data-tool="wall" title="Wall">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12"/><path d="M3 12h18"/><path d="M9 6v6"/><path d="M15 12v6"/></svg>
+            </button>
+
+            <!-- Admin: Roof -->
+            <button class="tool-btn admin-only" data-tool="roof" title="Roof">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-7 9 7"/><path d="M5 11v9h14v-9"/></svg>
+            </button>
+
+            <!-- Admin: Counter -->
+            <button class="tool-btn admin-only" data-tool="counter" title="Counter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+            </button>
+
+            <!-- Admin: Marker / pin -->
+            <button class="tool-btn admin-only" data-tool="marker" title="Marker / Note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 6 7 13 7 13s7-7 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </button>
+        </div>
+
+        <!-- Area submenu (popover above the Area button). Not admin-only —
+             its trigger (the Area button) is admin-gated, so this stays hidden
+             via JS for non-admin users. -->
+        <div id="area-submenu" class="tool-submenu">
+            <div class="submenu-item active" data-area="polygon">Polygon area</div>
+            <div class="submenu-item" data-area="rectangle">Rectangle area</div>
+        </div>
+
+        <!-- Compass — top-right. Rosette rotates with the camera. -->
+        <div id="compass">
+            <div id="compass-rosette">
+                <span class="compass-label compass-n">N</span>
+                <span class="compass-label compass-e">E</span>
+                <span class="compass-label compass-s">S</span>
+                <span class="compass-label compass-w">W</span>
+            </div>
+        </div>
+
+        <!-- Realtime sync status pill (top-right, below compass) -->
+        <div id="rt-status" style="position:fixed; top:84px; right:18px; font:600 11px/1 system-ui,-apple-system,sans-serif; color:#9ca3af; padding:4px 8px; background:rgba(15,23,42,0.55); border:1px solid rgba(255,255,255,0.08); border-radius:999px; z-index:80; pointer-events:none;">● Syncing...</div>
+
+        <!-- Bottom-left viewer panel — public-facing, text labels for clarity.
+             Toggles for cameras/crop/measurements + snap-to-view buttons.
+             Admin-only "Save current view as…" controls appear when unlocked. -->
+        <div id="viewer-panel">
+            <div class="viewer-row" id="vp-row-cameras">
+                <span class="viewer-label">Cameras</span>
+                <button class="viewer-toggle" id="vp-cameras-btn" data-state="off">Show</button>
+            </div>
+            <div class="viewer-row" id="vp-row-crop">
+                <span class="viewer-label">View</span>
+                <button class="viewer-toggle" id="vp-crop-btn" data-state="full">Full</button>
+            </div>
+            <div class="viewer-row" id="vp-row-measurements">
+                <span class="viewer-label">Measurements</span>
+                <button class="viewer-toggle" id="vp-measurements-btn" data-state="on">Hide</button>
+            </div>
+            <div class="viewer-divider"></div>
+            <div class="viewer-section-title">Snap to view</div>
+            <div class="viewer-views-grid">
+                <button class="viewer-view-btn" data-view-key="north" data-empty="1">North</button>
+                <button class="viewer-view-btn" data-view-key="south" data-empty="1">South</button>
+                <button class="viewer-view-btn" data-view-key="east"  data-empty="1">East</button>
+                <button class="viewer-view-btn" data-view-key="west"  data-empty="1">West</button>
+                <button class="viewer-view-btn" data-view-key="courtyard1" data-empty="1">Courtyard 1</button>
+                <button class="viewer-view-btn" data-view-key="courtyard2" data-empty="1">Courtyard 2</button>
+            </div>
+            <!-- Admin-only: capture current camera pose into one of the named slots -->
+            <div class="viewer-admin-block admin-only">
+                <div class="viewer-divider"></div>
+                <div class="viewer-section-title">Save current pose as…</div>
+                <div class="viewer-views-grid">
+                    <button class="viewer-save-btn" data-save-key="north">North</button>
+                    <button class="viewer-save-btn" data-save-key="south">South</button>
+                    <button class="viewer-save-btn" data-save-key="east">East</button>
+                    <button class="viewer-save-btn" data-save-key="west">West</button>
+                    <button class="viewer-save-btn" data-save-key="courtyard1">Court 1</button>
+                    <button class="viewer-save-btn" data-save-key="courtyard2">Court 2</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin button — bottom-right lock icon, only visible on 1572-mass-ave -->
+        <button id="admin-button" title="Admin tools">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </button>
+
+        <!-- Admin password modal -->
+        <div id="admin-modal">
+            <div id="admin-modal-card">
+                <h3>Admin tools</h3>
+                <p id="admin-modal-desc">Enter the password to unlock measurement and crop tools.</p>
+                <input type="password" id="admin-password-input" autocomplete="current-password" placeholder="Password" />
+                <div id="admin-modal-error">&nbsp;</div>
+                <div id="admin-modal-actions">
+                    <button class="admin-btn" onclick="window._closeAdminModal()">Cancel</button>
+                    <button class="admin-btn primary" onclick="window._submitAdminPassword()">Unlock</button>
+                </div>
+            </div>
         </div>
 
         <!-- Mobile / unsupported-device notice -->
@@ -476,6 +756,7 @@
 
             if (error) { console.error('Supabase save error:', error); return null; }
             measurement.dbId = data.id;
+            if (typeof _rtMarkOwn === 'function') _rtMarkOwn(data.id);
             return data;
         }
 
@@ -503,6 +784,7 @@
                 if (measurement.surfArea != null) metadata.surfArea = measurement.surfArea;
                 if (measurement.projArea != null) metadata.projArea = measurement.projArea;
             }
+            if (typeof _rtMarkOwn === 'function') _rtMarkOwn(measurement.dbId);
             await supabase.from('model_measurements').update({
                 title: measurement.title || 'Untitled',
                 points: points,
@@ -519,6 +801,7 @@
 
         async function deleteMeasurementFromDB(measurement) {
             if (!measurement.dbId) return;
+            if (typeof _rtMarkOwn === 'function') _rtMarkOwn(measurement.dbId);
             await supabase.from('model_measurements').delete().eq('id', measurement.dbId);
         }
 
@@ -615,7 +898,20 @@
                 name: '1572 Mass Ave',
                 crs: 'EPSG:32619',
                 camerasPath: 'models/1572-mass-ave/cameras/',
-                hasThermal: false
+                hasThermal: false,
+                // Baked-in adjacent-building crop. Values in metres. Captured
+                // from a manual crop session — admin no longer needs to set
+                // this; the toggle below the model picker just flips its
+                // visibility for the viewer.
+                defaultCrop: {
+                    xMin: -21.336, xMax:  22.250,
+                    yMin: -28.042, yMax:   1.829,
+                    zMin: -10.668, zMax:  18.288,
+                    rotY: -13 * Math.PI / 180
+                },
+                // Where world-north sits in model space. 0 = model +Z points
+                // north. Tweak (radians) if the compass disagrees with reality.
+                northOffset: 0
             },
             'colonial-village-a': {
                 type: 'glb',
@@ -651,36 +947,15 @@
             },
             'medfield': {
                 type: 'glb',
-                // Full-res raw (252 MB) served from Dropbox archive (/ardroneopssite/models/medfield/) — stable location, won't move
-                path: 'https://www.dropbox.com/scl/fi/uzgjtukvfuw9i7ubahtn6/odm_textured_model_geo.glb?rlkey=1k8cuu9eko5goyu6a8bd48alu&raw=1',
-                highPath: 'https://www.dropbox.com/scl/fi/uzgjtukvfuw9i7ubahtn6/odm_textured_model_geo.glb?rlkey=1k8cuu9eko5goyu6a8bd48alu&raw=1',
-                desktopPath: 'models/medfield/odm_textured_model_geo.desktop.glb',   // 69 MB, 1536px JPEG (default for desktop ?q=auto)
-                mobilePath: 'models/medfield/odm_textured_model_geo.mobile.glb',     // 48 MB, 1024px JPEG (default for iOS ?q=auto)
-                name: 'Medfield State Hospital',
-                crs: 'EPSG:32619',
-                hasThermal: false
+                path: '../3D_Model/Medfield-State-textured_model.glb',
+                name: 'Medfield State Hospital'
             },
             'cordage': {
                 type: 'glb',
-                // Full-res raw (258 MB) served from Dropbox archive (/ardroneopssite/models/cordage/) — stable location, won't move
-                path: 'https://www.dropbox.com/scl/fi/sg04a8nmascrlc8mcwggo/odm_textured_model_geo.glb?rlkey=vgs0xxt84zl2uga2nsfq8bz4x&raw=1',
-                highPath: 'https://www.dropbox.com/scl/fi/sg04a8nmascrlc8mcwggo/odm_textured_model_geo.glb?rlkey=vgs0xxt84zl2uga2nsfq8bz4x&raw=1',
-                desktopPath: 'models/cordage/odm_textured_model_geo.desktop.glb',   // 60 MB, 2048px JPEG (default for desktop ?q=auto)
-                mobilePath: 'models/cordage/odm_textured_model_geo.mobile.glb',     // 32 MB, 1024px JPEG (default for iOS ?q=auto)
+                path: 'models/cordage/odm_textured_model_geo.glb',
                 name: 'Cordage Park Marketplace',
                 crs: 'EPSG:32619',
-                hasThermal: false
-                // camerasPath intentionally absent — EXIF-only positions had model-origin offset issues that
-                // can't be resolved without ODM bundle-adjusted shots.geojson (DroneDeploy stripped it).
-            },
-            '22barnstable': {
-                type: 'glb',
-                path: 'models/22barnstable/odm_textured_model_geo.glb',         // 21 MB, Draco-compressed (single file serves all tiers — already smaller than typical mobile variant)
-                highPath: 'models/22barnstable/odm_textured_model_geo.glb',
-                desktopPath: 'models/22barnstable/odm_textured_model_geo.glb',
-                mobilePath: 'models/22barnstable/odm_textured_model_geo.glb',
-                name: '22 Barnstable St — VFW Post 1787',
-                crs: 'EPSG:32619',
+                camerasPath: 'models/cordage/cameras/',
                 hasThermal: false
             }
         };
@@ -830,6 +1105,10 @@
         function snapToWallPlane(point, mIdx) {
             const m = measurements[mIdx];
             if (!m || (m.type !== 'wall' && m.type !== 'area')) return point;
+            // Custom-render walls (elevation_with_bays, protrusion_box) have non-planar
+            // 3D outlines — snapping to a single averaged plane would lock Y to that plane
+            // and prevent up/down dragging. Let them follow the raw mesh hit instead.
+            if (m.customRender) return point;
             const plane = getWallPlane(m);
             if (!plane) return point;
             const projected = new THREE.Vector3();
@@ -945,6 +1224,7 @@
         controls.maxPolarAngle = Math.PI * 0.95;
         controls.minDistance = 1;
         controls.maxDistance = 2000;
+        window._controls = controls;
 
         // Lighting — generous for photogrammetry models
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
@@ -1011,6 +1291,10 @@
             });
         }
 
+        // Y-axis rotation applied to the otherwise axis-aligned clip box.
+        // Lives here so updateClipPlanes() can read it without globals proliferating.
+        let cropRotationY = 0; // radians
+
         function updateClipPlanes() {
             const xMin = document.getElementById('crop-x-min').value / 10;
             const xMax = document.getElementById('crop-x-max').value / 10;
@@ -1019,12 +1303,25 @@
             const zMin = document.getElementById('crop-z-min').value / 10;
             const zMax = document.getElementById('crop-z-max').value / 10;
 
-            clipPlanes[0].constant = -xMin;  // +X direction clips at xMin
-            clipPlanes[1].constant = xMax;   // -X direction clips at xMax
-            clipPlanes[2].constant = -yMin;  // +Y direction clips at yMin
-            clipPlanes[3].constant = yMax;   // -Y direction clips at yMax
-            clipPlanes[4].constant = -zMin;  // +Z direction clips at zMin
-            clipPlanes[5].constant = zMax;   // -Z direction clips at zMax
+            // Reset normals — applyMatrix4 below mutates them, so we must restore
+            // the axis-aligned state on every call.
+            clipPlanes[0].normal.set(1, 0, 0);  clipPlanes[0].constant = -xMin;
+            clipPlanes[1].normal.set(-1, 0, 0); clipPlanes[1].constant =  xMax;
+            clipPlanes[2].normal.set(0, 1, 0);  clipPlanes[2].constant = -yMin;
+            clipPlanes[3].normal.set(0, -1, 0); clipPlanes[3].constant =  yMax;
+            clipPlanes[4].normal.set(0, 0, 1);  clipPlanes[4].constant = -zMin;
+            clipPlanes[5].normal.set(0, 0, -1); clipPlanes[5].constant =  zMax;
+
+            // Apply Y rotation around the model center if non-zero.
+            if (cropRotationY !== 0 && modelBounds) {
+                const c = new THREE.Vector3();
+                modelBounds.getCenter(c);
+                const m = new THREE.Matrix4()
+                    .makeTranslation(c.x, c.y, c.z)
+                    .multiply(new THREE.Matrix4().makeRotationY(cropRotationY))
+                    .multiply(new THREE.Matrix4().makeTranslation(-c.x, -c.y, -c.z));
+                clipPlanes.forEach(p => p.applyMatrix4(m));
+            }
         }
 
         function enableCrop(enable) {
@@ -1207,7 +1504,12 @@
                     ? (window._isIOS ? config.mobilePath : config.desktopPath)
                     : null);
             const primaryPath = tier || config.mobilePath || config.path;
-            const fallbackPath = (primaryPath !== config.path) ? config.path : null;
+            // Some models only have the desktop variant baked; others only have the
+            // 4k original. Try a chain rather than a single fallback, since 0-byte
+            // placeholder GLBs in this repo will pass HTTP but fail to parse.
+            const fallbackChain = [
+                config.desktopPath, config.highPath, config.path, config.mobilePath
+            ].filter(p => p && p !== primaryPath);
 
             const onProgress = (progress) => {
                 if (progress.total > 0) {
@@ -1239,15 +1541,44 @@
                 resolve();
             };
 
-            return new Promise((resolve, reject) => {
-                gltfLoader.load(primaryPath, onLoaded(resolve), onProgress, (err) => {
-                    if (fallbackPath) {
-                        console.warn(`Mobile GLB not available (${primaryPath}); falling back to desktop variant.`);
-                        gltfLoader.load(fallbackPath, onLoaded(resolve), onProgress, reject);
-                    } else {
-                        reject(err);
-                    }
-                });
+            // HEAD-check each candidate first. 0-byte placeholder GLBs return
+            // HTTP 200 with Content-Length: 0, then GLTFLoader.parse() throws
+            // "Length out of range of buffer" INSIDE the success callback —
+            // so onError never fires and a fallback chain alone won't catch it.
+            // Append a cache-buster so Mobile Safari can't serve a stale 0-byte
+            // response from before this fix.
+            const CACHE_BUST = '?v=20260521b';
+            const bust = (url) => url + CACHE_BUST;
+            const headCheck = async (url) => {
+                try {
+                    const r = await fetch(bust(url), { method: 'HEAD' });
+                    if (!r.ok) return 0;
+                    const len = parseInt(r.headers.get('content-length') || '0', 10);
+                    return Number.isFinite(len) ? len : 0;
+                } catch (e) { return 0; }
+            };
+
+            return new Promise(async (resolve, reject) => {
+                const candidates = [primaryPath, ...fallbackChain];
+                // Probe sizes in parallel
+                const sizes = await Promise.all(candidates.map(headCheck));
+                // Keep candidates with > 1 KB of data (real GLBs are MBs)
+                const viable = candidates
+                    .map((p, i) => ({ path: p, size: sizes[i] }))
+                    .filter(c => c.size > 1024);
+                if (viable.length === 0) {
+                    return reject(new Error('No valid GLB variants found for this model (all are 0-byte placeholders).'));
+                }
+                console.log('GLB candidates:', viable.map(v => `${v.path} (${(v.size/1048576).toFixed(1)} MB)`));
+                const tryNext = (idx) => {
+                    if (idx >= viable.length) return reject(new Error('All GLB variants failed to load.'));
+                    const { path } = viable[idx];
+                    gltfLoader.load(bust(path), onLoaded(resolve), onProgress, (err) => {
+                        console.warn(`GLB parse failed for ${path}: ${err && err.message}; trying next`);
+                        tryNext(idx + 1);
+                    });
+                };
+                tryNext(0);
             });
         }
 
@@ -2063,14 +2394,23 @@
             const marker = createPointMarker(point, 0xf59e0b);
             marker.scale.setScalar(1.8);
 
-            const label = createLabel('Marker', new THREE.Vector3(point.x, point.y + 0.8, point.z), {
+            // Auto-number markers sequentially based on existing marker count
+            // so each anchor point gets a unique reference ID (P1, P2, P3, ...).
+            // Uses the highest existing P-number + 1 so deletes don't cause collisions.
+            const existingNums = measurements
+                .filter(m => m.type === 'marker' && /^P\d+$/.test(m.title || ''))
+                .map(m => parseInt(m.title.slice(1), 10));
+            const nextNum = existingNums.length ? Math.max(...existingNums) + 1 : 1;
+            const title = 'P' + nextNum;
+
+            const label = createLabel(title, new THREE.Vector3(point.x, point.y + 0.8, point.z), {
                 bg: 'rgba(245, 158, 11, 0.9)',
                 clickable: true
             });
 
             const measurement = {
                 type: 'marker',
-                title: 'Marker',
+                title,
                 point: point.clone(),
                 spheres: [marker],
                 label
@@ -2617,21 +2957,13 @@
             cameraModelBbox = null;
 
             const config = modelId ? MODELS[modelId] : null;
+            currentCamerasPath = (config && config.camerasPath) || 'cameras/';
             currentModelHasThermal = config ? (config.hasThermal !== false) : true;
 
             // Reset thermal mode if model doesn't support it
             if (!currentModelHasThermal) {
                 showThermal = false;
             }
-
-            // Models without an explicit camerasPath get NO cameras — never fall back to the
-            // repo-root cameras/ folder, which contains a different model's photos.
-            if (!config || !config.camerasPath) {
-                console.log('Model has no camerasPath — skipping cameras load');
-                currentCamerasPath = null;
-                return;
-            }
-            currentCamerasPath = config.camerasPath;
 
             try {
                 const resp = await fetch(currentCamerasPath + 'cameras.json');
@@ -2739,9 +3071,13 @@
                 mesh.userData = { cameraIndex: i, isCamera: true };
                 scene.add(mesh);
 
-                // Label
+                // Label. Cameras whose position was derived from EXIF (not
+                // OpenSfM bundle adjustment) get a trailing '*' so the viewer
+                // knows their frustum is approximate.
                 const waypointMatch = cam.file.match(/Waypoint(\d+)/);
-                const labelText = waypointMatch ? `WP${waypointMatch[1]}` : `Cam ${i+1}`;
+                const isApprox = cam.category === 'manual';
+                const baseText = waypointMatch ? `WP${waypointMatch[1]}` : `Cam ${i+1}`;
+                const labelText = isApprox ? `${baseText}*` : baseText;
                 const labelDiv = document.createElement('div');
                 labelDiv.style.cssText = `
                     background: rgba(0, 191, 255, 0.85); color: #fff; padding: 2px 6px;
@@ -2782,21 +3118,26 @@
                 cf.label.visible = camerasVisible;
             });
 
-            // Update camera button visual state
+            // Update camera button visual state. Old icon button was removed
+            // when the public toolbar moved to the bottom-left text panel,
+            // so this is defensive: badge logic only runs if the legacy
+            // button still exists.
             const btn = document.querySelector('[data-tool="camera"]');
-            btn.classList.toggle('active', camerasVisible);
-            if (camerasVisible) {
-                let badge = btn.querySelector('.badge');
-                if (!badge) {
-                    badge = document.createElement('span');
-                    badge.className = 'badge';
-                    badge.style.background = '#00bfff';
-                    btn.appendChild(badge);
+            if (btn) {
+                btn.classList.toggle('active', camerasVisible);
+                if (camerasVisible) {
+                    let badge = btn.querySelector('.badge');
+                    if (!badge) {
+                        badge = document.createElement('span');
+                        badge.className = 'badge';
+                        badge.style.background = '#00bfff';
+                        btn.appendChild(badge);
+                    }
+                    badge.textContent = cameraData.length;
+                } else {
+                    const badge = btn.querySelector('.badge');
+                    if (badge) badge.remove();
                 }
-                badge.textContent = cameraData.length;
-            } else {
-                const badge = btn.querySelector('.badge');
-                if (badge) badge.remove();
             }
             console.log(`Cameras ${camerasVisible ? 'visible' : 'hidden'} (${cameraFrustums.length} frustums)`);
         }
@@ -2931,6 +3272,7 @@
             // Hide photo overlay
             document.getElementById('photo-overlay-img').classList.remove('visible');
             document.getElementById('photo-overlay').classList.remove('show');
+            document.body.classList.remove('photo-open');
 
             // Deselect camera
             if (selectedCamera !== null) {
@@ -2968,6 +3310,7 @@
             img.onload = () => requestAnimationFrame(() => img.classList.add('visible'));
             img.src = previewSrc || fullResSrc;
             document.getElementById('photo-overlay').classList.add('show');
+            document.body.classList.add('photo-open');
             if (img.complete && img.naturalWidth > 0) {
                 requestAnimationFrame(() => img.classList.add('visible'));
             }
@@ -3306,6 +3649,91 @@
                     bg: mc.bg, border: mc.border, clickable: true
                 });
                 if (m.spheres) pts.forEach((p, i) => m.spheres[i].position.copy(p));
+            } else if (m.type === 'wall' && m.customRender === 'elevation_with_bays') {
+                // Composite rebuild: 1 flat main-wall panel + 3 bay boxes.
+                const mc = m.color || { line: 0xec4899, fill: 0xec4899, bg: 'rgba(236, 72, 153, 0.9)', border: '#ec4899' };
+                const groundY = m.groundY != null ? m.groundY : (m.metadata && m.metadata.ground_y);
+                const opacity = (m.metadata && m.metadata.opacity != null) ? m.metadata.opacity : 0.30;
+                const colorHex = (m.metadata && m.metadata.color) || '#ec4899';
+                const colorObj = new THREE.Color(colorHex);
+
+                function buildPanel(verts, indices) {
+                    const g = new THREE.BufferGeometry();
+                    g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(verts), 3));
+                    g.setIndex(indices);
+                    g.computeVertexNormals();
+                    const mat = new THREE.MeshStandardMaterial({
+                        color: colorObj, transparent: true, opacity,
+                        side: THREE.DoubleSide, depthTest: true, depthWrite: false
+                    });
+                    const me = new THREE.Mesh(g, mat);
+                    me.renderOrder = 5;
+                    return me;
+                }
+                function sortCCW(quad) {
+                    const cx = (quad[0].x + quad[1].x + quad[2].x + quad[3].x) / 4;
+                    const cz = (quad[0].z + quad[1].z + quad[2].z + quad[3].z) / 4;
+                    return [...quad].sort((a, b) =>
+                        Math.atan2(a.z - cz, a.x - cx) - Math.atan2(b.z - cz, b.x - cx)
+                    );
+                }
+
+                const TL = pts[0], TR = pts[13];
+                const wallVerts = [
+                    TL.x, TL.y,    TL.z,
+                    TR.x, TR.y,    TR.z,
+                    TR.x, groundY, TR.z,
+                    TL.x, groundY, TL.z
+                ];
+                const group = new THREE.Group();
+                group.add(buildPanel(wallVerts, [0, 1, 2,  0, 2, 3]));
+
+                const bayGroups = [
+                    [pts[1], pts[2], pts[3], pts[4]],
+                    [pts[5], pts[6], pts[7], pts[8]],
+                    [pts[9], pts[10], pts[11], pts[12]]
+                ];
+                let totalSurfArea = Math.hypot(TR.x - TL.x, TR.z - TL.z) * Math.abs(TL.y - groundY);
+                for (const rawQuad of bayGroups) {
+                    const top = sortCCW(rawQuad);
+                    const bot = top.map(p => ({ x: p.x, y: groundY, z: p.z }));
+                    const verts = [];
+                    for (const p of top) verts.push(p.x, p.y, p.z);
+                    for (const p of bot) verts.push(p.x, p.y, p.z);
+                    const indices = [];
+                    for (let i = 0; i < 4; i++) {
+                        const j = (i + 1) % 4;
+                        indices.push(i, j, 4 + j);
+                        indices.push(i, 4 + j, 4 + i);
+                    }
+                    indices.push(0, 1, 2);
+                    indices.push(0, 2, 3);
+                    group.add(buildPanel(verts, indices));
+                    const v1 = Math.hypot(top[1].x - top[0].x, top[1].z - top[0].z);
+                    const v2 = Math.hypot(top[2].x - top[1].x, top[2].z - top[1].z);
+                    const bayH = Math.abs(top[0].y - groundY);
+                    totalSurfArea += 2 * (v1 + v2) * bayH + v1 * v2;
+                }
+                m.fillMesh = group;
+                scene.add(m.fillMesh);
+
+                const lines2 = [];
+                lines2.push(createLine([TL, TR], mc.line));
+                for (const rawQuad of bayGroups) {
+                    const q = sortCCW(rawQuad);
+                    for (let i = 0; i < 4; i++) {
+                        lines2.push(createLine([q[i], q[(i + 1) % 4]], mc.line));
+                    }
+                }
+                m.lines = lines2;
+                m.surfArea = totalSurfArea;
+                const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                const cy = (TL.y + groundY) / 2;
+                const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                m.label = createLabel(`${m.title || 'Elevation'} · ${formatSqFt(m.surfArea)}`, new THREE.Vector3(cx, cy, cz), {
+                    bg: 'rgba(236, 72, 153, 0.9)', clickable: true
+                });
+                if (m.spheres) pts.forEach((p, i) => m.spheres[i] && m.spheres[i].position.copy(p));
             } else if (m.type === 'wall' || m.type === 'roof') {
                 const mc = m.color || { line: 0xa855f7, fill: 0x8b5cf6, bg: 'rgba(139, 92, 246, 0.9)', border: '#a855f7' };
                 // Rebuild edge lines
@@ -3980,10 +4408,18 @@
                 if (hit) {
                     const p = snapToWallPlane(hit.point, dragTarget.mIdx);
                     dragTarget.sphere.position.copy(p);
-                    measurements[dragTarget.mIdx].points[dragTarget.pIdx].copy(p);
+                    const mmDrag = measurements[dragTarget.mIdx];
+                    // Markers store position as `.point` (singular) and have no `.points[]` array.
+                    // Length/height/area/etc store as `.points[i]`. Update whichever this measurement uses,
+                    // and for markers also update the floating label so it follows the sphere.
+                    if (mmDrag.type === 'marker') {
+                        if (mmDrag.point) mmDrag.point.copy(p);
+                        if (mmDrag.label) mmDrag.label.position.set(p.x, p.y + 0.8, p.z);
+                    } else if (mmDrag.points && mmDrag.points[dragTarget.pIdx]) {
+                        mmDrag.points[dragTarget.pIdx].copy(p);
+                    }
                     recalcMeasurement(dragTarget.mIdx);
                     // Keep green edge-midpoint handles in sync while dragging
-                    const mmDrag = measurements[dragTarget.mIdx];
                     if (mmDrag._edgeHandles) {
                         _clearEdgeHandles(mmDrag);
                         _buildEdgeHandles(mmDrag, dragTarget.mIdx);
@@ -4098,6 +4534,7 @@
                     closeSidePanel();
                     document.getElementById('photo-overlay-img').classList.remove('visible');
                     document.getElementById('photo-overlay').classList.remove('show');
+                    document.body.classList.remove('photo-open');
                     break;
                 case 'enter':
                     if (currentTool === 'area' && tempPoints.length >= 3) finishArea();
@@ -4166,6 +4603,7 @@
                 if (m.lines) m.lines.forEach(l => { scene.remove(l); });
                 if (m.label) scene.remove(m.label);
                 if (m.fillMesh) scene.remove(m.fillMesh);
+                if (m.friezeMesh) { scene.remove(m.friezeMesh); m.friezeMesh.geometry.dispose(); m.friezeMesh.material.dispose(); }
             }
             measurements.length = 0;
             pointSphereMap.clear();
@@ -4174,6 +4612,72 @@
             await restoreSavedMeasurements(modelId);
             console.log(`Reloaded ${measurements.length} measurements from DB`);
         };
+
+        // ========== Supabase Realtime sync ==========
+        // Subscribe to model_measurements changes for the current model so edits
+        // made on another device/tab appear here within ~1s. The handler is
+        // debounced — many fast updates collapse into a single reload.
+        let _rtChannel = null;
+        let _rtReloadTimer = null;
+        let _rtOwnEdits = new Set(); // dbIds we wrote ourselves — skip echo
+        function _rtMarkOwn(dbId) {
+            if (!dbId) return;
+            _rtOwnEdits.add(dbId);
+            setTimeout(() => _rtOwnEdits.delete(dbId), 3000);
+        }
+        function _rtSetStatus(state) {
+            const el = document.getElementById('rt-status');
+            if (!el) return;
+            const styles = {
+                connecting: ['#9ca3af', 'Syncing...'],
+                connected:  ['#10b981', 'Live'],
+                disconnected: ['#ef4444', 'Offline'],
+                updating: ['#3b82f6', 'Updating...']
+            };
+            const [color, txt] = styles[state] || styles.disconnected;
+            el.style.color = color;
+            el.textContent = '● ' + txt;
+        }
+        function _rtSubscribe(modelId) {
+            if (!supabase || typeof supabase.channel !== 'function') {
+                console.warn('Supabase realtime unavailable');
+                return;
+            }
+            // Tear down prior subscription
+            if (_rtChannel) {
+                try { supabase.removeChannel(_rtChannel); } catch (e) {}
+                _rtChannel = null;
+            }
+            _rtSetStatus('connecting');
+            _rtChannel = supabase
+                .channel('model_measurements:' + modelId)
+                .on('postgres_changes',
+                    { event: '*', schema: 'public', table: 'model_measurements', filter: 'model_id=eq.' + modelId },
+                    (payload) => {
+                        const row = payload.new || payload.old;
+                        if (row && row.id && _rtOwnEdits.has(row.id)) return; // echo of our own write
+                        // Debounce: many rapid writes (e.g. dragging an edge) collapse
+                        clearTimeout(_rtReloadTimer);
+                        _rtSetStatus('updating');
+                        _rtReloadTimer = setTimeout(() => {
+                            window._reloadMeasurements().then(() => _rtSetStatus('connected'));
+                        }, 400);
+                    })
+                .subscribe((status) => {
+                    if (status === 'SUBSCRIBED') _rtSetStatus('connected');
+                    else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') _rtSetStatus('disconnected');
+                });
+        }
+        // Hook into model picker so switching models re-subscribes
+        const _modelPicker = document.getElementById('model-picker');
+        if (_modelPicker) {
+            _modelPicker.addEventListener('change', () => _rtSubscribe(_modelPicker.value));
+        }
+        // Initial subscription (deferred so supabase + DOM are ready)
+        setTimeout(() => {
+            const mid = (_modelPicker && _modelPicker.value) || (new URLSearchParams(location.search).get('model'));
+            if (mid) _rtSubscribe(mid);
+        }, 1000);
 
         window._undoLast = undoLastMeasurement;
         window._undoPoint = undoLastPoint;
@@ -4374,13 +4878,165 @@
                         bg: mc.bg, border: mc.border, clickable: true
                     });
                     m = { type: row.type, title: row.title || (isWindow ? 'Window' : 'Door'), points: pts, width: absW, height: absH, surfArea: area, fillMesh, label, spheres, lines, color: mc };
+                } else if (row.type === 'wall' && row.metadata && row.metadata.custom_render === 'elevation_with_bays' && pts.length >= 14) {
+                    // 14 points: [NE, bay1×4, bay2×4, bay3×4, SE]
+                    //   index 0  = NE main-wall corner (y ≈ -5)
+                    //   indices 1-4   = Bay 1 top corners (y ≈ -7.4)
+                    //   indices 5-8   = Bay 2 top corners
+                    //   indices 9-12  = Bay 3 top corners
+                    //   index 13 = SE main-wall corner (y ≈ -5)
+                    // Renders as: ONE flat main-wall panel (NE/SE corners → ground) + 3 bay boxes
+                    // extruded from each 4-corner top set down to ground. Bays don't reach
+                    // up to the top floor — they only span from their actual top Y to ground.
+                    const groundY = row.metadata.ground_y;
+                    const opacity = row.metadata.opacity != null ? row.metadata.opacity : 0.30;
+                    const colorHex = row.metadata.color || '#ec4899';
+                    const colorObj = new THREE.Color(colorHex);
+                    const allMeshes = [];
+
+                    function buildPanelMesh(verts, indices) {
+                        const g = new THREE.BufferGeometry();
+                        g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(verts), 3));
+                        g.setIndex(indices);
+                        g.computeVertexNormals();
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: colorObj, transparent: true, opacity,
+                            side: THREE.DoubleSide, depthTest: true, depthWrite: false
+                        });
+                        const me = new THREE.Mesh(g, mat);
+                        me.renderOrder = 5;
+                        scene.add(me);
+                        return me;
+                    }
+
+                    // -- Main wall panel: 4-corner flat rectangle NE → SE → SE-ground → NE-ground
+                    const TL = pts[0], TR = pts[13];
+                    const wallVerts = [
+                        TL.x, TL.y,     TL.z,    // 0 top-left
+                        TR.x, TR.y,     TR.z,    // 1 top-right
+                        TR.x, groundY,  TR.z,    // 2 bottom-right
+                        TL.x, groundY,  TL.z     // 3 bottom-left
+                    ];
+                    const wallIdx = [0, 1, 2,  0, 2, 3];
+                    allMeshes.push(buildPanelMesh(wallVerts, wallIdx));
+
+                    // -- 3 bay boxes
+                    function sortCCW(quad) {
+                        const cx = (quad[0].x + quad[1].x + quad[2].x + quad[3].x) / 4;
+                        const cz = (quad[0].z + quad[1].z + quad[2].z + quad[3].z) / 4;
+                        return [...quad].sort((a, b) =>
+                            Math.atan2(a.z - cz, a.x - cx) - Math.atan2(b.z - cz, b.x - cx)
+                        );
+                    }
+                    const bayGroups = [
+                        [pts[1], pts[2], pts[3], pts[4]],
+                        [pts[5], pts[6], pts[7], pts[8]],
+                        [pts[9], pts[10], pts[11], pts[12]]
+                    ];
+                    let totalSurfArea = Math.hypot(TR.x - TL.x, TR.z - TL.z) * Math.abs(TL.y - groundY);
+                    for (const rawQuad of bayGroups) {
+                        const top = sortCCW(rawQuad);
+                        const bot = top.map(p => ({ x: p.x, y: groundY, z: p.z }));
+                        const verts = [];
+                        for (const p of top) verts.push(p.x, p.y, p.z);
+                        for (const p of bot) verts.push(p.x, p.y, p.z);
+                        const indices = [];
+                        // 4 side faces
+                        for (let i = 0; i < 4; i++) {
+                            const j = (i + 1) % 4;
+                            indices.push(i, j, 4 + j);
+                            indices.push(i, 4 + j, 4 + i);
+                        }
+                        // Top cap (the bay's roof at y = -7.4)
+                        indices.push(0, 1, 2);
+                        indices.push(0, 2, 3);
+                        allMeshes.push(buildPanelMesh(verts, indices));
+                        // Bay surface area: 4 sides + top
+                        const v1 = Math.hypot(top[1].x - top[0].x, top[1].z - top[0].z);
+                        const v2 = Math.hypot(top[2].x - top[1].x, top[2].z - top[1].z);
+                        const bayH = Math.abs(top[0].y - groundY);
+                        totalSurfArea += 2 * (v1 + v2) * bayH + v1 * v2;
+                    }
+
+                    // Outline lines per logical edge group
+                    const lines = [];
+                    // Main wall top edge
+                    lines.push(createLine([TL, TR], mc.line));
+                    // Bay top edges
+                    for (const rawQuad of bayGroups) {
+                        const q = sortCCW(rawQuad);
+                        for (let i = 0; i < 4; i++) {
+                            lines.push(createLine([q[i], q[(i + 1) % 4]], mc.line));
+                        }
+                    }
+
+                    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+                    const cy = (TL.y + groundY) / 2;
+                    const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+                    const label = createLabel(`${row.title || 'Elevation'} · ${formatSqFt(totalSurfArea)}`, new THREE.Vector3(cx, cy, cz), {
+                        bg: 'rgba(236, 72, 153, 0.9)', clickable: true
+                    });
+                    const spheres = pts.map(p => createPointMarker(p, mc.line));
+                    // Use a parent Group so removeObj on m.fillMesh removes all sub-meshes
+                    const fillMesh = new THREE.Group();
+                    allMeshes.forEach(me => { scene.remove(me); fillMesh.add(me); });
+                    scene.add(fillMesh);
+                    m = { type: 'wall', title: row.title || 'Elevation', points: pts, surfArea: totalSurfArea, groundY, fillMesh, label, spheres, lines, color: mc,
+                          customRender: 'elevation_with_bays',
+                          metadata: row.metadata };
+                } else if (row.type === 'wall' && row.metadata && row.metadata.custom_render === 'protrusion_box' && pts.length === 4) {
+                    // Special: 4 top corners + metadata.ground_y → render as a 3D extruded box
+                    const groundY = row.metadata.ground_y;
+                    const opacity = row.metadata.opacity != null ? row.metadata.opacity : 0.35;
+                    const colorHex = row.metadata.color || '#06b6d4';
+                    const top = pts;
+                    const bot = top.map(p => new THREE.Vector3(p.x, groundY, p.z));
+                    const verts = [];
+                    for (const p of top) verts.push(p.x, p.y, p.z);
+                    for (const p of bot) verts.push(p.x, p.y, p.z);
+                    const indices = [];
+                    for (let i = 0; i < 4; i++) {
+                        const j = (i + 1) % 4;
+                        indices.push(i, j, 4 + j);
+                        indices.push(i, 4 + j, 4 + i);
+                    }
+                    indices.push(0, 1, 2);
+                    indices.push(0, 2, 3);
+                    const bg = new THREE.BufferGeometry();
+                    bg.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(verts), 3));
+                    bg.setIndex(indices);
+                    bg.computeVertexNormals();
+                    const bmat = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color(colorHex),
+                        transparent: true, opacity,
+                        side: THREE.DoubleSide,
+                        depthTest: true, depthWrite: false
+                    });
+                    const fillMesh = new THREE.Mesh(bg, bmat);
+                    fillMesh.renderOrder = 6;
+                    scene.add(fillMesh);
+                    const cx = pts.reduce((s, p) => s + p.x, 0) / 4;
+                    const cy = pts.reduce((s, p) => s + p.y, 0) / 4;
+                    const cz = pts.reduce((s, p) => s + p.z, 0) / 4;
+                    const heightM = Math.abs(top[0].y - groundY);
+                    const v1 = new THREE.Vector3().subVectors(top[1], top[0]);
+                    const v2 = new THREE.Vector3().subVectors(top[2], top[1]);
+                    const fpArea = v1.length() * v2.length();
+                    const volM3 = fpArea * heightM;
+                    const label = createLabel(`${row.title || 'Bay'} · ${formatCuFt(volM3)}`, new THREE.Vector3(cx, cy + 0.5, cz), {
+                        bg: 'rgba(6, 182, 212, 0.9)', clickable: true
+                    });
+                    const spheres = pts.map(p => createPointMarker(p, mc.line));
+                    m = { type: 'wall', title: row.title || 'Protrusion', points: pts, surfArea: fpArea, volume: volM3, groundY, fillMesh, label, spheres, lines: [], color: mc };
                 } else if ((row.type === 'wall' || row.type === 'roof') && pts.length >= 3) {
                     const spheres = pts.map(p => createPointMarker(p, mc.line));
                     const lines = [];
                     for (let i = 0; i < pts.length; i++) {
                         lines.push(createLine([pts[i], pts[(i + 1) % pts.length]], mc.line));
                     }
-                    const fillMesh = createPolygonFill(pts, mc.fill, 0.3);
+                    // Honor custom opacity/color from metadata when present (e.g. elevation polygon at 15%)
+                    const customOpacity = row.metadata && row.metadata.opacity != null ? row.metadata.opacity : 0.3;
+                    const fillMesh = createPolygonFill(pts, mc.fill, customOpacity);
                     const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
                     const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
                     const cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
@@ -4401,6 +5057,63 @@
                         bg: mc.bg, border: mc.border, clickable: true
                     });
                     m.label = label;
+                } else if (row.type === 'frieze' && pts.length >= 4) {
+                    // Open polyline of points along the wall. Build a tapered band
+                    // from each point: bottom-inner at frieze_bottom_y on the wall,
+                    // top-outer pushed outward by projection_m at frieze_top_y.
+                    const md = row.metadata || {};
+                    const yBot = md.frieze_bottom_y != null ? md.frieze_bottom_y : pts[0].y - 1.37;
+                    const yTop = md.frieze_top_y    != null ? md.frieze_top_y    : pts[0].y;
+                    const proj = md.projection_m    != null ? md.projection_m    : 0.7;
+                    // Outward normal = perpendicular to local segment, flipped to face away from polyline centroid
+                    let cxs = 0, czs = 0;
+                    for (const p of pts) { cxs += p.x; czs += p.z; }
+                    cxs /= pts.length; czs /= pts.length;
+                    const verts = [];
+                    const idxArr = [];
+                    for (let i = 0; i < pts.length; i++) {
+                        const prev = pts[Math.max(0, i - 1)];
+                        const next = pts[Math.min(pts.length - 1, i + 1)];
+                        let dx = next.x - prev.x, dz = next.z - prev.z;
+                        let nx = -dz, nz = dx;
+                        const dotOut = nx * (pts[i].x - cxs) + nz * (pts[i].z - czs);
+                        const sgn = dotOut < 0 ? -1 : 1;
+                        const L = Math.hypot(nx, nz) || 1;
+                        nx = sgn * nx / L; nz = sgn * nz / L;
+                        verts.push(pts[i].x, yBot, pts[i].z);
+                        verts.push(pts[i].x + nx * proj, yTop, pts[i].z + nz * proj);
+                    }
+                    for (let i = 0; i < pts.length - 1; i++) {
+                        const a0 = i * 2, a1 = i * 2 + 1, b0 = (i + 1) * 2, b1 = (i + 1) * 2 + 1;
+                        idxArr.push(a0, b0, a1);
+                        idxArr.push(b0, b1, a1);
+                    }
+                    const fg = new THREE.BufferGeometry();
+                    fg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
+                    fg.setIndex(idxArr);
+                    fg.computeVertexNormals();
+                    const fmat = new THREE.MeshStandardMaterial({
+                        color: 0x3b82f6, transparent: true, opacity: 0.55,
+                        side: THREE.DoubleSide, depthTest: true, depthWrite: false
+                    });
+                    const friezeMesh = new THREE.Mesh(fg, fmat);
+                    friezeMesh.name = 'frieze_overlay';
+                    scene.add(friezeMesh);
+
+                    let perimM = 0;
+                    for (let i = 1; i < pts.length; i++) {
+                        perimM += Math.hypot(pts[i].x - pts[i-1].x, pts[i].z - pts[i-1].z);
+                    }
+                    const heightFt = ((yTop - yBot) / 0.3048).toFixed(1);
+                    const projFt = (proj / 0.3048).toFixed(1);
+                    const perimFt = (perimM / 0.3048).toFixed(0);
+                    const labelText = `${row.title || 'Wall frieze'}: ${perimFt} ft × ${heightFt} ft tall × ${projFt} ft projection`;
+                    // Position label at midpoint of polyline
+                    const midIdx = Math.floor(pts.length / 2);
+                    const label = createLabel(labelText, new THREE.Vector3(pts[midIdx].x, yTop + 1.5, pts[midIdx].z), {
+                        bg: 'rgba(59, 130, 246, 0.9)', clickable: false
+                    });
+                    m = { type: 'frieze', title: row.title || 'Wall frieze', points: pts, friezeMesh, label, perimM };
                 } else if (row.type === 'marker' && pts.length >= 1) {
                     const marker = createPointMarker(pts[0], 0xf59e0b);
                     marker.scale.setScalar(1.8);
@@ -4625,6 +5338,311 @@
             document.getElementById('panel-content').innerHTML = html;
             panel.classList.add('open');
         }
+
+        // ========== Admin gate ==========
+        // Single client-side password unlocks the measurement toolbar and the
+        // "save current pose as…" controls in the bottom-left panel.
+        // sha256("password") placeholder — swap before going public.
+        const ADMIN_PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8';
+        const ADMIN_GATED_MODELS = new Set(['1572-mass-ave']);
+
+        async function sha256Hex(str) {
+            const buf = new TextEncoder().encode(str);
+            const hash = await crypto.subtle.digest('SHA-256', buf);
+            return Array.from(new Uint8Array(hash))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        function applyAdminUnlock(persist) {
+            document.body.classList.add('admin-unlocked');
+            if (persist) sessionStorage.setItem('adminUnlocked_1572', '1');
+        }
+
+        // Enable the gate UI for this model + auto-restore unlock from session.
+        if (ADMIN_GATED_MODELS.has(initialModelId) && !VIEW_ONLY) {
+            document.body.classList.add('admin-gate-enabled');
+            if (sessionStorage.getItem('adminUnlocked_1572') === '1') {
+                applyAdminUnlock(false);
+            }
+        }
+
+        document.getElementById('admin-button').addEventListener('click', () => {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.add('show');
+            const input = document.getElementById('admin-password-input');
+            input.value = '';
+            document.getElementById('admin-modal-error').textContent = ' ';
+            setTimeout(() => input.focus(), 50);
+        });
+
+        window._closeAdminModal = function() {
+            document.getElementById('admin-modal').classList.remove('show');
+        };
+
+        window._submitAdminPassword = async function() {
+            const input = document.getElementById('admin-password-input');
+            const errEl = document.getElementById('admin-modal-error');
+            const entered = input.value || '';
+            const hash = await sha256Hex(entered);
+            if (hash === ADMIN_PASSWORD_HASH) {
+                applyAdminUnlock(true);
+                window._closeAdminModal();
+            } else {
+                errEl.textContent = 'Incorrect password';
+                input.select();
+            }
+        };
+
+        document.getElementById('admin-password-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); window._submitAdminPassword(); }
+            if (e.key === 'Escape') { window._closeAdminModal(); }
+        });
+
+        // ========== Baked-in adjacent-building crop ==========
+        // Per-model defaultCrop in MODELS config defines a keep-volume in
+        // model-space metres. We apply it directly to clipPlanes the moment
+        // currentModel is available — no slider DOM, no admin needed.
+        let publicCropVisible = false;
+        let cropConfigured    = false;
+        let cropPivot         = null; // bbox center, pivot for rotation
+
+        function setClipFromCrop(crop) {
+            // Reset normals first — applyMatrix4 below rotates them in place.
+            clipPlanes[0].normal.set( 1, 0, 0); clipPlanes[0].constant = -crop.xMin;
+            clipPlanes[1].normal.set(-1, 0, 0); clipPlanes[1].constant =  crop.xMax;
+            clipPlanes[2].normal.set( 0, 1, 0); clipPlanes[2].constant = -crop.yMin;
+            clipPlanes[3].normal.set( 0,-1, 0); clipPlanes[3].constant =  crop.yMax;
+            clipPlanes[4].normal.set( 0, 0, 1); clipPlanes[4].constant = -crop.zMin;
+            clipPlanes[5].normal.set( 0, 0,-1); clipPlanes[5].constant =  crop.zMax;
+            if (crop.rotY && cropPivot) {
+                const m = new THREE.Matrix4()
+                    .makeTranslation(cropPivot.x, cropPivot.y, cropPivot.z)
+                    .multiply(new THREE.Matrix4().makeRotationY(crop.rotY))
+                    .multiply(new THREE.Matrix4().makeTranslation(-cropPivot.x, -cropPivot.y, -cropPivot.z));
+                clipPlanes.forEach(p => p.applyMatrix4(m));
+            }
+        }
+
+        function applyCropVisibility() {
+            if (!currentModel) return;
+            const planes = (publicCropVisible && cropConfigured) ? clipPlanes : null;
+            currentModel.traverse(child => {
+                if (child.isMesh && child.material) {
+                    const mats = Array.isArray(child.material) ? child.material : [child.material];
+                    mats.forEach(mat => {
+                        mat.clippingPlanes = planes;
+                        mat.clipShadows = !!planes;
+                        mat.needsUpdate = true;
+                    });
+                }
+            });
+            updateCropButtonUI();
+        }
+
+        function updateCropButtonUI() {
+            const btn = document.getElementById('vp-crop-btn');
+            if (!btn) return;
+            if (!cropConfigured) {
+                btn.textContent = 'Full';
+                btn.dataset.state = 'full';
+                btn.disabled = true;
+                btn.title = 'No crop volume configured for this model';
+                return;
+            }
+            btn.disabled = false;
+            btn.title = '';
+            // Button text = the action a click performs (= the opposite state).
+            if (publicCropVisible) {
+                btn.textContent   = 'Full';
+                btn.dataset.state = 'cropped';
+            } else {
+                btn.textContent   = 'Cropped';
+                btn.dataset.state = 'full';
+            }
+        }
+
+        // ========== Measurements visibility ==========
+        let measurementsVisible = true;
+        function applyMeasurementsVisibility() {
+            const vis = measurementsVisible;
+            measurements.forEach(m => {
+                (m.spheres || []).forEach(s => { if (s) s.visible = vis; });
+                (m.lines   || []).forEach(l => { if (l) l.visible = vis; });
+                if (m.fillMesh) m.fillMesh.visible = vis;
+                if (m.label)    m.label.visible    = vis;
+            });
+            const btn = document.getElementById('vp-measurements-btn');
+            if (btn) {
+                btn.textContent   = vis ? 'Hide' : 'Show';
+                btn.dataset.state = vis ? 'on'   : 'off';
+            }
+        }
+
+        // ========== Cameras visibility (bridges to existing toggleCameras) ==========
+        function updateCamerasButtonUI() {
+            const btn = document.getElementById('vp-cameras-btn');
+            if (!btn) return;
+            const vis = !!camerasVisible;
+            btn.textContent   = vis ? 'Hide' : 'Show';
+            btn.dataset.state = vis ? 'on'   : 'off';
+        }
+
+        document.getElementById('vp-cameras-btn').addEventListener('click', () => {
+            toggleCameras();
+            updateCamerasButtonUI();
+        });
+        document.getElementById('vp-crop-btn').addEventListener('click', () => {
+            if (!cropConfigured) return;
+            publicCropVisible = !publicCropVisible;
+            applyCropVisibility();
+        });
+        document.getElementById('vp-measurements-btn').addEventListener('click', () => {
+            measurementsVisible = !measurementsVisible;
+            applyMeasurementsVisibility();
+        });
+
+        // ========== Snap-to-view ==========
+        // Public buttons jump the camera to a saved pose. Admin captures the
+        // current pose into a named slot. Storage is localStorage per model.
+        const VIEW_STORAGE_KEY = `viewer:${initialModelId}:savedViews`;
+        function loadSavedViews() {
+            try { return JSON.parse(localStorage.getItem(VIEW_STORAGE_KEY) || '{}'); }
+            catch (_) { return {}; }
+        }
+        function persistSavedViews(views) {
+            try { localStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(views)); } catch (_) {}
+        }
+        let savedViews = loadSavedViews();
+
+        function refreshViewButtons() {
+            document.querySelectorAll('.viewer-view-btn').forEach(btn => {
+                const key = btn.dataset.viewKey;
+                if (savedViews[key]) btn.removeAttribute('data-empty');
+                else                 btn.setAttribute('data-empty', '1');
+            });
+        }
+        refreshViewButtons();
+
+        // Spherical interpolation around the focal target with an upward
+        // sin-bump on phi so the path arcs OVER the building. Never lets
+        // phi drop below the horizon (phi=π/2) mid-flight, so the camera
+        // never plunges through the ground or clips through the model.
+        function flyToPose(pose, durMs = 1300) {
+            if (!pose || !camera || !controls) return;
+            const posStart    = camera.position.clone();
+            const targetStart = controls.target.clone();
+            const posEnd    = new THREE.Vector3(pose.pos[0],    pose.pos[1],    pose.pos[2]);
+            const targetEnd = new THREE.Vector3(pose.target[0], pose.target[1], pose.target[2]);
+
+            const sphStart = new THREE.Spherical().setFromVector3(posStart.clone().sub(targetStart));
+            const sphEnd   = new THREE.Spherical().setFromVector3(posEnd.clone().sub(targetEnd));
+
+            // Shortest azimuth path
+            let dTheta = sphEnd.theta - sphStart.theta;
+            if (dTheta >  Math.PI) dTheta -= 2 * Math.PI;
+            if (dTheta < -Math.PI) dTheta += 2 * Math.PI;
+
+            const ARC_LIFT = 0.6; // radians — strength of "over the roof" bump
+            const PHI_HORIZON_MARGIN = 0.05; // keep ≥ ~3° above horizon mid-flight
+            const t0 = performance.now();
+
+            (function step() {
+                const t    = Math.min(1, (performance.now() - t0) / durMs);
+                const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+                const r     = sphStart.radius + (sphEnd.radius - sphStart.radius) * ease;
+                const theta = sphStart.theta  + dTheta                            * ease;
+                const phiLerp = sphStart.phi  + (sphEnd.phi   - sphStart.phi)   * ease;
+                const bump  = ARC_LIFT * Math.sin(ease * Math.PI);      // 0 at endpoints
+                let   phi   = phiLerp - bump;                           // -ve phi delta = lift
+                // Mid-flight clamp: never drop below horizon (phi > π/2 means below).
+                if (t > 0.01 && t < 0.99) {
+                    phi = Math.min(phi, Math.PI / 2 - PHI_HORIZON_MARGIN);
+                }
+                phi = Math.max(0.15, phi); // never directly overhead either
+
+                const rel = new THREE.Vector3()
+                    .setFromSpherical(new THREE.Spherical(r, phi, theta));
+                const curTarget = new THREE.Vector3().lerpVectors(targetStart, targetEnd, ease);
+                camera.position.copy(curTarget).add(rel);
+                controls.target.copy(curTarget);
+                controls.update();
+                if (t < 1) requestAnimationFrame(step);
+            })();
+        }
+
+        document.querySelectorAll('.viewer-view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.viewKey;
+                const pose = savedViews[key];
+                if (!pose) return;
+                flyToPose(pose);
+            });
+        });
+
+        document.querySelectorAll('.viewer-save-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.saveKey;
+                savedViews[key] = {
+                    pos:    [camera.position.x, camera.position.y, camera.position.z],
+                    target: [controls.target.x,  controls.target.y,  controls.target.z]
+                };
+                persistSavedViews(savedViews);
+                refreshViewButtons();
+                const orig = btn.textContent;
+                btn.textContent = 'Saved!';
+                setTimeout(() => { btn.textContent = orig; }, 900);
+            });
+        });
+
+        // ========== Compass ==========
+        // Rosette rotates so the caret at the top always represents the
+        // camera's current heading. N/E/S/W glyphs drift around showing
+        // where world-north lies from the viewer's POV. `northOffset` lets
+        // us correct each model if its +Z doesn't actually align with north.
+        const NORTH_OFFSET_RAD = (MODELS[initialModelId] && MODELS[initialModelId].northOffset) || 0;
+
+        (function compassTick() {
+            const rosette = document.getElementById('compass-rosette');
+            if (rosette && camera && controls) {
+                const fwd = new THREE.Vector3().subVectors(controls.target, camera.position);
+                fwd.y = 0;
+                if (fwd.lengthSq() > 1e-6) {
+                    fwd.normalize();
+                    // In this viewer's Three.js frame: +X = East, -Z = North,
+                    // so yaw is measured from -Z. Looking -Z gives yaw=0;
+                    // looking +X gives yaw=+π/2.
+                    const yaw = Math.atan2(fwd.x, -fwd.z) + NORTH_OFFSET_RAD;
+                    rosette.style.transform = `rotate(${-yaw * 180 / Math.PI}deg)`;
+                }
+            }
+            requestAnimationFrame(compassTick);
+        })();
+
+        // ========== Watcher: apply default crop + sync UI on model load ==========
+        (function watchForModelReady() {
+            let lastModel = null;
+            const tick = () => {
+                if (currentModel !== lastModel && currentModel) {
+                    lastModel = currentModel;
+                    const box = new THREE.Box3().setFromObject(currentModel);
+                    cropPivot = new THREE.Vector3(); box.getCenter(cropPivot);
+                    modelBounds = box;
+                    const cfg = MODELS[initialModelId];
+                    if (cfg && cfg.defaultCrop) {
+                        setClipFromCrop(cfg.defaultCrop);
+                        cropConfigured    = true;
+                        publicCropVisible = true; // crop on by default
+                    }
+                    applyCropVisibility();
+                    applyMeasurementsVisibility();
+                    updateCamerasButtonUI();
+                }
+                requestAnimationFrame(tick);
+            };
+            tick();
+        })();
 
     </script>
 </body>
