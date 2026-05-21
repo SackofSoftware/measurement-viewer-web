@@ -318,8 +318,8 @@
             <option value="colonial-village-e" data-path="models/colonial-village-e/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building E</option>
             <option value="colonial-village-f" data-path="models/colonial-village-f/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building F</option>
             <option value="colonial-village-h" data-path="models/colonial-village-h/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building H</option>
-            <option value="medfield" data-path="../3D_Model/Medfield-State-textured_model.glb" data-type="glb">Medfield State Hospital</option>
-            <option value="cordage" data-path="../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb" data-type="glb">Cordage Park Marketplace</option>
+            <option value="medfield" data-path="models/medfield/odm_textured_model_geo.glb" data-type="glb">Medfield State Hospital</option>
+            <option value="cordage" data-path="models/cordage/odm_textured_model_geo.glb" data-type="glb">Cordage Park Marketplace</option>
             <option value="22barnstable" data-path="models/22barnstable/odm_textured_model_geo.glb" data-type="glb">22 Barnstable St — VFW Post 1787</option>
         </select>
 
@@ -651,15 +651,24 @@
             },
             'medfield': {
                 type: 'glb',
-                path: '../3D_Model/Medfield-State-textured_model.glb',
-                name: 'Medfield State Hospital'
+                // Full-res raw (252 MB, 4K JPEG) served from Dropbox — too big for GitHub's 100 MB limit, opt-in via ?q=original or ?q=high
+                path: 'https://www.dropbox.com/scl/fi/637pio8ycms0zvjvu6kow/Medfield-State-textured_model.glb?rlkey=mrx62hwarawtdkgv5boe94eb3&raw=1',
+                highPath: 'https://www.dropbox.com/scl/fi/637pio8ycms0zvjvu6kow/Medfield-State-textured_model.glb?rlkey=mrx62hwarawtdkgv5boe94eb3&raw=1',
+                desktopPath: 'models/medfield/odm_textured_model_geo.desktop.glb',   // 69 MB, 1536px JPEG (default for desktop ?q=auto)
+                mobilePath: 'models/medfield/odm_textured_model_geo.mobile.glb',     // 48 MB, 1024px JPEG (default for iOS ?q=auto)
+                name: 'Medfield State Hospital',
+                crs: 'EPSG:32619',
+                hasThermal: false
             },
             'cordage': {
                 type: 'glb',
-                path: 'models/cordage/odm_textured_model_geo.glb',
+                // Full-res raw (258 MB, 4K JPEG) served from Dropbox — too big for GitHub's 100 MB limit, opt-in via ?q=original or ?q=high
+                path: 'https://www.dropbox.com/scl/fi/r4uzb1gt1r0jn7hexx9xe/Cordage-Park-Marketplace-8-12-2024-textured_model.glb?rlkey=1mowsdycmcli4kiqifpurex3t&raw=1',
+                highPath: 'https://www.dropbox.com/scl/fi/r4uzb1gt1r0jn7hexx9xe/Cordage-Park-Marketplace-8-12-2024-textured_model.glb?rlkey=1mowsdycmcli4kiqifpurex3t&raw=1',
+                desktopPath: 'models/cordage/odm_textured_model_geo.desktop.glb',   // 60 MB, 2048px JPEG (default for desktop ?q=auto)
+                mobilePath: 'models/cordage/odm_textured_model_geo.mobile.glb',     // 32 MB, 1024px JPEG (default for iOS ?q=auto)
                 name: 'Cordage Park Marketplace',
                 crs: 'EPSG:32619',
-                camerasPath: 'models/cordage/cameras/',
                 hasThermal: false
             },
             '22barnstable': {
