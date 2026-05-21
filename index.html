@@ -2615,13 +2615,21 @@
             cameraModelBbox = null;
 
             const config = modelId ? MODELS[modelId] : null;
-            currentCamerasPath = (config && config.camerasPath) || 'cameras/';
             currentModelHasThermal = config ? (config.hasThermal !== false) : true;
 
             // Reset thermal mode if model doesn't support it
             if (!currentModelHasThermal) {
                 showThermal = false;
             }
+
+            // Models without an explicit camerasPath get NO cameras — never fall back to the
+            // repo-root cameras/ folder, which contains a different model's photos.
+            if (!config || !config.camerasPath) {
+                console.log('Model has no camerasPath — skipping cameras load');
+                currentCamerasPath = null;
+                return;
+            }
+            currentCamerasPath = config.camerasPath;
 
             try {
                 const resp = await fetch(currentCamerasPath + 'cameras.json');
