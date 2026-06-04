@@ -475,7 +475,7 @@
             <option value="colonial-village-e" data-path="models/colonial-village-e/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building E</option>
             <option value="colonial-village-f" data-path="models/colonial-village-f/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building F</option>
             <option value="colonial-village-h" data-path="models/colonial-village-h/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building H</option>
-            <option value="medfield" data-path="../3D_Model/Medfield-State-textured_model.glb" data-type="glb">Medfield State Hospital</option>
+            <option value="medfield" data-path="models/medfield/odm_textured_model_geo.glb" data-type="glb">Medfield State Hospital</option>
             <option value="cordage" data-path="../3D_Model/Cordage-Park-Marketplace-8-12-2024-textured_model.glb" data-type="glb">Cordage Park Marketplace</option>
         </select>
 
@@ -947,8 +947,11 @@
             },
             'medfield': {
                 type: 'glb',
-                path: '../3D_Model/Medfield-State-textured_model.glb',
-                name: 'Medfield State Hospital'
+                path: 'models/medfield/odm_textured_model_geo.glb',
+                desktopPath: 'models/medfield/odm_textured_model_geo.desktop.glb',
+                mobilePath: 'models/medfield/odm_textured_model_geo.mobile.glb',
+                name: 'Medfield State Hospital',
+                crs: 'EPSG:32619'
             },
             'cordage': {
                 type: 'glb',
