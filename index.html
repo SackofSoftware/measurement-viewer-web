@@ -471,6 +471,7 @@
             <option value="three-rivers" data-path="../models/three_rivers/" data-type="obj">Three Rivers Drive</option>
             <option value="hadley" data-path="models/hadley/odm_textured_model_geo.glb" data-type="glb">Hadley School</option>
             <option value="1572-mass-ave" data-path="models/1572-mass-ave/odm_textured_model_geo.glb" data-type="glb">1572 Mass Ave</option>
+            <option value="globe-mills-rc" data-path="models/globe-mills-rc/globe_rc_retex.desktop.glb" data-type="glb">Globe Mills</option>
             <option value="colonial-village-a" data-path="models/colonial-village-a/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building A</option>
             <option value="colonial-village-e" data-path="models/colonial-village-e/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building E</option>
             <option value="colonial-village-f" data-path="models/colonial-village-f/odm_textured_model_geo.glb" data-type="glb">Colonial Village — Building F</option>
@@ -911,6 +912,26 @@
                 },
                 // Where world-north sits in model space. 0 = model +Z points
                 // north. Tweak (radians) if the compass disagrees with reality.
+                northOffset: 0
+            },
+            'globe-mills-rc': {
+                type: 'glb',
+                path: 'models/globe-mills-rc/globe_rc_retex.desktop.glb',
+                highPath: 'models/globe-mills-rc/globe_rc_retex.high.glb',
+                desktopPath: 'models/globe-mills-rc/globe_rc_retex.desktop.glb',
+                mobilePath: 'models/globe-mills-rc/globe_rc_retex.mobile.glb',
+                name: 'Globe Mills',
+                crs: 'EPSG:32619',
+                camerasPath: 'models/globe-mills-rc/cameras/',
+                hasThermal: false,
+                // RC geometry + ODM (texrecon gmi) texture; correct east elevation.
+                // Baked crop from manual session: footprint box rot -18 deg, height trimmed 7.5-27.3 m.
+                defaultCrop: {
+                    xMin: -30.4375, xMax: 16.2625,
+                    yMin:   7.5311, yMax: 27.3311,
+                    zMin: -68.7487, zMax: 66.2513,
+                    rotY: -18 * Math.PI / 180
+                },
                 northOffset: 0
             },
             'colonial-village-a': {
@@ -5347,7 +5368,7 @@
         // "save current pose as…" controls in the bottom-left panel.
         // sha256("password") placeholder — swap before going public.
         const ADMIN_PASSWORD_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8';
-        const ADMIN_GATED_MODELS = new Set(['1572-mass-ave']);
+        const ADMIN_GATED_MODELS = new Set(['1572-mass-ave', 'globe-mills-rc']);
 
         async function sha256Hex(str) {
             const buf = new TextEncoder().encode(str);
