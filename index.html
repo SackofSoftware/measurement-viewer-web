@@ -451,6 +451,8 @@
 
         /* Responsive — also keep safe-area inset on small screens */
         @media (max-width: 768px) {
+            /* Mobile: hide ALL overlay tools — show just the model. */
+            #viewer-panel, #admin-button, #rt-status, #compass, #side-panel, #toolbar, #crop-panel, #rotate-panel, #top-tools { display: none !important; }
             #side-panel { width: 100%; right: 0; }
             #toolbar { bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
             .tool-btn { width: 44px; height: 44px; font-size: 16px; }
